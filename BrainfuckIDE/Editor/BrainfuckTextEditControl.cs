@@ -145,19 +145,6 @@ namespace BrainfuckIDE.Editor
                 .Location;
         }
 
-        private NestPair[] GetNextPair()
-        {
-            var stack = new Stack<TextLocation>();
-
-            var nestPosed = new TextDocumentCharFinder(this.TextArea.Document)
-            .FindAll(p => p == '[' || p == '[');
-
-            foreach (var (letter,pos) in nestPosed)
-            {
-                if (letter == '[') stack.Push(pos);
-                else if(letter == ']') yield return  stack.Any() ? 
-            }
-        }
         private struct NestPair
         {
 
