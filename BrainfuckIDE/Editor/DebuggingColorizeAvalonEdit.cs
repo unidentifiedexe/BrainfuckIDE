@@ -15,8 +15,8 @@ namespace BrainfuckIDE.Editor
     class DebuggingColorizeAvalonEdit: DocumentColorizingTransformer
     {
 
-        private SingleRangeColorizer _runnningPosition = new SingleRangeColorizer(Colors.Yellow);
-        private MultiRangeColorizer _breakPoints = new MultiRangeColorizer(Colors.Red);
+        private readonly SingleRangeColorizer _runnningPosition = new SingleRangeColorizer(Colors.Yellow);
+        private readonly MultiRangeColorizer _breakPoints = new MultiRangeColorizer(Colors.Red);
 
 
         public int RunnningPosition
@@ -74,8 +74,8 @@ namespace BrainfuckIDE.Editor
         }
         private abstract class RangeColorizer
         {
-            private ISyntaxHighliteApplyer _applyer;
-           public Action<VisualLineElement> Applyer => _applyer.Applyer;
+            private readonly ISyntaxHighliteApplyer _applyer;
+            public Action<VisualLineElement> Applyer => _applyer.Applyer;
 
             public abstract IEnumerable<int> RangePositions { get; }
 
@@ -92,7 +92,7 @@ namespace BrainfuckIDE.Editor
         }
         private class BackgroundSyntaxHighliteApplyer : ISyntaxHighliteApplyer
         {
-            private Brush _brush;
+            private readonly Brush _brush;
 
             public BackgroundSyntaxHighliteApplyer(Color color)
             {

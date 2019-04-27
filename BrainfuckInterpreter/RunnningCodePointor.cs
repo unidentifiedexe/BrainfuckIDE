@@ -30,10 +30,10 @@ namespace BrainfuckInterpreter
         private int _runnningPointer = 0;
 
         /// <summary> ソースコード </summary>
-        private RunnningCode _sourceCode;
+        private readonly RunnningCode _sourceCode;
 
         /// <summary> ジャンパー </summary>
-        private Janper _janper;
+        private readonly Janper _janper;
 
         /// <summary> 現在のポインタが指し示すソースコードの文字を取得する。失敗した場合はChar.MinValueを返す。 </summary>
         public char Current
@@ -85,7 +85,7 @@ namespace BrainfuckInterpreter
         /// <summary> []によるコードの移動をサポートする </summary>
         private class Janper
         {
-            private Dictionary<int, int> _janpMap = new Dictionary<int, int>();
+            private readonly Dictionary<int, int> _janpMap = new Dictionary<int, int>();
 
             public Janper(RunnningCode code)
             {

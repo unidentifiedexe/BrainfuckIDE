@@ -8,11 +8,11 @@ namespace BrainfuckInterpreter
 {
     class RunnningCode
     {
-        private string _sourceCode;
-        private char[] _trimedSourceCode;
+        //private readonly string _sourceCode;
+        private readonly char[] _trimedSourceCode;
 
-        private Dictionary<int, Place> _mapToOriginCode = new Dictionary<int, Place>();
-        private Dictionary<Place, int> _mapToTrimed = new Dictionary<Place, int>();
+        private readonly Dictionary<int, Place> _mapToOriginCode = new Dictionary<int, Place>();
+        private readonly Dictionary<Place, int> _mapToTrimed = new Dictionary<Place, int>();
 
         /// <summary>
         /// 指定位置でのコードの文字を返す。終端の場合は Char.MinValue を返す。
@@ -71,7 +71,7 @@ namespace BrainfuckInterpreter
         /// <param name="sourceCode"></param>
         public RunnningCode(string sourceCode)
         {
-            _sourceCode = sourceCode;
+            //_sourceCode = sourceCode;
             var trimedCahrs = new List<char>(sourceCode.Length);
             Place originPlace = new Place();
             int trimedPlace = 0;

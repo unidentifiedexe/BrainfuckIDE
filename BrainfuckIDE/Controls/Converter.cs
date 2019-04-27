@@ -15,7 +15,7 @@ namespace BrainfuckIDE.Controls
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (!(value is byte)) throw new ArgumentException("byte型じゃないよ。", nameof(value));
+            if (!(value is byte)) throw new ArgumentException("Is not byte type.", nameof(value));
 
             return $"'{(char)(byte)value}'";
         }

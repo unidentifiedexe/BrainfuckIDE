@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using BrainfuckIDE.Editor.Controls;
 using BrainfuckInterpreter;
 using WpfUtils;
@@ -34,7 +35,6 @@ namespace BrainfuckIDE.Controls.ViewModels
         public Command RaisePauseReqestCommand => _pauseCommand ??= new Command(RaisePauseReqest);
 
 
-
         private void RaiseStopReqest()
         {
             RaisePauseReqest();
@@ -53,23 +53,32 @@ namespace BrainfuckIDE.Controls.ViewModels
         {
             if(_interpreter == null || _interpreter.IsStopped())
             {
-                _interpreter =  new Interpreter(EditrVM.SourceCode) {  BreakPoints = EditrVM.GetBreakPoints() };
+                try
+                {
+                    _interpreter = new Interpreter(EditrVM.SourceCode) { BreakPoints = EditrVM.GetBreakPoints() };
 
-                _interpreter.TryReadChar += TextImputDataVM.GetTextSender().TryGetNextChar;
-                _interpreter.WriteChar += ResultTextVM.WriteChar;
-                ResultTextVM.Clear();
+                    _interpreter.TryReadChar += TextImputDataVM.GetTextSender().TryGetNextChar;
+                    _interpreter.WriteChar += ResultTextVM.WriteChar;
+                    ResultTextVM.Clear();
+                }
+                catch(Exception exe)
+                {
+                    MessageBox.Show(exe.Message);
+                    return;
+                }
             }
             var interpreter = _interpreter;
 
             EditrVM.IsReadOnly = true;
+            MemoryVM.IsReadOnly = true;
             await Task.Run(() => interpreter.ExecuteNextCode(runType));
 
             EditrVM.IsReadOnly = false;
+            MemoryVM.IsReadOnly = false;
             StopInterpretorRunEvent?.Invoke(interpreter);
             UpdateDebuggerState();
 
         }
-
 
         private void UpdateDebuggerState()
         {

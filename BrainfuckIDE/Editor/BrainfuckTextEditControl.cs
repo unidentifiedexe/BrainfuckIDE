@@ -19,7 +19,7 @@ namespace BrainfuckIDE.Editor
 {
     partial class BrainfuckTextEditControl : TextEditor
     {
-        private DebuggingColorizeAvalonEdit _debuggingColorizeAvalonEdit = new DebuggingColorizeAvalonEdit();
+        private readonly DebuggingColorizeAvalonEdit _debuggingColorizeAvalonEdit = new DebuggingColorizeAvalonEdit();
 
         public BrainfuckTextEditControl() : base()
         {
@@ -141,7 +141,7 @@ namespace BrainfuckIDE.Editor
         {
             return 
                 new TextDocumentCharFinder(this.TextArea.Document, textLocation)
-                .FindFirst(p => EffectiveCharacters.Characters.Contains(p))
+                .FindFirstIncrimentalOrEmpty(p => EffectiveCharacters.Characters.Contains(p))
                 .Location;
         }
     }

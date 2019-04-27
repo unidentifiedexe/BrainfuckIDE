@@ -5,7 +5,7 @@ namespace BrainfuckIDE.Controls.ViewModels
 {
     class MemoryTokenViewModel : ViewModelBase
     {
-        private EditableMemoryToken _baseTorken;
+        private readonly EditableMemoryToken _baseTorken;
         public MemoryTokenViewModel(EditableMemoryToken baseTorken)
         {
             _baseTorken = baseTorken;

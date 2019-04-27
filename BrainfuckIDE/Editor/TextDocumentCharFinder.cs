@@ -10,9 +10,9 @@ namespace BrainfuckIDE.Editor
     internal class TextDocumentCharFinder
     {
 
-        private DocumentLine _firstLine;
-        private TextDocument _document;
-        TextLocation _startLocation;
+        private readonly DocumentLine _firstLine;
+        private readonly TextDocument _document;
+        private readonly TextLocation _startLocation;
         public TextDocumentCharFinder(TextDocument document):this(document, new TextLocation(1, 1))
         {
         }
@@ -25,12 +25,8 @@ namespace BrainfuckIDE.Editor
         }
 
 
-        public CharLocationTuple FindFirst(Func<char, bool> predicate)
-        {
-            return CharLocationTuple.Empty;
-        }
 
-
+        //TODO : Check
         public CharLocationTuple FindFirstDectimentalOrEmpty(Func<char, bool> predicate)
         {
             var turgetLine = _firstLine;

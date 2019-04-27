@@ -9,7 +9,10 @@
              mc:Ignorable="d" 
              Width="32"
              d:DesignHeight="20" d:DesignWidth="32"
-             d:DataContext="{d:DesignInstance {x:Type vm:MemoryTokenViewModel}}">
+             d:DataContext="{d:DesignInstance {x:Type vm:MemoryTokenViewModel}}"
+             Background="{Binding IsCurrent, Converter={local:BackGroundBrushConverter}, Mode=OneWay}"
+
+             >
     <Grid>
         <DockPanel>
             <TextBlock Text="[" DockPanel.Dock="Left" VerticalAlignment="Center" Foreground="#FFE6E6E6"/>
@@ -17,7 +20,11 @@
             <TextBox 
                 x:Name="_mainTextBox" x:FieldModifier="private"
                 Foreground="#FFE6E6E6" VerticalContentAlignment="Center"  HorizontalContentAlignment="Center" Background="{x:Null}" BorderThickness="0"
-                    ctrls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" CaretBrush="#FFE6E6E6">
+                    ctrls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" CaretBrush="#FFE6E6E6"
+                IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MemoryTokenView}}}"
+                >
+                
+                
                 <TextBox.Text>
                     <Binding Path ="Value" Converter="{ctrls:ByteStringInteractiveConverter}"/>
                 </TextBox.Text>
