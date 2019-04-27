@@ -1,0 +1,46 @@
+﻿<Window x:Class="BrainfuckIDE.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:editor="clr-namespace:BrainfuckIDE.Editor.Controls"
+        xmlns:vm="clr-namespace:BrainfuckIDE.Controls.ViewModels"
+        xmlns:view="clr-namespace:BrainfuckIDE.Controls.Views"
+        xmlns:local="clr-namespace:BrainfuckIDE"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        d:DataContext="{d:DesignInstance {x:Type vm:InterpreterRunningViewModel}}">
+    <Window.DataContext>
+        <vm:InterpreterRunningViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="100"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition MinWidth="100"/>
+        </Grid.ColumnDefinitions>
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="100"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition MinHeight="100"/>
+            </Grid.RowDefinitions>
+            <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch" />
+            <editor:EditorLayer Grid.Row="0" DataContext="{Binding EditrVM, Mode=OneTime}"/>
+            <view:MemoryViewLayer Grid.Row="2" DataContext="{Binding MemoryVM, Mode=OneTime}"/>
+        </Grid>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="170"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition MinHeight="100"/>
+            </Grid.RowDefinitions>
+            <GridSplitter Grid.Row="2" Height="5" HorizontalAlignment="Stretch" />
+            <view:CommandPanel Grid.Row="0" />
+            <view:TextInputViewPanel Grid.Row="1" Margin="10" DataContext="{Binding TextImputDataVM, Mode=OneTime}"/>
+            <view:ResultViewLayer Grid.Row="3" DataContext="{Binding ResultTextVM, Mode=OneTime}"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,20 @@
+<SyntaxDefinition name="brainfuck"
+        xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+    <!-- This is the main ruleset. -->
+    <RuleSet>
+
+      <Keywords foreground="#FF59B0F4">
+        <Word>+</Word>
+        <Word>-</Word>
+      </Keywords>
+      <Keywords foreground="Red">
+        <Word>[</Word>
+        <Word>]</Word>
+      </Keywords>
+
+      <Keywords foreground="Green">
+        <Word>&gt;</Word>
+        <Word>&lt;</Word>
+      </Keywords>
+    </RuleSet>
+</SyntaxDefinition>

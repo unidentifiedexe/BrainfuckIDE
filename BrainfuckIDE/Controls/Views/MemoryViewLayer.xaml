@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="BrainfuckIDE.Controls.Views.MemoryViewLayer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:BrainfuckIDE.Controls.ViewModels"
+             xmlns:local="clr-namespace:BrainfuckIDE.Controls.Views"
+             xmlns:ctrls="clr-namespace:BrainfuckIDE.Controls"
+             xmlns:custom="clr-namespace:BrainfuckIDE.CustomControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance {x:Type vm:MemoryViewModel}}"
+             Background="#FF1E1E1E" 
+             Focusable="True"
+             >
+    <Grid>
+        <ItemsControl ItemsSource="{Binding MemoryTokens}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:MemoryTokenView Margin="2" />
+                    <!--<custom:TokenViewTextBox Text="{Binding Value}" Width="30" TextAlignment="Center" Margin="2" Foreground="#FFE4E4E4" Background="#FF1E1E1E"/>-->
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Focusable="True"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Grid>
+</UserControl>
