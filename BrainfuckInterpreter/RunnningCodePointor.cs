@@ -20,7 +20,7 @@ namespace BrainfuckInterpreter
             get
             {
                 if (IsFinished || _runnningPointer == -1)
-                    return new Place();
+                    return Place.Empty;
                 else
                     return _sourceCode.GetOriginPlaceFromTrimedCode(_runnningPointer);
             }

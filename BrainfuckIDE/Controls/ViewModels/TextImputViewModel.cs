@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WpfUtils;
 
@@ -43,9 +44,12 @@ namespace BrainfuckIDE.Controls.ViewModels
             }
         }
 
+
         public IImputTextSender GetTextSender()
         {
-            return new ImputTextSender(ShowText, '\n');
+            var text = ShowText;
+            text = Regex.Replace(text, "\r\n+", "\n");
+            return new ImputTextSender(text, '\n');
         }
 
         class ImputTextSender : IImputTextSender, IDisposable
@@ -60,12 +64,13 @@ namespace BrainfuckIDE.Controls.ViewModels
                 _defaultChar = (byte)defaltChar;
             }
 
-            public byte GetNextChar()
+            public bool TryGetNextChar(out byte letter)
             {
                 if (_enumerator.MoveNext())
-                    return (byte)_enumerator.Current;
+                    letter = (byte)_enumerator.Current;
                 else
-                    return _defaultChar;
+                    letter =  _defaultChar;
+                return true;
             }
 
 

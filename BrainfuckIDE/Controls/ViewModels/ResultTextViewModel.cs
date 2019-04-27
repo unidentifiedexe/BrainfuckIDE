@@ -25,6 +25,10 @@ namespace BrainfuckIDE.Controls.ViewModels
         }
 
 
+        public void Clear()
+        {
+            ResultText = string.Empty;
+        }
         public void WriteChar(byte letter)
         {
             WriteChar((char)letter);

@@ -11,7 +11,7 @@ namespace BrainfuckIDE.IdeParts
 
     interface IImputTextSender
     {
-        byte GetNextChar();
+        bool TryGetNextChar(out byte letter);
     }
 
 }

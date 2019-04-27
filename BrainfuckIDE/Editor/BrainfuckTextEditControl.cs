@@ -144,20 +144,5 @@ namespace BrainfuckIDE.Editor
                 .FindFirst(p => EffectiveCharacters.Characters.Contains(p))
                 .Location;
         }
-
-        private struct NestPair
-        {
-
-            public TextLocation First { get; }
-           public TextLocation End  {get;}
-
-
-            public NestPair(TextLocation first, TextLocation end)
-            {
-                First = first;
-                End = end;
-            }
-
-        }
     }
 }

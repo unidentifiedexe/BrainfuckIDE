@@ -17,7 +17,7 @@ namespace BrainfuckIDE.Controls.ViewModels
         public ResultTextViewModel ResultTextVM { get; } = new ResultTextViewModel();
         public MemoryViewModel MemoryVM { get; } = new MemoryViewModel();
 
-        public TextImputOnlyInitDataViewModel TextImputDataViewModel { get; }
+        public TextImputOnlyInitDataViewModel TextImputDataVM { get; }
             = new TextImputOnlyInitDataViewModel();
 
         private Interpreter? _interpreter;
@@ -33,7 +33,7 @@ namespace BrainfuckIDE.Controls.ViewModels
         public Command RaiseStopReqestCommand => _stopCommand ??= new Command(RaiseStopReqest);
         public Command RaisePauseReqestCommand => _pauseCommand ??= new Command(RaisePauseReqest);
 
-        
+
 
         private void RaiseStopReqest()
         {
@@ -51,13 +51,21 @@ namespace BrainfuckIDE.Controls.ViewModels
 
         private async Task Run(RunType runType)
         {
-            var interpritor = _interpreter ??= new Interpreter(EditrVM.SourceCode) { BreakPoints = EditrVM.GetBreakPoints() };
+            if(_interpreter == null || _interpreter.IsStopped())
+            {
+                _interpreter =  new Interpreter(EditrVM.SourceCode) {  BreakPoints = EditrVM.GetBreakPoints() };
+
+                _interpreter.TryReadChar += TextImputDataVM.GetTextSender().TryGetNextChar;
+                _interpreter.WriteChar += ResultTextVM.WriteChar;
+                ResultTextVM.Clear();
+            }
+            var interpreter = _interpreter;
 
             EditrVM.IsReadOnly = true;
-            await Task.Run(() => interpritor.ExecuteNextCode(runType));
+            await Task.Run(() => interpreter.ExecuteNextCode(runType));
 
             EditrVM.IsReadOnly = false;
-            StopInterpretorRunEvent?.Invoke(interpritor);
+            StopInterpretorRunEvent?.Invoke(interpreter);
             UpdateDebuggerState();
 
         }

@@ -118,10 +118,10 @@ namespace BrainfuckInterpreter
         public WhiteCharDelegate? WriteChar { get; set; }
 
         /// <summary> 文字の読み取りが完了した時に発火するイベント </summary>
-        public event EventHandler CharRead;
+        public event EventHandler? CharRead;
 
         /// <summary> 文字の書き出しが完了した時に発火するイベント </summary>
-        public event EventHandler CharWriten;
+        public event EventHandler? CharWriten;
 
         ///// <summary> 描画更新デリゲード。描画が必要な際に呼び出される。 </summary>
         //public Action WhindowUpdate { get; set; }
@@ -140,18 +140,26 @@ namespace BrainfuckInterpreter
 
         private void WhiteCharMethod(byte letter)
         {
-            if (WriteChar != null)
+            var writeChar = WriteChar;
+            if (writeChar != null)
             {
-                WriteChar(letter);
+                writeChar(letter);
             }
             else
             {
                 Console.Write((char)letter);
             }
-            CharWriten.Invoke(this, new EventArgs());
+            CharWriten?.Invoke(this, new EventArgs());
             return;
         }
 
+
+        public bool IsStopped()
+        {
+            return
+                State == RunnningState.ErrorStoped ||
+                State == RunnningState.Finished;
+        }
     }
 
     public enum RunnningState

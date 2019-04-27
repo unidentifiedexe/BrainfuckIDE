@@ -25,7 +25,6 @@ namespace BrainfuckIDE.Editor
         }
 
 
-
         public CharLocationTuple FindFirst(Func<char, bool> predicate)
         {
             return CharLocationTuple.Empty;
