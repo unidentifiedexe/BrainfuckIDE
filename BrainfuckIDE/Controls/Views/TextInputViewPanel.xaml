@@ -11,6 +11,6 @@
              d:DataContext="{d:DesignInstance {x:Type vm:TextImputOnlyInitDataViewModel}}"
              >
     <Grid>
-        <TextBox Text="{Binding ShowText}" IsReadOnly="{Binding IsReadOnly}" AcceptsReturn="True"/>
+        <TextBox Text="{Binding ShowText}" IsReadOnly="{Binding IsReadOnly}" AcceptsReturn="True" Foreground="#FFF1F1F1" Background="#FF1E1E1E" FontFamily="Consolas" BorderThickness="0"/>
     </Grid>
 </UserControl>
