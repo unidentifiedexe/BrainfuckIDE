@@ -57,6 +57,17 @@ namespace BrainfuckInterpreter
             _janper = new Janper(_sourceCode);
         }
 
+
+        /// <summary> ソースコードよりインスタンスの作成 </summary>
+        /// <param name="sourceCode">ソースコード</param>
+        public RunnningCodePointer(string sourceCode, Place currentPos)
+        {
+            _sourceCode = new RunnningCode(sourceCode);
+            _janper = new Janper(_sourceCode);
+            if(!currentPos.IsEmpty())
+                _runnningPointer = _sourceCode.GetTrimedCodePlaceFromOrigin(currentPos);
+        }
+
         /// <summary> ポインタを一つ移動させる </summary>
         /// <remarks> 
         /// </remarks>
@@ -80,6 +91,12 @@ namespace BrainfuckInterpreter
         {
             if (Current == '[' || Current == ']')
                 _runnningPointer = _janper[_runnningPointer];
+        }
+
+        public void FourceUodatePosition(Place place)
+        {
+            if (!place.IsEmpty())
+                _runnningPointer = _sourceCode.GetTrimedCodePlaceFromOrigin(place);
         }
 
         /// <summary> []によるコードの移動をサポートする </summary>

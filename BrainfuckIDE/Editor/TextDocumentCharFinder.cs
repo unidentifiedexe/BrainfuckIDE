@@ -42,7 +42,7 @@ namespace BrainfuckIDE.Editor
                     if (predicate(letter))
                         return new CharLocationTuple(letter, line, i + 1);
                 }
-                turgetLine = turgetLine.NextLine;
+                turgetLine = turgetLine.PreviousLine;
                 line--;
                 isFirst = false;
             }

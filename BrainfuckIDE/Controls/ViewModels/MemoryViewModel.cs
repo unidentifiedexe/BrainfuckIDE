@@ -57,5 +57,10 @@ namespace BrainfuckIDE.Controls.ViewModels
                 }
             }
         }
+
+        internal void ReflectToInterpretor()
+        {
+            _editableMemory?.ReflectToParent();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -21,12 +22,35 @@ namespace BrainfuckIDE.Editor
     {
         private readonly DebuggingColorizeAvalonEdit _debuggingColorizeAvalonEdit = new DebuggingColorizeAvalonEdit();
 
+        public event EventHandler<DocumentChangeEventArgs> Changed
+        {
+            add { this.TextArea.Document.Changed += value; }
+            remove { this.TextArea.Document.Changed -= value; }
+        }
+
         public BrainfuckTextEditControl() : base()
         {
             base.Loaded += BrainfuckTextEditControl_Loaded;
             this.TextArea.Document.Changing += Document_Changing;
+            this.TextArea.Document.Changed += Document_Changed; ;
             this.PreviewMouseRightButtonDown += BrainfuckTextEditControl_PreviewMouseLeftButtonDown;
             this.DataContextChanged += BrainfuckTextEditControl_DataContextChanged;
+        }
+
+        private void Document_Changed(object sender, DocumentChangeEventArgs e)
+        {
+            if (_debuggingColorizeAvalonEdit.RunnningPosition < 0) return;
+            if (_debuggingColorizeAvalonEdit.RunnningPosition >= TextArea.Document.TextLength)
+                _debuggingColorizeAvalonEdit.RunnningPosition = TextArea.Document.TextLength - 1;
+                var currentChar = this.TextArea.Document.GetCharAt(_debuggingColorizeAvalonEdit.RunnningPosition);
+            if (EffectiveCharacters.Characters.Contains(currentChar)) return;
+            else
+            {
+                var loc = GetEditPlace(_debuggingColorizeAvalonEdit.RunnningPosition);
+                var newLoc = NearestEfectivPosition(loc);
+                _debuggingColorizeAvalonEdit.RunnningPosition = GetOffset(newLoc);
+                this.TextArea.TextView.Redraw();
+            }
         }
 
         private void BrainfuckTextEditControl_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
@@ -59,18 +83,18 @@ namespace BrainfuckIDE.Editor
             var deleteLen = e.RemovalLength;
             var addLen = e.InsertionLength;
             var newArr = _debuggingColorizeAvalonEdit.BreakPoints
-                .Select(PositionConverter).Where(p => p != -1).ToArray();
+                .Select(p=>PositionConverter(p)).Where(p => p != -1).ToArray();
             _debuggingColorizeAvalonEdit.BreakPoints.Clear();
             _debuggingColorizeAvalonEdit.BreakPoints.AddRange(newArr);
 
-            _debuggingColorizeAvalonEdit.RunnningPosition =
-                PositionConverter(_debuggingColorizeAvalonEdit.RunnningPosition);
+            _debuggingColorizeAvalonEdit.RunnningPosition
+                = e.OffsetChangeMap.GetNewOffset(_debuggingColorizeAvalonEdit.RunnningPosition);
 
 
             int PositionConverter(int from)
             {
                 if (from < pos) return from;
-                else if (from < deleteLen) return -1;
+                else if (from < pos + deleteLen) return -1;
                 else return from - deleteLen + addLen;
             }
 
@@ -119,7 +143,13 @@ namespace BrainfuckIDE.Editor
         public TextLocation RunnningPosition
         {
             get => GetEditPlace(_debuggingColorizeAvalonEdit.RunnningPosition);
-            set => _debuggingColorizeAvalonEdit.RunnningPosition = GetOffset(value);
+            set
+            {
+                var inPos = value;
+                if (!inPos.IsEmpty) inPos = NearestEfectivPosition(inPos);
+                _debuggingColorizeAvalonEdit.RunnningPosition = GetOffset(inPos);
+                
+             }
         }
 
         private TextLocation GetEditPlace(int offset)
@@ -139,9 +169,18 @@ namespace BrainfuckIDE.Editor
 
         public TextLocation NearestEfectivPosition(TextLocation textLocation)
         {
-            return 
+            return
                 new TextDocumentCharFinder(this.TextArea.Document, textLocation)
                 .FindFirstIncrimentalOrEmpty(p => EffectiveCharacters.Characters.Contains(p))
+                .Location;
+        }
+
+
+        public TextLocation NearestEfectivPositionAsDecrimental(TextLocation textLocation)
+        {
+            return
+                new TextDocumentCharFinder(this.TextArea.Document, textLocation)
+                .FindFirstDectimentalOrEmpty(p => EffectiveCharacters.Characters.Contains(p))
                 .Location;
         }
     }

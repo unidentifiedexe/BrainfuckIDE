@@ -10,7 +10,7 @@ namespace BrainfuckInterpreter
 {
     public class Interpreter
     {
-        private readonly RunnningCodePointer _sourceCode;
+        private RunnningCodePointer _sourceCode;
         private readonly Memory _memory;
         private bool _hasStopReqest = false;
         private Place[] _breakPoints = new Place[0];
@@ -33,6 +33,20 @@ namespace BrainfuckInterpreter
 
             _sourceCode = new RunnningCodePointer(code);
             _memory = new Memory();
+        }
+
+        public bool TryForceUpdateSourceCode(string code, Place currentPos)
+        {
+            if (State != RunnningState.Pause) return false;
+            _sourceCode = new RunnningCodePointer(code, currentPos);
+            return true;
+        }
+
+        public bool TryForceUpdateRunnningPosition(Place currentPos)
+        {
+            if (State != RunnningState.Pause) return false;
+            _sourceCode.FourceUodatePosition(currentPos);
+            return true;
         }
 
         /// <summary> 次に実行される場所を取得する </summary>
@@ -122,9 +136,6 @@ namespace BrainfuckInterpreter
 
         /// <summary> 文字の書き出しが完了した時に発火するイベント </summary>
         public event EventHandler? CharWriten;
-
-        ///// <summary> 描画更新デリゲード。描画が必要な際に呼び出される。 </summary>
-        //public Action WhindowUpdate { get; set; }
 
         private bool ReadCharMethod(out byte letter)
         {

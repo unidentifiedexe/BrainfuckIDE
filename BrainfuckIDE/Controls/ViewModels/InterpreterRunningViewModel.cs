@@ -22,6 +22,7 @@ namespace BrainfuckIDE.Controls.ViewModels
             = new TextImputOnlyInitDataViewModel();
 
         private Interpreter? _interpreter;
+        private Guid _sourceCodeHash = Guid.Empty;
 
 
 
@@ -49,23 +50,50 @@ namespace BrainfuckIDE.Controls.ViewModels
 
         private event Action<Interpreter> StopInterpretorRunEvent;
 
-        private async Task Run(RunType runType)
+
+        private bool InitializiedInterpretor()
         {
-            if(_interpreter == null || _interpreter.IsStopped())
+            var (hash, code) = EditrVM.SourceCode;
+            try
             {
-                try
+                var ret = true;
+                if (_interpreter == null || _interpreter.IsStopped())
                 {
-                    _interpreter = new Interpreter(EditrVM.SourceCode) { BreakPoints = EditrVM.GetBreakPoints() };
+                    _sourceCodeHash = hash;
+                    _interpreter = new Interpreter(code) {};
 
                     _interpreter.TryReadChar += TextImputDataVM.GetTextSender().TryGetNextChar;
                     _interpreter.WriteChar += ResultTextVM.WriteChar;
                     ResultTextVM.Clear();
                 }
-                catch(Exception exe)
+                else
                 {
-                    MessageBox.Show(exe.Message);
-                    return;
+                    if (_sourceCodeHash != hash)
+                        ret &= _interpreter.TryForceUpdateSourceCode(code, EditrVM.RunnningPosition);
+                    else
+                        ret &= _interpreter.TryForceUpdateRunnningPosition(EditrVM.RunnningPosition);
+                    MemoryVM.ReflectToInterpretor();
                 }
+                _interpreter.BreakPoints = EditrVM.GetBreakPoints();
+
+                return ret;
+            }
+            catch (Exception exe)
+            {
+                MessageBox.Show(exe.Message);
+                return false;
+            }
+            finally
+            {
+                _sourceCodeHash = hash;
+            }
+        }
+        private async Task Run(RunType runType)
+        {
+            if (!InitializiedInterpretor() || _interpreter == null)
+            {
+                MessageBox.Show("Interpretorの作成に失敗しました");
+                return;
             }
             var interpreter = _interpreter;
 

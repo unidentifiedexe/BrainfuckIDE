@@ -18,15 +18,33 @@ namespace BrainfuckIDE.Editor.Controls
         private BrainfuckTextEditControl _baseControl = null;
 
 
+        private bool _isChanged = false;
+        private Guid _textGuid = Guid.NewGuid();
+
         public void SetControl(BrainfuckTextEditControl editControl)
         {
             _baseControl = editControl;
+            _baseControl.Changed += BaseControl_Changed;
         }
 
+        private void BaseControl_Changed(object sender, EventArgs e)
+        {
+            _isChanged = true;
+        }
 
         private string _filePath = string.Empty;
 
-        public string SourceCode => _baseControl.Text;
+
+        public SourceText SourceCode
+        {
+            get
+            {
+                if(_isChanged)
+                    _textGuid = Guid.NewGuid();
+                _isChanged = false;
+                return new SourceText(_textGuid, _baseControl.Text);
+            }
+        }
 
         public IEnumerable<Place> GetBreakPoints()
         {
@@ -66,6 +84,42 @@ namespace BrainfuckIDE.Editor.Controls
             set => _baseControl.IsReadOnly = value;
         }
 
+
+
+    }
+    readonly struct SourceText
+    {
+        public Guid Guid { get; }
+
+        public string Text { get; }
+
+
+        public SourceText(Guid guid, string text)
+        {
+            Guid = guid;
+            Text = text;
+        }
+
+        public bool IsEmpty => (Guid.Empty == Guid);
+
+        public static bool operator ==(SourceText a, SourceText b) => a.Guid == b.Guid;
+        public static bool operator !=(SourceText a, SourceText b) => a.Guid != b.Guid;
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is SourceText)) return false;
+            return Guid.Equals(((SourceText)obj).Guid);
+        }
+        public override int GetHashCode()
+        {
+            return Guid.GetHashCode();
+        }
+
+        internal void Deconstruct(out Guid guid, out string text)
+        {
+            guid = Guid;
+            text = Text;
+        }
     }
 
 }

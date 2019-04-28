@@ -51,7 +51,7 @@ namespace BrainfuckInterpreter
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public int GetOriginPlaceFromTrimedCode(Place index)
+        public int GetTrimedCodePlaceFromOrigin(Place index)
         {
             return _mapToTrimed[index];
         }
