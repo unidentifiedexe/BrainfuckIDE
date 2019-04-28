@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
@@ -137,5 +138,32 @@ namespace BrainfuckIDE.Controls
         }
     }
 
+    //値の一致を表示状態に変換するコンバータ  
+    [ValueConversion(typeof(object), typeof(Visibility))]
+    public class EqualsToVisibleConveter : MarkupExtension, IValueConverter
+    {
 
+        private EqualsToVisibleConveter _converter;
+
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value == null)
+            {
+                return parameter == null ? Visibility.Visible : Visibility.Collapsed;
+            }
+            return value.Equals(parameter) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        //使わないよ  
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return _converter ??= new EqualsToVisibleConveter();
+        }
+    }
 }

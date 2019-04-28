@@ -27,7 +27,7 @@ namespace BrainfuckIDE
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
@@ -58,26 +58,6 @@ namespace BrainfuckIDE
         private void CommandBinding_Executed_Maximize(object sender, ExecutedRoutedEventArgs e)
         {
             SystemCommands.MaximizeWindow(this);
-        }
-
-        public bool IsNotMaximize
-            => this.WindowState != WindowState.Maximized;
-        public bool IsNotNomal
-            => this.WindowState != WindowState.Normal;
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            RaiseNotifyPropertyChanged(nameof(IsNotMaximize));
-            RaiseNotifyPropertyChanged(nameof(IsNotNomal));
-        }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-
-        protected void RaiseNotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

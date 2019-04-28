@@ -8,6 +8,7 @@
         xmlns:view="clr-namespace:BrainfuckIDE.Controls.Views" 
         xmlns:dd="urn:gong-wpf-dragdrop"         
         xmlns:local="clr-namespace:BrainfuckIDE"
+        xmlns:ctrls="clr-namespace:BrainfuckIDE.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="1000"
         d:DataContext="{d:DesignInstance {x:Type vm:InterpreterRunningViewModel}}"
@@ -15,15 +16,14 @@
         dd:DragDrop.DropHandler="{Binding EditrVM}" 
         Background="#FF3F3F46"
         WindowStyle="None" 
-        SizeChanged="Window_SizeChanged"
         Loaded="Window_Loaded"
         >
 
     <Window.CommandBindings>
-        <CommandBinding Command="{x:Static SystemCommands.MinimizeWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Minimize" />
-        <CommandBinding Command="{x:Static SystemCommands.RestoreWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Restore" />
-        <CommandBinding Command="{x:Static SystemCommands.MaximizeWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Maximize" />
-        <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Close" />
+        <CommandBinding Command="{x:Static SystemCommands.MinimizeWindowCommand}" Executed="CommandBinding_Executed_Minimize" />
+        <CommandBinding Command="{x:Static SystemCommands.RestoreWindowCommand}"  Executed="CommandBinding_Executed_Restore"  />
+        <CommandBinding Command="{x:Static SystemCommands.MaximizeWindowCommand}" Executed="CommandBinding_Executed_Maximize" />
+        <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}"    Executed="CommandBinding_Executed_Close"    />
     </Window.CommandBindings>
 
     
@@ -33,25 +33,47 @@
     <Window.DataContext>
         <vm:InterpreterRunningViewModel/>
     </Window.DataContext>
-    
+
     <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
+        <ResourceDictionary Source="/ControlStyle/StyleDictionary.xaml"/>
     </Window.Resources>
-    
+
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel 
+        <StackPanel Margin="0,0,5,0"
                      Orientation="Horizontal"
                      HorizontalAlignment="Right">
-            <Button Content="0" Command="{x:Static SystemCommands.MinimizeWindowCommand}" FontFamily="Marlett" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderThickness="0" Margin="2" Width="20" Height="20" WindowChrome.IsHitTestVisibleInChrome="True"/>
-            <Button Content="2" Command="{x:Static SystemCommands.RestoreWindowCommand}"  FontFamily="Marlett" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderThickness="0" Margin="2" Width="20" Height="20" WindowChrome.IsHitTestVisibleInChrome="True" Visibility="{Binding Path=IsNotNomal, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}} ,Converter={StaticResource boolToVisibilityConverter}, Mode=OneWay}" />
-            <Button Content="1" Command="{x:Static SystemCommands.MaximizeWindowCommand}" FontFamily="Marlett" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderThickness="0" Margin="2" Width="20" Height="20" WindowChrome.IsHitTestVisibleInChrome="True" Visibility="{Binding Path=IsNotMaximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}} ,Converter={StaticResource boolToVisibilityConverter}, Mode=OneWay}" />
-            <Button Content="r" Command="{x:Static SystemCommands.CloseWindowCommand}"    FontFamily="Marlett" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderThickness="0" Margin="2" Width="20" Height="20" WindowChrome.IsHitTestVisibleInChrome="True"/>
+            <Button Content="0" Style="{DynamicResource CaptionButtonStyleKey}" Command="{x:Static SystemCommands.MinimizeWindowCommand}"/>
+            <Button Content="1" Style="{DynamicResource CaptionButtonStyleKey}" Command="{x:Static SystemCommands.MaximizeWindowCommand}">
+                <Button.Visibility>
+                    <Binding RelativeSource="{RelativeSource AncestorType=Window}"  
+                         Path="WindowState"  
+                         Mode="OneWay"  
+                         Converter="{ctrls:EqualsToVisibleConveter}">
+                        <Binding.ConverterParameter>
+                            <WindowState>Normal</WindowState>
+                        </Binding.ConverterParameter>
+                    </Binding>
+                </Button.Visibility>
+            </Button>
+            <Button Content="2" Style="{DynamicResource CaptionButtonStyleKey}"  Command="{x:Static SystemCommands.RestoreWindowCommand}">
+                <Button.Visibility>
+                    <Binding RelativeSource="{RelativeSource AncestorType=Window}"  
+                         Path="WindowState"  
+                         Mode="OneWay"  
+                         Converter="{ctrls:EqualsToVisibleConveter}">
+                        <Binding.ConverterParameter>
+                            <WindowState>Maximized</WindowState>
+                        </Binding.ConverterParameter>
+                    </Binding>
+                </Button.Visibility>
+            </Button>
+            <Button Content="r" Style="{DynamicResource CaptionButtonStyleKey}" Command="{x:Static SystemCommands.CloseWindowCommand}"/>
         </StackPanel>
-        <Grid Grid.Row="1" Margin="10,0,10,10"  Background="#FF2D2D30" >
+        <Grid Grid.Row="1" Margin="5,0,5,5"  Background="#FF2D2D30" >
         <Grid.InputBindings>
             <KeyBinding Gesture="Ctrl+S" Command="{Binding EditrVM.SaveCommand}"/>
             <KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding EditrVM.SaveAsCommand}"/>
