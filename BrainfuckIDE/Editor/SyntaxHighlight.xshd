@@ -1,20 +1,34 @@
 <SyntaxDefinition name="brainfuck"
         xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+  <Color name="ValueChange" foreground="#FF59B0F4" />
+  <Color name="PointerChange" foreground="#FF59B0F4" />
+  <Color name="InOut" foreground="Yellow" />
+  <Color name="Loop" foreground="Red" />
+  <Color name="Comment" foreground="Green" />
     <!-- This is the main ruleset. -->
     <RuleSet>
 
-      <Keywords foreground="#FF59B0F4">
-        <Word>+</Word>
-        <Word>-</Word>
-      </Keywords>
-      <Keywords foreground="Red">
+      
+      <Keywords color="Loop">
         <Word>[</Word>
         <Word>]</Word>
       </Keywords>
 
-      <Keywords foreground="Green">
+      <Keywords color="PointerChange">
         <Word>&gt;</Word>
         <Word>&lt;</Word>
       </Keywords>
+
+      <Keywords color="InOut">
+        <Word>.</Word>
+        <Word>,</Word>
+      </Keywords>
+
+
+      <Rule color="Comment">
+        [^.,&gt;&lt;+-\[\]]
+      </Rule>
+
+
     </RuleSet>
 </SyntaxDefinition>
