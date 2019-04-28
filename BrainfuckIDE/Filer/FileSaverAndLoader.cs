@@ -36,20 +36,43 @@ namespace BrainfuckIDE.Filer
 
         /// <summary> ファイル名が紐づけされているかどうかを取得します </summary>
         public bool HasSaveFilePath => !string.IsNullOrEmpty(_saveFilePath);
+
+
+
+        /// <summary>
+        /// 一時保存しているファイルが正規の保存ファイルと一致しているかどうかを取得します
+        /// </summary>
+        /// <returns></returns>
+        public bool IsSaved() => IsSaved(_temporaryFileTextHash);
+        /// <summary>
+        /// 指定のテキストが保存済みと一致しているかどうかを取得します
+        /// </summary>
+        /// <param name="hash"> テキストのハッシュ値 </param>
+        /// <returns></returns>
         public bool IsSaved(Guid hash)
         {
+            if (_saveFileTextHash == Guid.Empty) return false;
             return _saveFileTextHash == hash;
         }
 
+        /// <summary> テキストデータを上書き保存します </summary>
+        /// <param name="sourceText"> テキストデータ </param>
+        /// <exception cref="Exception"> 保存先が未指定です </exception>
+        /// <exception cref="Exception"> 保存に失敗した場合適当な例外が発生します </exception>
         public void Save(SourceText sourceText)
         {
-            Save(_saveFilePath, sourceText.Text);
-            _saveFileTextHash = sourceText.Guid;
-            ForceDeleteTemporaryFile();
+            SaveAs(_saveFilePath, sourceText);
         }
+
+
+
+        /// <summary> 一時ファイルにテキストデータを保存します </summary>
+        /// <param name="sourceText"> テキストデータ </param>
+        /// <exception cref="Exception"> 保存に失敗した場合適当な例外が発生します </exception>
         public void SaveToTemporary(SourceText sourceText)
         {
             if (sourceText.Guid == _temporaryFileTextHash) return;
+            if (sourceText.Guid == _saveFileTextHash) return;
             if (string.IsNullOrEmpty(_temporaryFilePath))
                 _temporaryFilePath = CreateTemporaryFile(LocalEnvironmental.TemporaryDirectory, ".bf");
 
@@ -57,14 +80,22 @@ namespace BrainfuckIDE.Filer
             _temporaryFileTextHash = sourceText.Guid;
         }
 
-        public void SaveAs(SourceText sourceText, string filePath)
+        /// <summary> 新たなファイル名を指定してテキストデータの保存を行います </summary>
+        /// <param name="sourceText"></param>
+        /// <param name="filePath"></param>
+        /// <exception cref="Exception"> 保存に失敗した場合適当な例外が発生します </exception>
+        public void SaveAs(string filePath, SourceText sourceText)
         {
             Save(filePath, sourceText.Text);
             _saveFilePath = filePath;
-            _saveFileTextHash = sourceText.Guid;
+            _saveFileTextHash = _saveFileTextHash = sourceText.Guid;
             ForceDeleteTemporaryFile();
         }
 
+        /// <summary> ファイルを開きテキストデータを取得します </summary>
+        /// <param name="loadPath"> 読み取るファイルパス </param>
+        /// <returns></returns>
+        /// <exception cref="Exception"> 読み取りに失敗した場合適当な例外が発生します </exception>
         public SourceText OpenFrom(string loadPath)
         {
             var text = File.ReadAllText(loadPath);
@@ -79,17 +110,21 @@ namespace BrainfuckIDE.Filer
         /// <summary> 一時ファイルがセーブされているかどうかを確認せず一時ファイルを削除する </summary>
         public void ForceDeleteTemporaryFile()
         {
-            File.Delete(_temporaryFilePath);
-            _temporaryFilePath = string.Empty;
-            _temporaryFileTextHash = Guid.Empty;
+            if (!string.IsNullOrEmpty(_temporaryFilePath))
+            {
+                File.Delete(_temporaryFilePath);
+                _temporaryFilePath = string.Empty;
+            }
         }
 
         static private void Save(string path, string text)
         {
             File.WriteAllText(path, text);
         }
+        
         static private string CreateTemporaryFile(string dirPath, string extension)
         {
+            Directory.CreateDirectory(dirPath);
             const int tryCount = 100;
 
             for (int i = 0; i < tryCount; i++)
@@ -99,7 +134,9 @@ namespace BrainfuckIDE.Filer
 
                 if (!File.Exists(newPath))
                 {
-                    File.Create(newPath);
+                    using (var f = File.Create(newPath))
+                        f.Close();
+
                     return newPath;
                 }
             }

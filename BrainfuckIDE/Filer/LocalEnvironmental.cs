@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace BrainfuckIDE.Filer
 {
-    class LocalEnvironmental
+    static class LocalEnvironmental
     {
+        static public string TemporaryDirectory => "./.temp/";
+
+
     }
 }

@@ -14,6 +14,9 @@
         <vm:InterpreterRunningViewModel/>
     </Window.DataContext>
     <Grid>
+        <Grid.InputBindings>
+            <KeyBinding Gesture="Ctrl+S" Command="{Binding EditrVM.SaveCommand}"/>
+        </Grid.InputBindings>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="100"/>
             <ColumnDefinition Width="Auto"/>

@@ -53,7 +53,7 @@ namespace BrainfuckIDE.Controls.ViewModels
 
         private bool InitializiedInterpretor()
         {
-            var (hash, code) = EditrVM.SourceCode;
+            var (hash, code) = EditrVM.GetSourceCode();
             try
             {
                 var ret = true;

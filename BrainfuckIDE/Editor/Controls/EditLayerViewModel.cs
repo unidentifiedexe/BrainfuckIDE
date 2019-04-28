@@ -1,5 +1,8 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,11 +18,53 @@ namespace BrainfuckIDE.Editor.Controls
     class EditLayerViewModel : ViewModelBase
     {
 
-        private BrainfuckTextEditControl _baseControl = null;
+        private BrainfuckTextEditControl _baseControl = null!;
+
+        public FileSaverViewModel FileSaverViewModel { get; } = new FileSaverViewModel();
 
 
-        private bool _isChanged = false;
-        private Guid _textGuid = Guid.NewGuid();
+        private bool _isChanged = true;
+        private SourceText _previousText;
+
+        #region FileOperatiions
+
+        private void Save()
+        {
+            if (FileSaverViewModel.CanOverWriteSave)
+                FileSaverViewModel.SaveText(GetSourceCode());
+            else
+                SaveAs();
+        }
+
+        private void SaveAs()
+        {
+            var fileSaveDialog = new DialogUtils.FileSaveDialog<object?>()
+            {
+                FileFilters =
+                {
+                    { "Brainf*ck source code." , "*.bf" , default },
+                    { "All type." , "*.*", default }
+                },
+            };
+
+            var res = fileSaveDialog.ShowDialog();
+            if (res.HasValue && res.Value)
+                FileSaverViewModel.SaveTextAs(fileSaveDialog.FileName, GetSourceCode());
+
+        }
+
+        #region FileCommand
+
+        private Command? _saveCommand;
+        public Command SaveCommand => _saveCommand ??= new Command(Save);
+
+
+        private Command? _saveAsCommand;
+        public Command SaveAsCommand => _saveAsCommand ??= new Command(SaveAs);
+        #endregion
+
+        #endregion
+
 
         public void SetControl(BrainfuckTextEditControl editControl)
         {
@@ -30,20 +75,20 @@ namespace BrainfuckIDE.Editor.Controls
         private void BaseControl_Changed(object sender, EventArgs e)
         {
             _isChanged = true;
+            FileSaverViewModel.NoticeToTextChanged();
         }
 
         private string _filePath = string.Empty;
 
-
-        public SourceText SourceCode
+        public SourceText GetSourceCode()
         {
-            get
+            if (_isChanged)
             {
-                if(_isChanged)
-                    _textGuid = Guid.NewGuid();
+                _previousText = new SourceText(Guid.NewGuid(), _baseControl.Text);
                 _isChanged = false;
-                return new SourceText(_textGuid, _baseControl.Text);
+                FileSaverViewModel.SaveTextToTemp(_previousText);
             }
+            return _previousText;
         }
 
         public IEnumerable<Place> GetBreakPoints()
@@ -68,7 +113,7 @@ namespace BrainfuckIDE.Editor.Controls
 
         private Place ConvertPlace(TextLocation place)
         {
-            return new Place(place.Line - 1, place.Column -1);
+            return new Place(place.Line - 1, place.Column - 1);
         }
 
 
@@ -85,7 +130,6 @@ namespace BrainfuckIDE.Editor.Controls
         }
 
 
-
     }
     readonly struct SourceText
     {
@@ -100,7 +144,8 @@ namespace BrainfuckIDE.Editor.Controls
             Text = text;
         }
 
-        public bool IsEmpty => (Guid.Empty == Guid);
+        static public SourceText Empty => new SourceText(Guid.Empty, string.Empty);
+        public bool IsEmpty => (Guid == Guid.Empty);
 
         public static bool operator ==(SourceText a, SourceText b) => a.Guid == b.Guid;
         public static bool operator !=(SourceText a, SourceText b) => a.Guid != b.Guid;

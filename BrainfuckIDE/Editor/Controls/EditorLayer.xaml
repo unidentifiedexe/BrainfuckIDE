@@ -7,14 +7,22 @@
              xmlns:Editor="clr-namespace:BrainfuckIDE.Editor" x:Class="BrainfuckIDE.Editor.Controls.EditorLayer"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-    DataContextChanged="UserControl_DataContextChanged"
+             DataContextChanged="UserControl_DataContextChanged"
+             Background="#FF2D2D30"
+       
+             d:DataContext="{d:DesignInstance {x:Type local:EditLayerViewModel}}"
     >
-    
-    <Grid>
 
-        <Editor:BrainfuckTextEditControl 
-            x:Name="_editControl" x:FieldModifier="private"
-            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+    <Grid>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="30,5,0,0">
+                <local:NameTabViewLayer Foreground="#FFF1F1F1" Background="#FF1E1E1E" DataContext="{Binding FileSaverViewModel}"/>
+            </StackPanel>
+            <Grid  Margin="5,0,5,5" Background="#FF1E1E1E" >
+                 <Editor:BrainfuckTextEditControl
+                               Margin="5,5,0,0"
+                               x:Name="_editControl" x:FieldModifier="private"
+                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                FontFamily="Consolas"
                                FontSize="10pt"
                                SyntaxHighlighting="Brainfuck"
@@ -23,7 +31,9 @@
                                Background="#FF1E1E1E" 
                                HorizontalScrollBarVisibility="Auto" 
                                VerticalScrollBarVisibility="Auto"
-                                         />
+                          />
+            </Grid>
+        </DockPanel>
 
     </Grid>
 </UserControl>

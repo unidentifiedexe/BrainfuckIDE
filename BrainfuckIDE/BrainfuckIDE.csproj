@@ -65,7 +65,17 @@
     </ApplicationDefinition>
     <Compile Include="Controls\InputBindingsManager.cs" />
     <Compile Include="Controls\Converter.cs" />
+    <Compile Include="DialogUtils\Filer\FileFilter.cs" />
+    <Compile Include="DialogUtils\Filer\FileOpener.cs" />
+    <Compile Include="DialogUtils\Filer\FileSavener.cs" />
+    <Compile Include="DialogUtils\ShowMessageBox.cs" />
+    <Compile Include="Editor\Controls\FileSaverViewModel.cs" />
+    <Compile Include="Editor\Controls\NameTabViewLayer.xaml.cs">
+      <DependentUpon>NameTabViewLayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Editor\TextDocumentCharFinder.cs" />
+    <Compile Include="Filer\FileSaverAndLoader.cs" />
+    <Compile Include="Filer\LocalEnvironmental.cs" />
     <Compile Include="Themes\CustomControlsTest.xaml.cs">
       <DependentUpon>CustomControlsTest.xaml</DependentUpon>
     </Compile>
@@ -90,6 +100,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Editor\Controls\EditorLayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Editor\Controls\NameTabViewLayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
