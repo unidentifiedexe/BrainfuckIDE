@@ -6,7 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using BrainfuckInterpreter;
+using GongSolutions.Wpf.DragDrop;
 using ICSharpCode.AvalonEdit.Document;
 using WpfUtils;
 
@@ -15,7 +17,7 @@ namespace BrainfuckIDE.Editor.Controls
     /// <summary>
     /// EditLayerをMVVM風に使うためにVMもどき。実際はViewとVMの切り離しは行われていない
     /// </summary>
-    class EditLayerViewModel : ViewModelBase
+    class EditLayerViewModel : ViewModelBase,IDropTarget
     {
 
         private BrainfuckTextEditControl _baseControl = null!;
@@ -53,6 +55,24 @@ namespace BrainfuckIDE.Editor.Controls
 
         }
 
+        private void Load(string filePath)
+        {
+            if (!FileSaverViewModel.IsSaved)
+            {
+                var res = MessageBox.Show(Application.Current.MainWindow,"現在のファイルが保存されていません。\r\n保存しますか?", "Notice", MessageBoxButton.YesNoCancel);
+                if (res == MessageBoxResult.Cancel) return;
+                if (res == MessageBoxResult.Yes) Save();
+            }
+
+            var text = FileSaverViewModel.LoadText(filePath);
+
+            _baseControl.Changed -= BaseControl_Changed;
+            _previousText = text;
+            _baseControl.Text = text.Text;
+            _isChanged = false;
+            _baseControl.Changed += BaseControl_Changed;
+        }
+
         #region FileCommand
 
         private Command? _saveCommand;
@@ -65,6 +85,25 @@ namespace BrainfuckIDE.Editor.Controls
 
         #endregion
 
+        #region DropTarget
+
+        public void DragOver(IDropInfo dropInfo)
+        {
+            var haveFiles = ((DataObject)dropInfo.Data).GetFileDropList().OfType<string>().Any();
+            dropInfo.Effects = haveFiles
+                ? DragDropEffects.Copy : DragDropEffects.None;
+        }
+
+        public void Drop(IDropInfo dropInfo)
+        {
+            var files = ((DataObject)dropInfo.Data).GetFileDropList().OfType<string>().ToList();
+
+            if (files.Count == 0) return;
+
+            Load(files[0]);
+
+        }
+        #endregion
 
         public void SetControl(BrainfuckTextEditControl editControl)
         {
@@ -78,8 +117,6 @@ namespace BrainfuckIDE.Editor.Controls
             FileSaverViewModel.NoticeToTextChanged();
         }
 
-        private string _filePath = string.Empty;
-
         public SourceText GetSourceCode()
         {
             if (_isChanged)
@@ -90,6 +127,7 @@ namespace BrainfuckIDE.Editor.Controls
             }
             return _previousText;
         }
+
 
         public IEnumerable<Place> GetBreakPoints()
         {

@@ -51,7 +51,7 @@ namespace BrainfuckIDE.Filer
         /// <returns></returns>
         public bool IsSaved(Guid hash)
         {
-            if (_saveFileTextHash == Guid.Empty) return false;
+            //if (_saveFileTextHash == Guid.Empty) return false;
             return _saveFileTextHash == hash;
         }
 
@@ -88,7 +88,7 @@ namespace BrainfuckIDE.Filer
         {
             Save(filePath, sourceText.Text);
             _saveFilePath = filePath;
-            _saveFileTextHash = _saveFileTextHash = sourceText.Guid;
+            _temporaryFileTextHash = _saveFileTextHash = sourceText.Guid;
             ForceDeleteTemporaryFile();
         }
 
@@ -100,7 +100,7 @@ namespace BrainfuckIDE.Filer
         {
             var text = File.ReadAllText(loadPath);
             _saveFilePath = loadPath;
-            _saveFileTextHash = Guid.NewGuid();
+            _temporaryFileTextHash = _saveFileTextHash = Guid.NewGuid();
             ForceDeleteTemporaryFile();
             return new SourceText(_saveFileTextHash, text);
         }

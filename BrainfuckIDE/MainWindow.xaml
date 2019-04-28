@@ -5,22 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:editor="clr-namespace:BrainfuckIDE.Editor.Controls"
         xmlns:vm="clr-namespace:BrainfuckIDE.Controls.ViewModels"
-        xmlns:view="clr-namespace:BrainfuckIDE.Controls.Views"
+        xmlns:view="clr-namespace:BrainfuckIDE.Controls.Views" 
+        xmlns:dd="urn:gong-wpf-dragdrop"         
         xmlns:local="clr-namespace:BrainfuckIDE"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        d:DataContext="{d:DesignInstance {x:Type vm:InterpreterRunningViewModel}}">
+        Title="MainWindow" Height="650" Width="1000"
+        d:DataContext="{d:DesignInstance {x:Type vm:InterpreterRunningViewModel}}"
+        dd:DragDrop.IsDropTarget="True"  
+        dd:DragDrop.DropHandler="{Binding EditrVM}" >
+    
     <Window.DataContext>
         <vm:InterpreterRunningViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.InputBindings>
             <KeyBinding Gesture="Ctrl+S" Command="{Binding EditrVM.SaveCommand}"/>
+            <KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding EditrVM.SaveAsCommand}"/>
         </Grid.InputBindings>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="100"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition MinWidth="100"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
         <Grid Grid.Column="0">

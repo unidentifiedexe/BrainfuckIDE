@@ -5,15 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BrainfuckIDE.Editor.Controls"
              xmlns:Editor="clr-namespace:BrainfuckIDE.Editor" x:Class="BrainfuckIDE.Editor.Controls.EditorLayer"
+             xmlns:dd="urn:gong-wpf-dragdrop"         
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContextChanged="UserControl_DataContextChanged"
              Background="#FF2D2D30"
-       
              d:DataContext="{d:DesignInstance {x:Type local:EditLayerViewModel}}"
+             dd:DragDrop.IsDropTarget="True" 
+             dd:DragDrop.DropHandler="{Binding}"
     >
 
-    <Grid>
+    <Grid >
+        
         <DockPanel>
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="30,5,0,0">
                 <local:NameTabViewLayer Foreground="#FFF1F1F1" Background="#FF1E1E1E" DataContext="{Binding FileSaverViewModel}"/>
