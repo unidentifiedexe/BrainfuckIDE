@@ -55,7 +55,7 @@ namespace BrainfuckIDE.Editor.Controls
 
         }
 
-        private void Load(string filePath)
+        public void Load(string filePath)
         {
             if (!FileSaverViewModel.IsSaved)
             {

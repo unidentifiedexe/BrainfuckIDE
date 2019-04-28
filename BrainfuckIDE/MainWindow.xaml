@@ -16,7 +16,7 @@
         Background="#FF3F3F46"
         WindowStyle="None" 
         SizeChanged="Window_SizeChanged"
-        
+        Loaded="Window_Loaded"
         >
 
     <Window.CommandBindings>

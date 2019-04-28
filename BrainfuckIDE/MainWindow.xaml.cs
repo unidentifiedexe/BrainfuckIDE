@@ -84,6 +84,15 @@ namespace BrainfuckIDE
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            string[] Commands = System.Environment.GetCommandLineArgs();
+            var files = Commands.Skip(1).Where(p => System.IO.File.Exists(p)).ToArray();
+            if(files.Any())
+                (this.DataContext as Controls.ViewModels.InterpreterRunningViewModel)?.EditrVM.Load(files.First());
+        }
     }
 
 }
