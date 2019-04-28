@@ -28,7 +28,7 @@
 
     
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="0" />
+        <WindowChrome CaptionHeight="30" UseAeroCaptionButtons="False"/>
     </WindowChrome.WindowChrome>
     <Window.DataContext>
         <vm:InterpreterRunningViewModel/>
@@ -38,18 +38,18 @@
         <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
     </Window.Resources>
     
-    <Grid Background="Transparent" MouseLeftButtonDown="Caption_MouseLeftButtonDown">
+    <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel 
                      Orientation="Horizontal"
-                        HorizontalAlignment="Right">
-            <Button Content="0" Command="{x:Static SystemCommands.MinimizeWindowCommand}" FontFamily="Marlett" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderThickness="0" Margin="2" Width="20" Height="20"/>
-            <Button Content="2" Command="{x:Static SystemCommands.RestoreWindowCommand}"  FontFamily="Marlett" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderThickness="0" Margin="2" Width="20" Height="20" Visibility="{Binding Path=IsNotNomal, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}} ,Converter={StaticResource boolToVisibilityConverter}, Mode=OneWay}" />
-            <Button Content="1" Command="{x:Static SystemCommands.MaximizeWindowCommand}" FontFamily="Marlett" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderThickness="0" Margin="2" Width="20" Height="20" Visibility="{Binding Path=IsNotMaximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}} ,Converter={StaticResource boolToVisibilityConverter}, Mode=OneWay}" />
-            <Button Content="r" Command="{x:Static SystemCommands.CloseWindowCommand}"    FontFamily="Marlett" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderThickness="0" Margin="2" Width="20" Height="20"/>
+                     HorizontalAlignment="Right">
+            <Button Content="0" Command="{x:Static SystemCommands.MinimizeWindowCommand}" FontFamily="Marlett" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderThickness="0" Margin="2" Width="20" Height="20" WindowChrome.IsHitTestVisibleInChrome="True"/>
+            <Button Content="2" Command="{x:Static SystemCommands.RestoreWindowCommand}"  FontFamily="Marlett" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderThickness="0" Margin="2" Width="20" Height="20" WindowChrome.IsHitTestVisibleInChrome="True" Visibility="{Binding Path=IsNotNomal, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}} ,Converter={StaticResource boolToVisibilityConverter}, Mode=OneWay}" />
+            <Button Content="1" Command="{x:Static SystemCommands.MaximizeWindowCommand}" FontFamily="Marlett" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderThickness="0" Margin="2" Width="20" Height="20" WindowChrome.IsHitTestVisibleInChrome="True" Visibility="{Binding Path=IsNotMaximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}} ,Converter={StaticResource boolToVisibilityConverter}, Mode=OneWay}" />
+            <Button Content="r" Command="{x:Static SystemCommands.CloseWindowCommand}"    FontFamily="Marlett" Background="#FF3F3F46" Foreground="#FFF1F1F1" BorderThickness="0" Margin="2" Width="20" Height="20" WindowChrome.IsHitTestVisibleInChrome="True"/>
         </StackPanel>
         <Grid Grid.Row="1" Margin="10,0,10,10"  Background="#FF2D2D30" >
         <Grid.InputBindings>
