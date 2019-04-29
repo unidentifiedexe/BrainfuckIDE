@@ -39,10 +39,10 @@ namespace BrainfuckIDE.Editor
 
         private void Document_Changed(object sender, DocumentChangeEventArgs e)
         {
-            if (_debuggingColorizeAvalonEdit.RunnningPosition < 0) return;
             if (_debuggingColorizeAvalonEdit.RunnningPosition >= TextArea.Document.TextLength)
                 _debuggingColorizeAvalonEdit.RunnningPosition = TextArea.Document.TextLength - 1;
-                var currentChar = this.TextArea.Document.GetCharAt(_debuggingColorizeAvalonEdit.RunnningPosition);
+            if (_debuggingColorizeAvalonEdit.RunnningPosition < 0) return;
+            var currentChar = this.TextArea.Document.GetCharAt(_debuggingColorizeAvalonEdit.RunnningPosition);
             if (EffectiveCharacters.Characters.Contains(currentChar)) return;
             else
             {
