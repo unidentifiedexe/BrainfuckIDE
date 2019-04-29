@@ -35,30 +35,17 @@ namespace BrainfuckIDE
 
         }
 
-        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
+        //private void Window_Minimize(object sender, ExecutedRoutedEventArgs e) 
+        //    => SystemCommands.MinimizeWindow(this);
 
-        private void CommandBinding_Executed_Minimize(object sender, ExecutedRoutedEventArgs e)
-        {
-            SystemCommands.MinimizeWindow(this);
-        }
+        //private void Window_Close(object sender, ExecutedRoutedEventArgs e)
+        //{
+        //    SystemCommands.CloseWindow(this);
+        //}
 
-        private void CommandBinding_Executed_Close(object sender, ExecutedRoutedEventArgs e)
-        {
-            SystemCommands.CloseWindow(this);
-        }
+        //private void Window_Restore(object sender, ExecutedRoutedEventArgs e) => SystemCommands.RestoreWindow(this);
 
-        private void CommandBinding_Executed_Restore(object sender, ExecutedRoutedEventArgs e)
-        {
-            SystemCommands.RestoreWindow(this);
-        }
-
-        private void CommandBinding_Executed_Maximize(object sender, ExecutedRoutedEventArgs e)
-        {
-            SystemCommands.MaximizeWindow(this);
-        }
+        //private void Window_Maximize(object sender, ExecutedRoutedEventArgs e) => SystemCommands.MaximizeWindow(this);
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
