@@ -9,6 +9,8 @@
         xmlns:dd="urn:gong-wpf-dragdrop"         
         xmlns:local="clr-namespace:BrainfuckIDE"
         xmlns:ctrls="clr-namespace:BrainfuckIDE.Controls"
+        xmlns:utils="clr-namespace:WpfUtils;assembly=WpfUtils"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="1000"
         d:DataContext="{d:DesignInstance {x:Type vm:InterpreterRunningViewModel}}"
@@ -20,10 +22,10 @@
         >
 
     <Window.CommandBindings>
-        <CommandBinding Command="{x:Static SystemCommands.MinimizeWindowCommand}" Executed="CommandBinding_Executed_Minimize" />
-        <CommandBinding Command="{x:Static SystemCommands.RestoreWindowCommand}"  Executed="CommandBinding_Executed_Restore"  />
-        <CommandBinding Command="{x:Static SystemCommands.MaximizeWindowCommand}" Executed="CommandBinding_Executed_Maximize" />
-        <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}"    Executed="CommandBinding_Executed_Close"    />
+        <CommandBinding Command="{x:Static SystemCommands.MinimizeWindowCommand}" Executed="{x:Static Member=utils:WindowBehavior.WindowMinimizeEvent}"/>
+        <CommandBinding Command="{x:Static SystemCommands.RestoreWindowCommand}"  Executed="{x:Static Member=utils:WindowBehavior.WindowRestoreEvent}"/>
+        <CommandBinding Command="{x:Static SystemCommands.MaximizeWindowCommand}" Executed="{x:Static Member=utils:WindowBehavior.WindowMaximizeEvent}"/>
+        <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}"    Executed="{x:Static Member=utils:WindowBehavior.WindowCloseEvent}"/>
     </Window.CommandBindings>
 
     
@@ -102,7 +104,7 @@
                 <RowDefinition MinHeight="100"/>
             </Grid.RowDefinitions>
             <GridSplitter Grid.Row="2" Height="5" HorizontalAlignment="Stretch"  Background="#FF3F3F46"/>
-            <view:CommandPanel Grid.Row="0" />
+            <view:CommandPanel Grid.Row="0" Loaded="Window_Loaded" />
             <view:TextInputViewPanel Grid.Row="1" Margin="10" DataContext="{Binding TextImputDataVM, Mode=OneTime}"/>
             <view:ResultViewLayer Grid.Row="3" Margin="5" DataContext="{Binding ResultTextVM, Mode=OneTime}"/>
         </Grid>
