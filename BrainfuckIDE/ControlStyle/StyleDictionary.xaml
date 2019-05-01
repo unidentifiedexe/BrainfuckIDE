@@ -64,4 +64,15 @@
         </Setter>
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     </Style>
+
+
+    <Style x:Key="CommandButtonStyleKey" TargetType="{x:Type Button}">
+        <!--<Setter Property="OverridesDefaultStyle" Value="True" />-->
+        <Setter Property="Foreground" Value="#FFF1F1F1" />
+        <Setter Property="Background" Value="#FF1E1E1E" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
 </ResourceDictionary>

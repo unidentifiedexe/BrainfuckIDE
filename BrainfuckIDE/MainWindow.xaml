@@ -104,7 +104,7 @@
                 <RowDefinition MinHeight="100"/>
             </Grid.RowDefinitions>
             <GridSplitter Grid.Row="2" Height="5" HorizontalAlignment="Stretch"  Background="#FF3F3F46"/>
-            <view:CommandPanel Grid.Row="0" Loaded="Window_Loaded" />
+            <view:CommandPanel Grid.Row="0"/>
             <view:TextInputViewPanel Grid.Row="1" Margin="10" DataContext="{Binding TextImputDataVM, Mode=OneTime}"/>
             <view:ResultViewLayer Grid.Row="3" Margin="5" DataContext="{Binding ResultTextVM, Mode=OneTime}"/>
         </Grid>
