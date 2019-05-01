@@ -1,6 +1,6 @@
 <SyntaxDefinition name="brainfuck"
         xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-  <Color name="ValueChange" foreground="#FF59B0F4" />
+  <Color name="ValueChange" foreground="#FFF1F1F1" />
   <Color name="PointerChange" foreground="#FF59B0F4" />
   <Color name="InOut" foreground="Yellow" />
   <Color name="Loop" foreground="Red" />
@@ -26,7 +26,7 @@
 
 
       <Rule color="Comment">
-        [^.,&gt;&lt;+-\[\]]
+        [^.,&gt;&lt;+-]
       </Rule>
 
 
