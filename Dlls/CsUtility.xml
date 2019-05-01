@@ -4,20 +4,6 @@
         <name>CsUtility</name>
     </assembly>
     <members>
-        <member name="T:CsUtility.Comparer.DescendingComparer`1">
-            <summary> 降順(逆順)に並べ替えるための比較子を提供します。 </summary>
-            <typeparam name="T"></typeparam>
-        </member>
-        <member name="P:CsUtility.Comparer.DescendingComparer`1.Default">
-            <summary>
-            汎用引数で指定された型の順序比較子の逆順並べ替えの既定値を返します。
-            </summary>
-        </member>
-        <member name="M:CsUtility.Comparer.DescendingComparer`1.Create(System.Collections.Generic.IComparer{`0})">
-            <summary> 指定した比較子を使用して、降順の比較子を作成します。 </summary>
-            <param name="baseComparer"> 基準となる昇順の比較子 </param>
-            <returns> 生成された降順比較子 </returns>
-        </member>
         <member name="T:CsUtility.Enumerable.EnumerableUtilities">
             <summary>
             <see cref="T:System.Linq.Enumerable"/> および <see cref="T:System.Collections.IEnumerable"/> の Utility コードを定義しているクラス。

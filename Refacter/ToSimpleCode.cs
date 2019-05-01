@@ -12,7 +12,7 @@ namespace Refacter
         static public string Get(string sourceCode , Func<string,IEnumerable<char>> removeNonEfectivChar)
         {
 
-            var codes = removeNonEfectivChar(sourceCode).SplitIf((p, n) => (p != n));
+            var codes = removeNonEfectivChar(sourceCode).SplitIf((p, n) => (p != n)).Select(p => p.ToArray());
 
             return new string(GetMarged(codes).SelectMany().ToArray());
         }
