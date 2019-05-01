@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BrainfuckInterpreter
 {
-   public class EffectiveCharacters
+   public static class EffectiveCharacters
     {
 
         static public IEnumerable<char> Characters => _nomalBrainfackCharctors;
@@ -17,16 +17,12 @@ namespace BrainfuckInterpreter
         /// ソースコードの不要な文字を削除したものを返す
         /// </summary>
         /// <param name="code"></param>
-        /// <param name="additivEfectivechars"></param>
         /// <returns></returns>
-        static string RemoveNonEffectiveChars(string code ,params char[] additivEfectivechars)
+        public static  IEnumerable<char> RemoveNonEffectiveChars(string code )
         {
+            var ret = code.Where(p => Characters.Contains(p));
 
-            var effectivChars = Characters.Concat(additivEfectivechars).Distinct().ToList();
-
-            var ret = code.Where(p => effectivChars.Contains(p)).ToArray();
-
-            return new string(ret);
+            return ret;
         }
 
     }
