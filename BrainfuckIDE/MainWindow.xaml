@@ -84,7 +84,7 @@
             <!--<MenuItem Header="File(_F)"  Background="#FF3F3F46" Foreground="White">
                 <MenuItem Header="Empty"  Background="#FF3F3F46"/>
             </MenuItem>-->
-            <MenuItem Header="Refact(_R)" Foreground="White">
+            <MenuItem Header="Refact(_R)" Foreground="White" Template="{StaticResource MenuItemControlTemplate}">
                 <MenuItem Header="CopySimplyCodeToClipbord"  Background="#FF3F3F46" Command="{Binding CopySimplyCodeToClipbordCommand}"/>
             </MenuItem>
         </Menu>
