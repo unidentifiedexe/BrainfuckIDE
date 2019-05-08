@@ -146,7 +146,8 @@ namespace Refacter
                 }
 
             }
-            yield return prev.ToCode();
+            if(prev != null)
+                yield return prev.ToCode();
         }
 
 
