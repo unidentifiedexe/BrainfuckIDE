@@ -43,11 +43,15 @@
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Margin="0,0,5,0"
-                     Orientation="Horizontal"
-                     HorizontalAlignment="Right">
+        <DockPanel>
+            
+        <StackPanel DockPanel.Dock="Right"
+                    Margin="0,0,5,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
             <Button Content="0" Style="{DynamicResource CaptionButtonStyleKey}" Command="{x:Static SystemCommands.MinimizeWindowCommand}"/>
             <Button Content="1" Style="{DynamicResource CaptionButtonStyleKey}" Command="{x:Static SystemCommands.MaximizeWindowCommand}">
                 <Button.Visibility>
@@ -75,7 +79,17 @@
             </Button>
             <Button Content="r" Style="{DynamicResource CaptionButtonStyleKey}" Command="{x:Static SystemCommands.CloseWindowCommand}"/>
         </StackPanel>
-        <Grid Grid.Row="1" Margin="5,0,5,5"  Background="#FF2D2D30" >
+        <Menu Background="#FF3F3F46" Foreground="White" Margin="30,2,2,2" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+              WindowChrome.IsHitTestVisibleInChrome="True">
+            <!--<MenuItem Header="File(_F)"  Background="#FF3F3F46" Foreground="White">
+                <MenuItem Header="Empty"  Background="#FF3F3F46"/>
+            </MenuItem>-->
+            <MenuItem Header="Refact(_R)" Foreground="White">
+                <MenuItem Header="CopySimplyCodeToClipbord"  Background="#FF3F3F46" Command="{Binding CopySimplyCodeToClipbordCommand}"/>
+            </MenuItem>
+        </Menu>
+        </DockPanel>
+        <Grid Grid.Row="2" Margin="5,0,5,5"  Background="#FF2D2D30" >
         <Grid.InputBindings>
             <KeyBinding Gesture="Ctrl+S" Command="{Binding EditrVM.SaveCommand}"/>
             <KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding EditrVM.SaveAsCommand}"/>

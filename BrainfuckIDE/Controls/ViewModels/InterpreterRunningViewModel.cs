@@ -29,12 +29,23 @@ namespace BrainfuckIDE.Controls.ViewModels
         private AsyncCommand<RunType>? _runCommand = null;
         private Command? _stopCommand;
         private Command? _pauseCommand;
+        private  Command? _copySimplyCodeToClipbordCommand;
 
         public AsyncCommand<RunType> RunCommand => _runCommand ??= new AsyncCommand<RunType>(Run);
 
         public Command RaiseStopReqestCommand => _stopCommand ??= new Command(RaiseStopReqest);
         public Command RaisePauseReqestCommand => _pauseCommand ??= new Command(RaisePauseReqest);
 
+        public Command CopySimplyCodeToClipbordCommand
+            => _copySimplyCodeToClipbordCommand ??= new Command(CopySimplyCodeToClipbord);
+
+
+        private void CopySimplyCodeToClipbord()
+        {
+            var (hash, code) = EditrVM.GetSourceCode();
+            var str = Refacter.ToSimpleCode.Get(code,EffectiveCharacters.RemoveNonEffectiveChars);
+            Clipboard.SetDataObject(str, true);
+        }
 
         private void RaiseStopReqest()
         {
@@ -60,7 +71,7 @@ namespace BrainfuckIDE.Controls.ViewModels
                 if (_interpreter == null || _interpreter.IsStopped())
                 {
                     _sourceCodeHash = hash;
-                    _interpreter = new Interpreter(code) {};
+                    _interpreter = new Interpreter(code) { };
 
                     _interpreter.TryReadChar += TextImputDataVM.GetTextSender().TryGetNextChar;
                     _interpreter.WriteChar += ResultTextVM.WriteChar;

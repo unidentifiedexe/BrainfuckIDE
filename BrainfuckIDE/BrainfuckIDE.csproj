@@ -68,6 +68,9 @@
     </ApplicationDefinition>
     <Compile Include="Controls\InputBindingsManager.cs" />
     <Compile Include="Controls\Converter.cs" />
+    <Compile Include="Controls\Views\MainManuViewLayer.xaml.cs">
+      <DependentUpon>MainManuViewLayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DialogUtils\Filer\FileFilter.cs" />
     <Compile Include="DialogUtils\Filer\FileOpener.cs" />
     <Compile Include="DialogUtils\Filer\FileSavener.cs" />
@@ -87,6 +90,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Views\CommandPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Views\MainManuViewLayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -195,6 +202,10 @@
     <ProjectReference Include="..\BrainfuckInterpreter\BrainfuckInterpreter.csproj">
       <Project>{b9aa7cc8-01e8-4f0b-9047-21e54d210ce5}</Project>
       <Name>BrainfuckInterpreter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Refacter\Refacter.csproj">
+      <Project>{1b7fc49d-cfa8-4324-bd61-79e46e636a72}</Project>
+      <Name>Refacter</Name>
     </ProjectReference>
     <ProjectReference Include="..\WpfUtils\WpfUtils.csproj">
       <Project>{2e767a05-576e-44c7-8012-4fba51168653}</Project>
