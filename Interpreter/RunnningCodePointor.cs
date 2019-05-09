@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BrainfuckInterpreter
+namespace Interpreter
 {
 
     /// <summary> ソースコードの実行ポインタを管理するクラス </summary>

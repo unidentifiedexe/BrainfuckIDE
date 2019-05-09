@@ -7,8 +7,8 @@
     <ProjectGuid>{B9AA7CC8-01E8-4F0B-9047-21E54D210CE5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BrainfuckInterpreter</RootNamespace>
-    <AssemblyName>BrainfuckInterpreter</AssemblyName>
+    <RootNamespace>Interpreter</RootNamespace>
+    <AssemblyName>Interpreter</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
