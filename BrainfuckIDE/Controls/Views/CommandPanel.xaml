@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:BrainfuckIDE.Controls.ViewModels"
-             xmlns:interpreter="clr-namespace:BrainfuckInterpreter;assembly=BrainfuckInterpreter"
+             xmlns:interpreter="clr-namespace:Interpreter;assembly=Interpreter"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:BrainfuckIDE.Controls.Views"
              mc:Ignorable="d" 

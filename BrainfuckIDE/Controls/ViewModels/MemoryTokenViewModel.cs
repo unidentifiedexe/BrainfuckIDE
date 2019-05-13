@@ -1,4 +1,4 @@
-﻿using BrainfuckInterpreter;
+﻿using Interpreter;
 using WpfUtils;
 
 namespace BrainfuckIDE.Controls.ViewModels

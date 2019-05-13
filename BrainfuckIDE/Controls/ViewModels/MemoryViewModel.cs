@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-using BrainfuckInterpreter;
+using Interpreter;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
