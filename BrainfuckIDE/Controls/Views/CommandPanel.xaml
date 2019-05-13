@@ -4,19 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:BrainfuckIDE.Controls.ViewModels"
-             xmlns:interpreter="clr-namespace:BrainfuckInterpreter;assembly=BrainfuckInterpreter"
+             xmlns:interpreter="clr-namespace:Interpreter;assembly=Interpreter"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:BrainfuckIDE.Controls.Views"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance {x:Type vm:InterpreterRunningViewModel}}"
              >
+    <UserControl.Resources>
+        <ResourceDictionary Source="../../ControlStyle/StyleDictionary.xaml"/>
+    </UserControl.Resources>
+    
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <Button Background="#FF1E1E1E" Foreground="#FFF1F1F1" BorderThickness="0" Margin="5" MinHeight="30" MinWidth="40" Content="&#x34;" Command="{Binding RunCommand}" CommandParameter="{x:Static interpreter:RunType.Nomal}" FontFamily="Webdings" FontSize="22" ToolTip="実行"/>
-            <Button Background="#FF1E1E1E" Foreground="#FFF1F1F1" BorderThickness="0" Margin="5" MinHeight="30" MinWidth="40" Content="&#x36;" Command="{Binding RunCommand}"  CommandParameter="{x:Static interpreter:RunType.OneStep}" FontFamily="Webdings" FontSize="22" ToolTip="ステップ実行"/>
-            <Button Background="#FF1E1E1E" Foreground="#FFF1F1F1" BorderThickness="0" Margin="5" MinHeight="30" MinWidth="40" Content="&#x3b;" Command="{Binding RaisePauseReqestCommand}" FontFamily="Webdings"  FontSize="22" ToolTip="一時停止"/>
-            <Button Background="#FF1E1E1E" Foreground="#FFF1F1F1" BorderThickness="0" Margin="5" MinHeight="30" MinWidth="40" Content="&#x3c;" Command="{Binding RaiseStopReqestCommand}" FontFamily="Webdings"  FontSize="22"  ToolTip="停止"/>
+            <Button Style="{StaticResource CommandButtonStyleKey}" Margin="5" MinHeight="30" MinWidth="40" Content="&#x34;" FontFamily="Webdings" FontSize="22" Command="{Binding RunCommand}" CommandParameter="{x:Static interpreter:RunType.Nomal}" ToolTip="実行"/>
+            <Button Style="{StaticResource CommandButtonStyleKey}" Margin="5" MinHeight="30" MinWidth="40" Content="&#x36;" FontFamily="Webdings" FontSize="22" Command="{Binding RunCommand}"  CommandParameter="{x:Static interpreter:RunType.OneStep}" ToolTip="ステップ実行"/>
+            <Button Style="{StaticResource CommandButtonStyleKey}" Margin="5" MinHeight="30" MinWidth="40" Content="&#x3b;" FontFamily="Webdings" FontSize="22" Command="{Binding RaisePauseReqestCommand}" ToolTip="一時停止"/>
+            <Button Style="{StaticResource CommandButtonStyleKey}" Margin="5" MinHeight="30" MinWidth="40" Content="&#x3c;" FontFamily="Webdings" FontSize="22" Command="{Binding RaiseStopReqestCommand}" ToolTip="停止"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using BrainfuckInterpreter;
 using GongSolutions.Wpf.DragDrop;
 using ICSharpCode.AvalonEdit.Document;
+using Interpreter;
 using WpfUtils;
 
 namespace BrainfuckIDE.Editor.Controls

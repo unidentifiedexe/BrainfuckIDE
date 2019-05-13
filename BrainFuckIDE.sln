@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextManager", "TextManager\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextCodeMaker", "TextCodeMaker\TextCodeMaker.csproj", "{3B520406-B3CC-41D5-8C74-74E136D8424C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrainfuckInterpreter", "BrainfuckInterpreter\BrainfuckInterpreter.csproj", "{B9AA7CC8-01E8-4F0B-9047-21E54D210CE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interpreter", "Interpreter\Interpreter.csproj", "{B9AA7CC8-01E8-4F0B-9047-21E54D210CE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrainfuckIDE", "BrainfuckIDE\BrainfuckIDE.csproj", "{565FF5DD-F693-43C9-BC74-8C0FAA292550}"
 EndProject

@@ -199,9 +199,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BrainfuckInterpreter\BrainfuckInterpreter.csproj">
+    <ProjectReference Include="..\Interpreter\Interpreter.csproj">
       <Project>{b9aa7cc8-01e8-4f0b-9047-21e54d210ce5}</Project>
-      <Name>BrainfuckInterpreter</Name>
+      <Name>Interpreter</Name>
     </ProjectReference>
     <ProjectReference Include="..\Refacter\Refacter.csproj">
       <Project>{1b7fc49d-cfa8-4324-bd61-79e46e636a72}</Project>

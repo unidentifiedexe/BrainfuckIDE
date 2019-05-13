@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using BrainfuckIDE.Editor.Controls;
-using BrainfuckInterpreter;
+using Interpreter;
 using WpfUtils;
 
 namespace BrainfuckIDE.Controls.ViewModels
@@ -21,7 +21,7 @@ namespace BrainfuckIDE.Controls.ViewModels
         public TextImputOnlyInitDataViewModel TextImputDataVM { get; }
             = new TextImputOnlyInitDataViewModel();
 
-        private Interpreter? _interpreter;
+        private Interpreter.Interpreter? _interpreter;
         private Guid _sourceCodeHash = Guid.Empty;
 
 
@@ -59,7 +59,7 @@ namespace BrainfuckIDE.Controls.ViewModels
             _interpreter?.NoticeStopReqest();
         }
 
-        private event Action<Interpreter> StopInterpretorRunEvent;
+        private event Action<Interpreter.Interpreter> StopInterpretorRunEvent;
 
 
         private bool InitializiedInterpretor()
@@ -71,7 +71,7 @@ namespace BrainfuckIDE.Controls.ViewModels
                 if (_interpreter == null || _interpreter.IsStopped())
                 {
                     _sourceCodeHash = hash;
-                    _interpreter = new Interpreter(code) { };
+                    _interpreter = new Interpreter.Interpreter(code) { };
 
                     _interpreter.TryReadChar += TextImputDataVM.GetTextSender().TryGetNextChar;
                     _interpreter.WriteChar += ResultTextVM.WriteChar;
@@ -122,7 +122,6 @@ namespace BrainfuckIDE.Controls.ViewModels
         private void UpdateDebuggerState()
         {
             EditrVM.RunnningPosition = _interpreter?.Position ?? Place.Empty;
-
             MemoryVM.SetMemory(_interpreter?.GetEditableMemory());
         }
 
