@@ -49,7 +49,7 @@ namespace BrainfuckIDE.Controls.ViewModels
         {
             var text = ShowText;
             text = Regex.Replace(text, "\r\n+", "\n");
-            return new ImputTextSender(text, '\n');
+            return new ImputTextSender(text, 0xff);
         }
 
         class ImputTextSender : IImputTextSender, IDisposable
@@ -62,6 +62,13 @@ namespace BrainfuckIDE.Controls.ViewModels
             {
                 _enumerator = text.GetEnumerator();
                 _defaultChar = (byte)defaltChar;
+            }
+
+
+            public ImputTextSender(string text, byte defaltChar)
+            {
+                _enumerator = text.GetEnumerator();
+                _defaultChar = defaltChar;
             }
 
             public bool TryGetNextChar(out byte letter)
