@@ -49,7 +49,7 @@ namespace BrainfuckIDE.Controls.ViewModels
         {
             var text = ShowText;
             text = Regex.Replace(text, "\r\n+", "\n");
-            if (text[text.Length - 1] != '\n') text += '\n';
+            if (text.Length  != 0 && text[text.Length - 1] != '\n') text += '\n';
             return new ImputTextSender(text, 0xff);
         }
 

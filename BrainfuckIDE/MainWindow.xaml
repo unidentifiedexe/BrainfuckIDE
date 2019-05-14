@@ -84,10 +84,13 @@
             <!--<MenuItem Header="File(_F)"  Background="#FF3F3F46" Foreground="White">
                 <MenuItem Header="Empty"  Background="#FF3F3F46"/>
             </MenuItem>-->
-            <MenuItem Header="Refact(_R)" Foreground="White" Template="{StaticResource MenuItemControlTemplate}">
-                <MenuItem Header="CopySimplyCodeToClipbord"  Background="#FF3F3F46" Command="{Binding CopySimplyCodeToClipbordCommand}"/>
-            </MenuItem>
-        </Menu>
+                <MenuItem Header="Refact(_R)" Foreground="White" Template="{StaticResource MenuItemControlTemplate}">
+                    <MenuItem Header="CopySimplyCodeToClipbord"  Background="#FF3F3F46" Command="{Binding CopySimplyCodeToClipbordCommand}"/>
+                </MenuItem>
+                <MenuItem Header="Window(_W)" Foreground="White" Template="{StaticResource MenuItemControlTemplate}">
+                    <MenuItem Header="Print text code geter window"  Background="#FF3F3F46" Command="{Binding OpenPrintTextCodeGeterWindowCommand}"/>
+                </MenuItem>
+            </Menu>
         </DockPanel>
         <Grid Grid.Row="2" Margin="5,0,5,5"  Background="#FF2D2D30" >
         <Grid.InputBindings>

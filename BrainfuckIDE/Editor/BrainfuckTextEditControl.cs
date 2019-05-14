@@ -15,6 +15,7 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using System.Windows;
 
 namespace BrainfuckIDE.Editor
 {
@@ -33,7 +34,7 @@ namespace BrainfuckIDE.Editor
             base.Loaded += BrainfuckTextEditControl_Loaded;
             this.TextArea.Document.Changing += Document_Changing;
             this.TextArea.Document.Changed += Document_Changed; ;
-            this.PreviewMouseRightButtonDown += BrainfuckTextEditControl_PreviewMouseLeftButtonDown;
+            this.PreviewMouseDown += BrainfuckTextEditControl_PreviewMouseDown;
             this.DataContextChanged += BrainfuckTextEditControl_DataContextChanged;
         }
 
@@ -67,13 +68,16 @@ namespace BrainfuckIDE.Editor
             this.TextArea.TextView.Redraw();
         }
 
-        private void BrainfuckTextEditControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void BrainfuckTextEditControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (sender is TextEditor editor)
             {
-                var pos = editor.GetPositionFromPoint(e.GetPosition(editor));
-                if (pos.HasValue)
-                    ToglleDebuggingPoint(pos.Value.Location);
+                if (e.MiddleButton == MouseButtonState.Pressed)
+                {
+                    var pos = editor.GetPositionFromPoint(e.GetPosition(editor));
+                    if (pos.HasValue)
+                        ToglleDebuggingPoint(pos.Value.Location);
+                }
             }
         }
 
@@ -121,7 +125,7 @@ namespace BrainfuckIDE.Editor
             this.TextArea.TextView.LineTransformers.Add(_debuggingColorizeAvalonEdit);
         }
 
-        private void ToglleDebuggingPoint(TextLocation location)
+        public void ToglleDebuggingPoint(TextLocation location)
         {
             var nearestLoc = this.NearestEfectivPosition(location);
             if (nearestLoc.IsEmpty) return;
@@ -152,14 +156,14 @@ namespace BrainfuckIDE.Editor
              }
         }
 
-        private TextLocation GetEditPlace(int offset)
+        public TextLocation GetEditPlace(int offset)
         {
             if (offset < 0) return TextLocation.Empty;
             return this.TextArea.Document.GetLocation(offset);
         }
 
 
-        private int GetOffset(TextLocation location)
+        public int GetOffset(TextLocation location)
         {
             if (location.IsEmpty) return -1;
             return this.TextArea.Document.GetOffset(location);
@@ -183,5 +187,7 @@ namespace BrainfuckIDE.Editor
                 .FindFirstDectimentalOrEmpty(p => EffectiveCharacters.Characters.Contains(p))
                 .Location;
         }
+
+
     }
 }

@@ -10,25 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BrainfuckIDE.Editor.Controls
+namespace BrainfuckIDE.Controls.WIndows.Views
 {
     /// <summary>
-    /// EditorLayer.xaml の相互作用ロジック
+    /// TextPuterCodeGenerateWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class EditorLayer : UserControl
+    public partial class TextPuterCodeGenerateWindow : Window
     {
-        public EditorLayer()
+        public TextPuterCodeGenerateWindow()
         {
             InitializeComponent();
         }
 
-        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            (e.NewValue as EditLayerViewModel)?.SetControl(_editControl);
+            e.Cancel = true;
+            this.Visibility = Visibility.Collapsed;
         }
-
     }
 }

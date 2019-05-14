@@ -17,7 +17,7 @@ namespace BrainfuckIDE.Editor.Controls
     /// <summary>
     /// EditLayerをMVVM風に使うためにVMもどき。実際はViewとVMの切り離しは行われていない
     /// </summary>
-    class EditLayerViewModel : ViewModelBase,IDropTarget
+    class EditLayerViewModel : ViewModelBase, IDropTarget
     {
 
         private BrainfuckTextEditControl _baseControl = null!;
@@ -59,7 +59,7 @@ namespace BrainfuckIDE.Editor.Controls
         {
             if (!FileSaverViewModel.IsSaved)
             {
-                var res = MessageBox.Show(Application.Current.MainWindow,"現在のファイルが保存されていません。\r\n保存しますか?", "Notice", MessageBoxButton.YesNoCancel);
+                var res = MessageBox.Show(Application.Current.MainWindow, "現在のファイルが保存されていません。\r\n保存しますか?", "Notice", MessageBoxButton.YesNoCancel);
                 if (res == MessageBoxResult.Cancel) return;
                 if (res == MessageBoxResult.Yes) Save();
             }
@@ -80,6 +80,7 @@ namespace BrainfuckIDE.Editor.Controls
 
 
         private Command? _saveAsCommand;
+
         public Command SaveAsCommand => _saveAsCommand ??= new Command(SaveAs);
         #endregion
 
@@ -103,6 +104,40 @@ namespace BrainfuckIDE.Editor.Controls
             Load(files[0]);
 
         }
+        #endregion
+
+        #region DebugCommand
+
+        private Command? _toggleBreakPointCommand;
+        public Command ToggleBreakPointCommand 
+            => _toggleBreakPointCommand ??= new Command(ToggleBreakPointOnCurrentPos);
+
+        private void ToggleBreakPointOnCurrentPos()
+        {
+            var pos = _baseControl.GetEditPlace(_baseControl.SelectionStart);
+            _baseControl.ToglleDebuggingPoint(pos);
+
+        }
+
+        #endregion
+
+        #region ContextMenuItemCommand
+
+
+        private Command? _selectedTextConvertToPrintCodeCommand;
+
+        public Command SelectedTextConvertToPrintCodeCommand
+                => _selectedTextConvertToPrintCodeCommand ??= new Command(SelectedTextConvertToPrintCode);
+
+        private void SelectedTextConvertToPrintCode()
+        {
+            var selectedText = _baseControl.SelectedText;
+            var selectionStart = _baseControl.SelectionStart;
+            var selectionLength = _baseControl.SelectionLength;
+            var newText = TextCodeMaker.AutoMaker.GetSimplyTextOutputer(selectedText);
+            _baseControl.Document.Replace(selectionStart, selectionLength, newText);
+        }
+
         #endregion
 
         public void SetControl(BrainfuckTextEditControl editControl)

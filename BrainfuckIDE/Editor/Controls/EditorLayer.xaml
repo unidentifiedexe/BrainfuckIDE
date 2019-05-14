@@ -22,7 +22,7 @@
                 <local:NameTabViewLayer Foreground="#FFF1F1F1" Background="#FF1E1E1E" DataContext="{Binding FileSaverViewModel}"/>
             </StackPanel>
             <Grid  Margin="5,0,5,5" Background="#FF1E1E1E" >
-                 <Editor:BrainfuckTextEditControl
+                <Editor:BrainfuckTextEditControl
                                Margin="5,5,0,0"
                                x:Name="_editControl" x:FieldModifier="private"
                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
@@ -34,7 +34,19 @@
                                Background="#FF1E1E1E" 
                                HorizontalScrollBarVisibility="Auto" 
                                VerticalScrollBarVisibility="Auto"
-                          />
+                          >
+                    <Editor:BrainfuckTextEditControl.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="TextReplace" Command="{Binding SelectedTextConvertToPrintCodeCommand}"/>
+                        </ContextMenu>
+                    </Editor:BrainfuckTextEditControl.ContextMenu>
+
+                </Editor:BrainfuckTextEditControl>
+                <Grid.InputBindings>
+                    <KeyBinding Gesture="Ctrl+R" Command="{Binding SelectedTextConvertToPrintCodeCommand}"/>
+                    <KeyBinding Gesture="Ctrl+B" Command="{Binding ToggleBreakPointCommand}"/>
+                    <KeyBinding Gesture="F9" Command="{Binding ToggleBreakPointCommand}"/>
+                </Grid.InputBindings>
             </Grid>
         </DockPanel>
 

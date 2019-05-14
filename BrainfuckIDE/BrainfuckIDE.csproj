@@ -71,6 +71,10 @@
     <Compile Include="Controls\Views\MainManuViewLayer.xaml.cs">
       <DependentUpon>MainManuViewLayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WIndows\ViewModels\TextPuterCodeGenerateViewModel.cs" />
+    <Compile Include="Controls\WIndows\Views\TextPuterCodeGenerateWindow.xaml.cs">
+      <DependentUpon>TextPuterCodeGenerateWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DialogUtils\Filer\FileFilter.cs" />
     <Compile Include="DialogUtils\Filer\FileOpener.cs" />
     <Compile Include="DialogUtils\Filer\FileSavener.cs" />
@@ -110,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Views\TextInputViewPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WIndows\Views\TextPuterCodeGenerateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -206,6 +214,10 @@
     <ProjectReference Include="..\Refacter\Refacter.csproj">
       <Project>{1b7fc49d-cfa8-4324-bd61-79e46e636a72}</Project>
       <Name>Refacter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TextCodeMaker\TextCodeMaker.csproj">
+      <Project>{3b520406-b3cc-41d5-8c74-74e136d8424c}</Project>
+      <Name>TextCodeMaker</Name>
     </ProjectReference>
     <ProjectReference Include="..\WpfUtils\WpfUtils.csproj">
       <Project>{2e767a05-576e-44c7-8012-4fba51168653}</Project>

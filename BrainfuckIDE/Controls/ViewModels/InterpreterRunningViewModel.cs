@@ -39,6 +39,21 @@ namespace BrainfuckIDE.Controls.ViewModels
         public Command CopySimplyCodeToClipbordCommand
             => _copySimplyCodeToClipbordCommand ??= new Command(CopySimplyCodeToClipbord);
 
+        public Command OpenPrintTextCodeGeterWindowCommand =>
+            _openPrintTextCodeGeterWindowCommand ??= new Command(OpenPrintTextCodeGeterWindow);
+
+        private Command? _openPrintTextCodeGeterWindowCommand;
+
+        Window? _openPrintTextCodeGeterWindow;
+
+        private void OpenPrintTextCodeGeterWindow()
+        {
+
+            _openPrintTextCodeGeterWindow ??= new WIndows.Views.TextPuterCodeGenerateWindow();
+
+            _openPrintTextCodeGeterWindow.Show();
+        }
+
 
         private void CopySimplyCodeToClipbord()
         {
