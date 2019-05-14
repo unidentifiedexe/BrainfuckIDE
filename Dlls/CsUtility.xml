@@ -4,6 +4,20 @@
         <name>CsUtility</name>
     </assembly>
     <members>
+        <member name="T:CsUtility.Comparer.DescendingComparer`1">
+            <summary> 降順(逆順)に並べ替えるための比較子を提供します。 </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:CsUtility.Comparer.DescendingComparer`1.Default">
+            <summary>
+            汎用引数で指定された型の順序比較子の逆順並べ替えの既定値を返します。
+            </summary>
+        </member>
+        <member name="M:CsUtility.Comparer.DescendingComparer`1.Create(System.Collections.Generic.IComparer{`0})">
+            <summary> 指定した比較子を使用して、降順の比較子を作成します。 </summary>
+            <param name="baseComparer"> 基準となる昇順の比較子 </param>
+            <returns> 生成された降順比較子 </returns>
+        </member>
         <member name="T:CsUtility.Enumerable.EnumerableUtilities">
             <summary>
             <see cref="T:System.Linq.Enumerable"/> および <see cref="T:System.Collections.IEnumerable"/> の Utility コードを定義しているクラス。
@@ -1915,6 +1929,27 @@
             <see cref="T:System.Runtime.Serialization.StreamingContext"/> 構造体。
             </param>
             <exception cref="T:System.ArgumentNullException"> <paramref name="info"/> は null です。</exception>
+        </member>
+        <member name="T:CsUtility.Path.PathChnager">
+            <summary> パスの変換をサポートするクラス </summary>
+        </member>
+        <member name="M:CsUtility.Path.PathChnager.ChangeFileName(System.String,System.String)">
+            <summary> 拡張子をそのままにファイル名を変換します </summary>
+            <param name="path"> 変換元のファイルパス </param>
+            <param name="newName"> 変換後のファイル名 </param>
+            <returns></returns>
+        </member>
+        <member name="M:CsUtility.Path.PathChnager.AddFileName(System.String,System.String)">
+            <summary> 拡張子をそのままにファイル名に名前を追加しますを変換します </summary>
+            <param name="path"> 変換元のファイルパス </param>
+            <param name="addName"> 追加する名前 </param>
+            <returns></returns>
+        </member>
+        <member name="M:CsUtility.Path.PathChnager.ChangeFileName(System.String,System.Func{System.String,System.String})">
+            <summary> 拡張子をそのままにファイル名を変換します </summary>
+            <param name="path"> 変換元のファイルパス </param>
+            <param name="nameChanger"> 旧ファイル名から新ファイル名に変換する関数 </param>
+            <returns></returns>
         </member>
         <member name="T:CsUtility.Primitive.PrimitiveUtilities">
             <summary>
