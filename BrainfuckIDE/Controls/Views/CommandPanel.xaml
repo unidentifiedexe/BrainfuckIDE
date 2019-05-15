@@ -14,13 +14,28 @@
     <UserControl.Resources>
         <ResourceDictionary Source="../../ControlStyle/StyleDictionary.xaml"/>
     </UserControl.Resources>
-    
+
     <Grid>
-        <StackPanel Orientation="Horizontal">
-            <Button Style="{StaticResource CommandButtonStyleKey}" Margin="5" MinHeight="30" MinWidth="40" Content="&#x34;" FontFamily="Webdings" FontSize="22" Command="{Binding RunCommand}" CommandParameter="{x:Static interpreter:RunType.Nomal}" ToolTip="実行"/>
-            <Button Style="{StaticResource CommandButtonStyleKey}" Margin="5" MinHeight="30" MinWidth="40" Content="&#x36;" FontFamily="Webdings" FontSize="22" Command="{Binding RunCommand}"  CommandParameter="{x:Static interpreter:RunType.OneStep}" ToolTip="ステップ実行"/>
+        <WrapPanel Orientation="Horizontal">
+            <Button Style="{StaticResource CommandButtonStyleKey}" Margin="5" MinHeight="30" MinWidth="40" Command="{Binding RunCommand}" CommandParameter="{x:Static interpreter:RunType.Nomal}" ToolTip="実行">
+                <Grid RenderTransformOrigin="0.5,0.5" >
+                    <Grid.RenderTransform >
+                        <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
+                    </Grid.RenderTransform>
+                    <Path Data="M 0 0 L 0 20 L 13 10 " Fill="{Binding Foreground , RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/>
+                </Grid>
+            </Button>
+            <Button Style="{StaticResource CommandButtonStyleKey}" Margin="5" MinHeight="30" MinWidth="40" Command="{Binding RunCommand}"  CommandParameter="{x:Static interpreter:RunType.OneStep}" ToolTip="ステップ実行">
+                <Grid RenderTransformOrigin="0.5,0.5" >
+                    <Grid.RenderTransform >
+                        <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
+                    </Grid.RenderTransform>
+                    <Path Data="M 0 0 L 0 20 L 13 10 " Fill="{Binding Foreground , RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/>
+                    <Path Data="M 12 0 L 12 20 L 15 20 L 15 0 " Fill="{Binding Foreground , RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/>
+                </Grid>
+            </Button>
             <Button Style="{StaticResource CommandButtonStyleKey}" Margin="5" MinHeight="30" MinWidth="40" Content="&#x3b;" FontFamily="Webdings" FontSize="22" Command="{Binding RaisePauseReqestCommand}" ToolTip="一時停止"/>
             <Button Style="{StaticResource CommandButtonStyleKey}" Margin="5" MinHeight="30" MinWidth="40" Content="&#x3c;" FontFamily="Webdings" FontSize="22" Command="{Binding RaiseStopReqestCommand}" ToolTip="停止"/>
-        </StackPanel>
+        </WrapPanel>
     </Grid>
 </UserControl>
