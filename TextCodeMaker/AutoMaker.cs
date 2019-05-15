@@ -65,7 +65,7 @@ namespace TextCodeMaker
                 .ZipVicinity((p, n) => (New: n, Deff: Math.Abs(n - p)))
                 .Where(p => p.Deff >= 20).Select(p=>p.New)
                 .Append(text[0])
-                .Select(p => (p + (baseDivider / 2)) / baseDivider * baseDivider).ToArray();
+                .Select(p => (p + (baseDivider / 2)) / baseDivider * baseDivider).Distinct().ToArray();
 
             var retStrs = $"++++++++++[->"
                 + string.Join(">", baseChars.Select(p => RepeatString('+', p/10)))
