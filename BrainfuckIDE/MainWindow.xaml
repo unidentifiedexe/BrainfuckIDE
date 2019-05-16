@@ -10,6 +10,7 @@
         xmlns:local="clr-namespace:BrainfuckIDE"
         xmlns:ctrls="clr-namespace:BrainfuckIDE.Controls"
         xmlns:utils="clr-namespace:WpfUtils;assembly=WpfUtils"
+        xmlns:interpreter="clr-namespace:Interpreter;assembly=Interpreter"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="1000"
@@ -47,41 +48,40 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <DockPanel>
-            
-        <StackPanel DockPanel.Dock="Right"
+            <StackPanel DockPanel.Dock="Right"
                     Margin="0,0,5,0"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
-            <Button Content="0" Style="{DynamicResource CaptionButtonStyleKey}" Command="{x:Static SystemCommands.MinimizeWindowCommand}"/>
-            <Button Content="1" Style="{DynamicResource CaptionButtonStyleKey}" Command="{x:Static SystemCommands.MaximizeWindowCommand}">
-                <Button.Visibility>
-                    <Binding RelativeSource="{RelativeSource AncestorType=Window}"  
+                <Button Content="0" Style="{DynamicResource CaptionButtonStyleKey}" Command="{x:Static SystemCommands.MinimizeWindowCommand}"/>
+                <Button Content="1" Style="{DynamicResource CaptionButtonStyleKey}" Command="{x:Static SystemCommands.MaximizeWindowCommand}">
+                    <Button.Visibility>
+                        <Binding RelativeSource="{RelativeSource AncestorType=Window}"  
                          Path="WindowState"  
                          Mode="OneWay"  
                          Converter="{ctrls:EqualsToVisibleConveter}">
-                        <Binding.ConverterParameter>
-                            <WindowState>Normal</WindowState>
-                        </Binding.ConverterParameter>
-                    </Binding>
-                </Button.Visibility>
-            </Button>
-            <Button Content="2" Style="{DynamicResource CaptionButtonStyleKey}"  Command="{x:Static SystemCommands.RestoreWindowCommand}">
-                <Button.Visibility>
-                    <Binding RelativeSource="{RelativeSource AncestorType=Window}"  
+                            <Binding.ConverterParameter>
+                                <WindowState>Normal</WindowState>
+                            </Binding.ConverterParameter>
+                        </Binding>
+                    </Button.Visibility>
+                </Button>
+                <Button Content="2" Style="{DynamicResource CaptionButtonStyleKey}"  Command="{x:Static SystemCommands.RestoreWindowCommand}">
+                    <Button.Visibility>
+                        <Binding RelativeSource="{RelativeSource AncestorType=Window}"  
                          Path="WindowState"  
                          Mode="OneWay"  
                          Converter="{ctrls:EqualsToVisibleConveter}">
-                        <Binding.ConverterParameter>
-                            <WindowState>Maximized</WindowState>
-                        </Binding.ConverterParameter>
-                    </Binding>
-                </Button.Visibility>
-            </Button>
-            <Button Content="r" Style="{DynamicResource CaptionButtonStyleKey}" Command="{x:Static SystemCommands.CloseWindowCommand}"/>
-        </StackPanel>
-        <Menu Background="#FF3F3F46" Foreground="White" Margin="30,2,2,2" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                            <Binding.ConverterParameter>
+                                <WindowState>Maximized</WindowState>
+                            </Binding.ConverterParameter>
+                        </Binding>
+                    </Button.Visibility>
+                </Button>
+                <Button Content="r" Style="{DynamicResource CaptionButtonStyleKey}" Command="{x:Static SystemCommands.CloseWindowCommand}"/>
+            </StackPanel>
+            <Menu Background="#FF3F3F46" Foreground="White" Margin="30,2,2,2" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
               WindowChrome.IsHitTestVisibleInChrome="True">
-            <!--<MenuItem Header="File(_F)"  Background="#FF3F3F46" Foreground="White">
+                <!--<MenuItem Header="File(_F)"  Background="#FF3F3F46" Foreground="White">
                 <MenuItem Header="Empty"  Background="#FF3F3F46"/>
             </MenuItem>-->
                 <MenuItem Header="Refact(_R)" Foreground="White" Template="{StaticResource MenuItemControlTemplate}">
@@ -93,38 +93,41 @@
             </Menu>
         </DockPanel>
         <Grid Grid.Row="2" Margin="5,0,5,5"  Background="#FF2D2D30" >
-        <Grid.InputBindings>
-            <KeyBinding Gesture="Ctrl+S" Command="{Binding EditrVM.SaveCommand}"/>
-            <KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding EditrVM.SaveAsCommand}"/>
-        </Grid.InputBindings>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="100"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="300"/>
-        </Grid.ColumnDefinitions>
-        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="#FF3F3F46" />
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition MinHeight="100"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition MinHeight="100"/>
-            </Grid.RowDefinitions>
-            <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"  Background="#FF3F3F46"/>
-            <editor:EditorLayer Grid.Row="0" DataContext="{Binding EditrVM, Mode=OneTime}"/>
-            <view:MemoryViewLayer Grid.Row="2" DataContext="{Binding MemoryVM, Mode=OneTime}" Margin="5"/>
+            <Grid.InputBindings>
+                <KeyBinding Gesture="Ctrl+S" Command="{Binding EditrVM.SaveCommand}"/>
+                <KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding EditrVM.SaveAsCommand}"/>
+                <KeyBinding Gesture="F5" Command="{Binding RunCommand}" CommandParameter="{x:Static interpreter:RunType.Nomal}"/>
+                <KeyBinding Gesture="Shift+F5" Command="{Binding RaiseStopReqestCommand}"/>
+                <KeyBinding Gesture="F11" Command="{Binding RunCommand}" CommandParameter="{x:Static interpreter:RunType.OneStep}"/>
+            </Grid.InputBindings>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="100"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="#FF3F3F46" />
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="100"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition MinHeight="100"/>
+                </Grid.RowDefinitions>
+                <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"  Background="#FF3F3F46"/>
+                <editor:EditorLayer Grid.Row="0" DataContext="{Binding EditrVM, Mode=OneTime}"/>
+                <view:MemoryViewLayer Grid.Row="2" DataContext="{Binding MemoryVM, Mode=OneTime}" Margin="5"/>
+            </Grid>
+            <Grid Grid.Column="2" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="170"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition MinHeight="100"/>
+                </Grid.RowDefinitions>
+                <GridSplitter Grid.Row="2" Height="5" HorizontalAlignment="Stretch"  Background="#FF3F3F46"/>
+                <view:CommandPanel Grid.Row="0"/>
+                <view:TextInputViewPanel Grid.Row="1" Margin="10" DataContext="{Binding TextImputDataVM, Mode=OneTime}"/>
+                <view:ResultViewLayer Grid.Row="3" Margin="5" DataContext="{Binding ResultTextVM, Mode=OneTime}"/>
+            </Grid>
         </Grid>
-        <Grid Grid.Column="2" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="170"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition MinHeight="100"/>
-            </Grid.RowDefinitions>
-            <GridSplitter Grid.Row="2" Height="5" HorizontalAlignment="Stretch"  Background="#FF3F3F46"/>
-            <view:CommandPanel Grid.Row="0"/>
-            <view:TextInputViewPanel Grid.Row="1" Margin="10" DataContext="{Binding TextImputDataVM, Mode=OneTime}"/>
-            <view:ResultViewLayer Grid.Row="3" Margin="5" DataContext="{Binding ResultTextVM, Mode=OneTime}"/>
-        </Grid>
-    </Grid>
     </Grid>
 </Window>

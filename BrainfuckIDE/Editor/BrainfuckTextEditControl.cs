@@ -36,6 +36,7 @@ namespace BrainfuckIDE.Editor
             this.TextArea.Document.Changed += Document_Changed; ;
             this.PreviewMouseDown += BrainfuckTextEditControl_PreviewMouseDown;
             this.DataContextChanged += BrainfuckTextEditControl_DataContextChanged;
+            InitBindings();
         }
 
         private void Document_Changed(object sender, DocumentChangeEventArgs e)
@@ -188,6 +189,64 @@ namespace BrainfuckIDE.Editor
                 .Location;
         }
 
+
+
+        #region KeyBindings
+        
+        private void InitBindings()
+        {
+            this.InputBindings.Add(GetInputBinding(CutCrentLine, Key.L, ModifierKeys.Control));
+            this.InputBindings.Add(GetInputBinding(MoveLineToNext, Key.Down, ModifierKeys.Alt));
+            this.InputBindings.Add(GetInputBinding(MoveLineToPrevious, Key.Up, ModifierKeys.Alt));
+        }
+
+        private static InputBinding GetInputBinding(Action action,Key key,ModifierKeys modifierKeys)
+        {
+            return new InputBinding(new WpfUtils.Command(action), new KeyGesture(key, modifierKeys));
+        }
+
+        private void CutCrentLine()
+        {
+            var line = this.TextArea.Caret.Line;
+            var lineSegment = this.TextArea.Document.GetLineByNumber(line);
+            this.TextArea.Document.Remove(lineSegment.Offset, lineSegment.TotalLength);
+        }
+
+
+        private void MoveLineToNext()
+        {
+            var caretLine = this.TextArea.Caret.Line;
+            var caretColum = this.TextArea.Caret.Column;
+            var line = this.TextArea.Document.GetLineByNumber(this.TextArea.Caret.Line);
+            var next = line.NextLine;
+            if (next == null) return;
+            var txt = this.TextArea.Document.GetText(next) + Environment.NewLine +
+                      this.TextArea.Document.GetText(line);
+            if (next.DelimiterLength != 0) txt += Environment.NewLine;
+
+            this.TextArea.Document.Replace(line.Offset, line.TotalLength + next.TotalLength, txt);
+            this.TextArea.Caret.Line = caretLine + 1;
+            this.TextArea.Caret.Column = caretColum;
+
+        }
+
+        private void MoveLineToPrevious()
+        {
+            var caretLine = this.TextArea.Caret.Line;
+            var caretColum = this.TextArea.Caret.Column;
+            var line = this.TextArea.Document.GetLineByNumber(this.TextArea.Caret.Line);
+            var prev = line.PreviousLine;
+            if (prev == null) return;
+            var txt = this.TextArea.Document.GetText(line) +Environment.NewLine +
+                       this.TextArea.Document.GetText(prev);
+            if (line.DelimiterLength != 0) txt += Environment.NewLine;
+
+            this.TextArea.Document.Replace(prev.Offset,  prev.TotalLength + line.TotalLength, txt);
+            this.TextArea.Caret.Line = caretLine - 1;
+            this.TextArea.Caret.Column = caretColum;
+
+        }
+        #endregion
 
     }
 }
