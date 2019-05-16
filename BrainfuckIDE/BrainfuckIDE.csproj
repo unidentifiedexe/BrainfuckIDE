@@ -83,9 +83,18 @@
     <Compile Include="Editor\Controls\NameTabViewLayer.xaml.cs">
       <DependentUpon>NameTabViewLayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editor\Snippets\BasicBfSnippets\MoveSnippet.cs" />
+    <Compile Include="Editor\Snippets\BasicBfSnippets\SnippetUtils.cs" />
+    <Compile Include="Editor\Snippets\BfSnippet.cs" />
+    <Compile Include="Editor\Snippets\SnippetRepeatBoundElement.cs" />
+    <Compile Include="Editor\Snippets\TestSnippet.cs" />
     <Compile Include="Editor\TextDocumentCharFinder.cs" />
     <Compile Include="Filer\FileSaverAndLoader.cs" />
     <Compile Include="Filer\LocalEnvironmental.cs" />
+    <Compile Include="Editor\Snippets\BasicCompletionData.cs" />
+    <Compile Include="Editor\Snippets\CompletionWindowCreator.cs" />
+    <Compile Include="Editor\Snippets\ISnippet.cs" />
+    <Compile Include="Editor\Snippets\NonArgumentSnippet.cs" />
     <Compile Include="Themes\CustomControlsTest.xaml.cs">
       <DependentUpon>CustomControlsTest.xaml</DependentUpon>
     </Compile>

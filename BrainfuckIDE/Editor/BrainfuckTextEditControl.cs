@@ -16,6 +16,9 @@ using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using System.Windows;
+using ICSharpCode.AvalonEdit.CodeCompletion;
+using BrainfuckIDE.Editor.Snippets;
+using System.Windows.Media;
 
 namespace BrainfuckIDE.Editor
 {
@@ -36,7 +39,42 @@ namespace BrainfuckIDE.Editor
             this.TextArea.Document.Changed += Document_Changed; ;
             this.PreviewMouseDown += BrainfuckTextEditControl_PreviewMouseDown;
             this.DataContextChanged += BrainfuckTextEditControl_DataContextChanged;
+            base.TextArea.TextEntering += TextArea_TextEntering;
+            base.TextArea.TextEntered += TextArea_TextEntered;
         }
+        #region CodeCompletion 
+
+        private CompletionWindow? _completionWindow;
+        private void TextArea_TextEntered(object sender, TextCompositionEventArgs e)
+        {
+        }
+
+        private void TextArea_TextEntering(object sender, TextCompositionEventArgs e)
+        {
+
+            var isShowCompletionWindow =
+                e.Text.Length == 1 &&
+                !EffectiveCharacters.Characters.Contains(e.Text[0]) &&
+                char.IsLetterOrDigit(e.Text[0]);
+
+            if(isShowCompletionWindow == false)
+            {
+                _completionWindow?.Close();
+            }
+
+            if (_completionWindow == null && isShowCompletionWindow)
+            {
+                _completionWindow = CompletionWindowCreator.Creato(TextArea);
+                _completionWindow.Show();
+                // ウインドウを閉じたときの処理
+                _completionWindow.Closed += delegate { _completionWindow = null; };
+            }
+
+
+
+            // e.Handled = true; を設定してはならない
+        }
+        #endregion
 
         private void Document_Changed(object sender, DocumentChangeEventArgs e)
         {
