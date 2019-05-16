@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace BrainfuckIDE.Editor.Snippets
@@ -34,12 +35,11 @@ namespace BrainfuckIDE.Editor.Snippets
             window.WindowStyle = WindowStyle.None;
             window.AllowsTransparency = true;
             window.BorderThickness = new Thickness(0);
-            window.CompletionList.BorderThickness = new Thickness(10);
-            window.CompletionList.BorderBrush = Brushes.Blue;
-            window.CompletionList.Background = Brushes.Black;
-            window.CompletionList.Foreground = Brushes.Red;
-            window.CompletionList.ListBox.Background = Brushes.Black;
-            window.CompletionList.ListBox.Foreground = Brushes.Red;
+            var border = (textArea.Parent as FrameworkElement).Parent as Border;
+            window.CompletionList.Background = border.Background;
+            window.CompletionList.Foreground = textArea.Foreground;
+            window.CompletionList.ListBox.Background = border.Background;
+            window.CompletionList.ListBox.Foreground = textArea.Foreground;
 
 
             IList<ICompletionData> data = window.CompletionList.CompletionData;

@@ -16,6 +16,7 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
             yield return Min;
             yield return Max;
             yield return GreaterThan;
+            yield return Not;
         }
 
         /// <summary> 積算を行うスニペットを取得します </summary>
@@ -44,6 +45,10 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
 
         public static ISnippet GreaterThan { get; }
           = new NonArgumentSnippet("Gt", "Greater than", "[[->]<[<]>]<<");
+
+
+        public static ISnippet Not { get; }
+          = new NonArgumentSnippet("Not", "Not", ">[-]+<[[-]>-<]>");
 
     }
 }

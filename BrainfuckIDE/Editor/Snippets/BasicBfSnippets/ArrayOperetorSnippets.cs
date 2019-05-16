@@ -66,7 +66,7 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
             yield return "//**";
         }
 
-
+        
 
     }
 }
