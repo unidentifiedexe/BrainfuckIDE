@@ -10,7 +10,15 @@ namespace BrainfuckIDE.Editor.Snippets
 {
     class NonArgumentSnippet : ISnippet
     {
-        public NonArgumentSnippet(string shortcut, string title,string text)
+        public NonArgumentSnippet(string shortcut, string title, IEnumerable<string> texts)
+            : this(shortcut, title, string.Join(Environment.NewLine, texts) + Environment.NewLine)
+        {
+
+        }
+
+
+        public NonArgumentSnippet(string shortcut, string title, string text)
+
         {
             Shortcut = shortcut;
             Title = title;

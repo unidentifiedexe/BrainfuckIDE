@@ -42,12 +42,34 @@ namespace BrainfuckIDE.Editor
             base.TextArea.TextEntering += TextArea_TextEntering;
             base.TextArea.TextEntered += TextArea_TextEntered;
         }
+
+        /// <summary> "[]"の処理を記述 </summary>
+        private void TextArea_TextEntered(object sender, TextCompositionEventArgs e)
+        {
+            if (e.Text.Length == 1)
+            {
+                if (this.TextArea.Selection.Length == 0)
+                {
+                    if (e.Text[0] == '[')
+                    {
+                        TextArea.Document.Insert(TextArea.Caret.Offset, "]");
+                        TextArea.Caret.Offset--;
+                    }
+                    else if (e.Text[0] == ']')
+                    {
+                        if (TextArea.Caret.Offset < TextArea.Document.TextLength &&
+                            TextArea.Document.GetCharAt(TextArea.Caret.Offset) == ']')
+
+                            TextArea.Document.Remove(TextArea.Caret.Offset, 1);
+                    }
+                }
+            }
+        }
+
+
         #region CodeCompletion 
 
         private CompletionWindow? _completionWindow;
-        private void TextArea_TextEntered(object sender, TextCompositionEventArgs e)
-        {
-        }
 
         private void TextArea_TextEntering(object sender, TextCompositionEventArgs e)
         {
@@ -55,7 +77,7 @@ namespace BrainfuckIDE.Editor
             var isShowCompletionWindow =
                 e.Text.Length == 1 &&
                 !EffectiveCharacters.Characters.Contains(e.Text[0]) &&
-                char.IsLetterOrDigit(e.Text[0]);
+                char.IsLetter(e.Text[0]);
 
             if(isShowCompletionWindow == false)
             {
@@ -81,6 +103,7 @@ namespace BrainfuckIDE.Editor
             if (_debuggingColorizeAvalonEdit.RunnningPosition >= TextArea.Document.TextLength)
                 _debuggingColorizeAvalonEdit.RunnningPosition = TextArea.Document.TextLength - 1;
             if (_debuggingColorizeAvalonEdit.RunnningPosition < 0) return;
+
             var currentChar = this.TextArea.Document.GetCharAt(_debuggingColorizeAvalonEdit.RunnningPosition);
             if (EffectiveCharacters.Characters.Contains(currentChar)) return;
             else

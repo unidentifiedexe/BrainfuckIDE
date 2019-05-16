@@ -83,8 +83,13 @@
     <Compile Include="Editor\Controls\NameTabViewLayer.xaml.cs">
       <DependentUpon>NameTabViewLayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editor\Snippets\BasicBfSnippets\ArrayOperetorSnippets.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\MoveSnippet.cs" />
+    <Compile Include="Editor\Snippets\BasicBfSnippets\OperationSnipets.cs" />
+    <Compile Include="Editor\Snippets\BasicBfSnippets\PointerMoveSnippet.cs" />
+    <Compile Include="Editor\Snippets\BasicBfSnippets\SnippetBase.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\SnippetUtils.cs" />
+    <Compile Include="Editor\Snippets\BasicBfSnippets\StandardInOutSnippets.cs" />
     <Compile Include="Editor\Snippets\BfSnippet.cs" />
     <Compile Include="Editor\Snippets\SnippetRepeatBoundElement.cs" />
     <Compile Include="Editor\Snippets\TestSnippet.cs" />

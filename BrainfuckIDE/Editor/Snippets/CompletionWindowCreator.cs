@@ -16,11 +16,13 @@ namespace BrainfuckIDE.Editor.Snippets
     {
         public static CompletionWindow Creato(TextArea textArea)
         {
-            var snippets = new ISnippet[] {
-                new NonArgumentSnippet("gt", "Grator than", "[[->]<[<]>]<<"),
-                new TestSnippet(),
-                MoveSnippet.Instance,
-            };
+            var snippets = new[]{
+                new [] { MoveSnippet.Instance, PointerMoveSnippet.Instance },
+                OperationSnipets.GetAllSnippets(),
+                StandardInOutSnippets.GetAllSnippets(),
+                 ArrayOperetorSnippets.GetAllSnippets(),
+            }.SelectMany(p => p);
+
             return Creato(textArea, snippets);
         }
 

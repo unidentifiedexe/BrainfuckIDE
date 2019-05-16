@@ -16,22 +16,23 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
 
         static private MoveSnippet? _instance;
 
-        static public MoveSnippet Instance => _instance ??= new MoveSnippet();
+        static public ISnippet Instance => _instance ??= new MoveSnippet();
 
 
         private readonly Snippet _snippet;
 
         private MoveSnippet()
         {
-            var pos = new SnippetReplaceableTextElement { Text = "1" };
+            var pos = new SnippetReplaceableTextElement { Text = ">" };
             _snippet = new Snippet
             {
                 Elements =
                 {
-                     new SnippetTextElement { Text = "//Move to " },
-                     pos,
-                     new SnippetTextElement { Text = "\n" },
-                     new MoveSnipetGenerator{ TargetElement = pos},
+                     new SnippetTextElement(){  Text = "[-"},
+                    pos,
+                     new SnippetTextElement(){  Text = "+"},
+                     new PointerMoveSnippet.PointerMoveSnipetGenerator(){ TargetElement = pos } ,
+                     new SnippetTextElement(){  Text = "]"},
 
                 }
             };
@@ -41,21 +42,22 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
 
         public string Title => "Data move";
 
+
         public void Insert(TextArea textArea)
         {
             _snippet.Insert(textArea);
         }
+        //class MoveSnipetGenerator :SnippetBoundElement
+        //{
 
-        class MoveSnipetGenerator :SnippetBoundElement
-        {
+        //    public override string ConvertText(string input)
+        //    {
+        //        if (!int.TryParse(input, out var num))
+        //            return string.Empty;
+        //        else
+        //            return $"[-{GetPointerMoveStr(num)}+{GetPointerMoveStr(-num)}]"; 
+        //    }
+        //}
 
-            public override string ConvertText(string input)
-            {
-                if (!int.TryParse(input, out var num))
-                    return string.Empty;
-                else
-                    return $"[-{GetPointerMoveStr(num)}+{GetPointerMoveStr(-num)}]"; 
-            }
-        }
     }
 }
