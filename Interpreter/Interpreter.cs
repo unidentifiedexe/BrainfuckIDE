@@ -88,6 +88,7 @@ namespace Interpreter
             _hasStopReqest = false;
             State = RunnningState.Runnning;
             Exception = null;
+            var startLine = _sourceCode.Position.Line;
             try
             {
                 while (!_hasStopReqest)
@@ -109,6 +110,7 @@ namespace Interpreter
 
                     if (!_sourceCode.MoveNext()) break;
                     if (runType == RunType.OneStep) break;
+                    if (runType == RunType.Line && startLine != _sourceCode.Position.Line) { break; }
                     if (_breakPoints.Contains(_sourceCode.Position)) break;
                 }
                 if (_sourceCode.IsFinished)

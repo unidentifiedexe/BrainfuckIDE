@@ -25,5 +25,10 @@ namespace Interpreter
             return ret;
         }
 
+        public static bool IsEffectiveChar(char letter )
+        {
+            return Characters.Contains(letter);
+        }
+
     }
 }

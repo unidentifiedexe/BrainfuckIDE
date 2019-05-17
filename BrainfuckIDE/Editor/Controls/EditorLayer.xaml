@@ -37,13 +37,12 @@
                           >
                     <Editor:BrainfuckTextEditControl.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="TextReplace" Command="{Binding SelectedTextConvertToPrintCodeCommand}"/>
+                            <MenuItem Header="Set/Remove Break point" Command="{Binding ToggleBreakPointCommand}"/>
                         </ContextMenu>
                     </Editor:BrainfuckTextEditControl.ContextMenu>
 
                 </Editor:BrainfuckTextEditControl>
                 <Grid.InputBindings>
-                    <KeyBinding Gesture="Ctrl+R" Command="{Binding SelectedTextConvertToPrintCodeCommand}"/>
                     <KeyBinding Gesture="Ctrl+B" Command="{Binding ToggleBreakPointCommand}"/>
                     <KeyBinding Gesture="F9" Command="{Binding ToggleBreakPointCommand}"/>
                 </Grid.InputBindings>
