@@ -90,6 +90,7 @@
     <Compile Include="Editor\Snippets\BasicBfSnippets\SnippetBase.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\SnippetUtils.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\StandardInOutSnippets.cs" />
+    <Compile Include="Editor\Snippets\CompletionWindow.cs" />
     <Compile Include="Editor\TextDocumentCharFinder.cs" />
     <Compile Include="Filer\FileSaverAndLoader.cs" />
     <Compile Include="Filer\LocalEnvironmental.cs" />
