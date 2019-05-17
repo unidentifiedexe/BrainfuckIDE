@@ -69,7 +69,7 @@ namespace BrainfuckIDE.Editor
 
         #region CodeCompletion 
 
-        private CompletionWindow? _completionWindow;
+        private Snippets.CompletionWindow? _completionWindow;
 
         private void TextArea_TextEntering(object sender, TextCompositionEventArgs e)
         {

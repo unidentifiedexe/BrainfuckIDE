@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace BrainfuckIDE.Editor.Snippets
@@ -36,18 +37,24 @@ namespace BrainfuckIDE.Editor.Snippets
             window.AllowsTransparency = true;
             window.BorderThickness = new Thickness(0);
             var border = (textArea.Parent as FrameworkElement).Parent as Border;
-            window.CompletionList.Background = border.Background;
-            window.CompletionList.Foreground = textArea.Foreground;
+            //window.CompletionList.Background = border.Background;
+            //window.CompletionList.Foreground = textArea.Foreground;
             window.CompletionList.ListBox.Background = border.Background;
             window.CompletionList.ListBox.Foreground = textArea.Foreground;
 
+            window.ToolTipBackground = border.Background;
+            window.ToolTipForeground = textArea.Foreground;
 
+            window.MinHeight = 0;
             IList<ICompletionData> data = window.CompletionList.CompletionData;
             foreach (var item in snippets)
                 data.Add(new SnippetCompletionData (item));
 
+            window.CompletionList.ListBox.SelectedIndex = 1;
             return window;
         }
+
+
 
 
 
