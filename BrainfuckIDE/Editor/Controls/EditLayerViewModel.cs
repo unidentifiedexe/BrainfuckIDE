@@ -123,21 +123,6 @@ namespace BrainfuckIDE.Editor.Controls
 
         #region ContextMenuItemCommand
 
-
-        private Command? _selectedTextConvertToPrintCodeCommand;
-
-        public Command SelectedTextConvertToPrintCodeCommand
-                => _selectedTextConvertToPrintCodeCommand ??= new Command(SelectedTextConvertToPrintCode);
-
-        private void SelectedTextConvertToPrintCode()
-        {
-            var selectedText = _baseControl.SelectedText;
-            var selectionStart = _baseControl.SelectionStart;
-            var selectionLength = _baseControl.SelectionLength;
-            var newText = TextCodeMaker.AutoMaker.GetSimplyTextOutputer(selectedText);
-            _baseControl.Document.Replace(selectionStart, selectionLength, newText);
-        }
-
         #endregion
 
         public void SetControl(BrainfuckTextEditControl editControl)

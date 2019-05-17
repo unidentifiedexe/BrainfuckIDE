@@ -10,5 +10,6 @@ namespace Interpreter
     {
         Nomal,
         OneStep,
+        Line,
     }
 }

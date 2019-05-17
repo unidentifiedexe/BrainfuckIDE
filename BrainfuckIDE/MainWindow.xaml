@@ -99,6 +99,7 @@
                 <KeyBinding Gesture="F5" Command="{Binding RunCommand}" CommandParameter="{x:Static interpreter:RunType.Nomal}"/>
                 <KeyBinding Gesture="Shift+F5" Command="{Binding RaiseStopReqestCommand}"/>
                 <KeyBinding Gesture="F11" Command="{Binding RunCommand}" CommandParameter="{x:Static interpreter:RunType.OneStep}"/>
+                <KeyBinding Gesture="F10" Command="{Binding RunCommand}" CommandParameter="{x:Static interpreter:RunType.Line}"/>
             </Grid.InputBindings>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="100"/>
