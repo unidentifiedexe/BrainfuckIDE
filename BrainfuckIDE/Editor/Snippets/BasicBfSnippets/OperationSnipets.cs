@@ -17,6 +17,7 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
             yield return Max;
             yield return GreaterThan;
             yield return Not;
+            yield return DiffAbs;
         }
 
         /// <summary> 積算を行うスニペットを取得します </summary>
@@ -26,8 +27,11 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
 
         /// <summary> 除算を行うスニペットを取得します </summary>
         public static ISnippet Division { get; }
-           = new NonArgumentSnippet("Division", "Division", "[->->+<[>]>[[-<+>]>>>+<]<<<<]  >[-]>[-<+>]>>>[-<<<<<+>>>>>]<<<<<");
+           = new NonArgumentSnippet("Division", "Division", "[->->+<[>]>[[-<+>]>>>+<]<<<<]  >[-]>[-<<+>>]<<");
 
+        /// <summary> 差の絶対値のスニペットを取得します </summary>
+        public static ISnippet DiffAbs { get; }
+           = new NonArgumentSnippet("DiffAbs", "Diff Abs", ">>>>+[<+<<<[>>>+<]>>[<]<[>>+<]>[<]>---[[+]<+>]+<[->-<]>>-<[-<<<->->>>+<]>]<<<[-<+>]<");
 
 
         /// <summary> 剰余算を行うスニペットを取得します </summary>
@@ -44,7 +48,7 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
 
 
         public static ISnippet GreaterThan { get; }
-          = new NonArgumentSnippet("Gt", "Greater than", "[[->]<[<]>]<<");
+          = new NonArgumentSnippet("GreaterThan", "Greater than", "[[->]<[<]>]<<");
 
 
         public static ISnippet Not { get; }
