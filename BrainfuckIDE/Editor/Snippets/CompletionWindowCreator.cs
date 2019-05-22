@@ -22,7 +22,8 @@ namespace BrainfuckIDE.Editor.Snippets
                 new [] { MoveSnippet.Instance, PointerMoveSnippet.Instance },
                 OperationSnipets.GetAllSnippets(),
                 StandardInOutSnippets.GetAllSnippets(),
-                 ArrayOperetorSnippets.GetAllSnippets(),
+                ArrayOperetorSnippets.GetAllSnippets(),
+                MultiByteVariable.GetAllSnippets(),
             }.SelectMany(p => p);
 
             return Creato(textArea, snippets);

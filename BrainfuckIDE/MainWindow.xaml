@@ -20,7 +20,7 @@
         Background="Transparent"
         WindowStyle="None" 
         Loaded="Window_Loaded"
-        AllowsTransparency="True" MinWidth="300" MinHeight="40"
+        AllowsTransparency="True" MinWidth="300" MinHeight="40" Icon="Resource/BrainfuckIdeIcon.ico"
         >
 
     <Window.CommandBindings>
@@ -90,7 +90,9 @@
                     </Button>
                     <Button Content="r" Style="{DynamicResource CaptionButtonStyleKey}" Command="{x:Static SystemCommands.CloseWindowCommand}"/>
                 </StackPanel>
-                <Menu Background="#FF3F3F46" Foreground="White" Margin="30,2,2,2" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                <Image Margin="10,4" Stretch="Uniform" Source="{Binding Icon ,Mode=OneTime, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" RenderTransformOrigin="0.5,0.5">
+                </Image>
+                <Menu Background="#FF3F3F46" Foreground="White" Margin="0,2,2,2" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
               WindowChrome.IsHitTestVisibleInChrome="True">
                     <!--<MenuItem Header="File(_F)"  Background="#FF3F3F46" Foreground="White">
                 <MenuItem Header="Empty"  Background="#FF3F3F46"/>

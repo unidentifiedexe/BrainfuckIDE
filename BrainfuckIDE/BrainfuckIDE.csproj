@@ -37,6 +37,9 @@
     <WarningLevel>4</WarningLevel>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resource\BrainfuckIdeIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="GongSolutions.WPF.DragDrop, Version=2.0.0.0, Culture=neutral, PublicKeyToken=91f1945125b7a587, processorArchitecture=MSIL">
       <HintPath>..\packages\gong-wpf-dragdrop.2.0.1\lib\net47\GongSolutions.WPF.DragDrop.dll</HintPath>
@@ -85,6 +88,7 @@
     </Compile>
     <Compile Include="Editor\Snippets\BasicBfSnippets\ArrayOperetorSnippets.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\MoveSnippet.cs" />
+    <Compile Include="Editor\Snippets\BasicBfSnippets\MultiByteVariable.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\OperationSnipets.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\PointerMoveSnippet.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\SnippetBase.cs" />
@@ -239,6 +243,8 @@
   <ItemGroup>
     <Resource Include="SourceLicenses.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resource\BrainfuckIdeIcon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
