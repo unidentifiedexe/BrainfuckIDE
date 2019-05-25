@@ -264,6 +264,7 @@ namespace BrainfuckIDE.Editor
             this.InputBindings.Add(GetInputBinding(PointerDirectionInverse, Key.R, ModifierKeys.Control));
             this.InputBindings.Add(GetInputBinding(ConvertToRepeatString, Key.E, ModifierKeys.Control));
             this.InputBindings.Add(GetInputBinding(SelectedTextConvertToPrintCodeCommand, Key.T, ModifierKeys.Control));
+            this.InputBindings.Add(GetInputBinding(RefactSimplySelectedRange, Key.W, ModifierKeys.Control));
         }
 
         private InputBinding GetInputBinding(Action action, Key key, ModifierKeys modifierKeys)
@@ -316,6 +317,20 @@ namespace BrainfuckIDE.Editor
             this.TextArea.Caret.Line = caretLine - 1;
             this.TextArea.Caret.Column = caretColum;
 
+        }
+
+        private void RefactSimplySelectedRange()
+        {
+
+            var selection = this.TextArea.Selection;
+            var segments = selection.Segments;
+            TextArea.Document.BeginUpdate();
+            foreach (var item in segments)
+            {
+                var text = TextArea.Document.GetText(item);
+                TextArea.Document.Replace(item, Refacter.CodeConverter.ToSimplyCode(text));
+            }
+            TextArea.Document.EndUpdate();
         }
         #endregion
 
