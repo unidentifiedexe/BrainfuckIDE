@@ -12,9 +12,9 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
 {
     abstract class SnippetBase : ISnippet
     {
-        public abstract string Shortcut { get; }
+        public abstract string Shortcut { get; protected set; }
 
-        public abstract string Title { get; }
+        public abstract string Title { get; protected set; }
 
         protected Snippet? _snippet = null;
 
