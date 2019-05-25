@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Interpreter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,5 +28,13 @@ namespace Refacter
 
             return new string(array);
         }
+
+        /// <summary>
+        /// 不要な文字を削除したコードを返します
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string ToSimplyCode(string str)
+            => ToSimpleCode.Get(str, EffectiveCharacters.RemoveNonEffectiveChars);
     }
 }

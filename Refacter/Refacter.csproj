@@ -50,5 +50,11 @@
     <Compile Include="ToSimpleCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Interpreter\Interpreter.csproj">
+      <Project>{B9AA7CC8-01E8-4F0B-9047-21E54D210CE5}</Project>
+      <Name>Interpreter</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
