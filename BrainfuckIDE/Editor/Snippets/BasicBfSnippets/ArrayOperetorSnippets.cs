@@ -13,6 +13,8 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
         {
             yield return OrderBy;
             yield return OrderByDescending;
+            yield return Min;
+            yield return Max;
         }
 
 
@@ -42,12 +44,11 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
 
 
         private static ISnippet OrderByDescending { get; }
-          = new NonArgumentSnippet("Arr.OrderByDescending", "Order ByDescending", GetOrderByDisStrs());
+          = new NonArgumentSnippet("Arr.OrderByDescending", "Order By Descending", GetOrderByDisStrs());
 
 
         private static IEnumerable<string> GetOrderByDisStrs()
         {
-
             yield return "//** Sort";
             yield return "<[";
             yield return "  [";
@@ -66,7 +67,37 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
             yield return "//**";
         }
 
-        
+        private static ISnippet Min { get; }
+          = new NonArgumentSnippet("Arr.Min", "Get Min", GetMinByStrs());
 
+        private static IEnumerable<string> GetMinByStrs()
+        {
+            yield return "<";
+            yield return "[";
+            yield return "  [->>>+<<<]";
+            yield return "  >[-<+>>+<]";
+            yield return "  >[[->]<[<]>]<<";
+            yield return "  [-<<->>]";
+            yield return "  <<<";
+            yield return "]";
+            yield return ">";
+        }
+
+
+        private static ISnippet Max { get; }
+          = new NonArgumentSnippet("Arr.Min", "Get Min", GetMaxByStrs());
+
+        private static IEnumerable<string> GetMaxByStrs()
+        {
+            yield return "<";
+            yield return "[";
+            yield return "  [->>+<<]";
+            yield return "  >[-<+>>>+<<]";
+            yield return "  >[[->]<[<]>]<<";
+            yield return "  [-<<+>>]";
+            yield return "  <<<";
+            yield return "]";
+            yield return ">";
+        }
     }
 }

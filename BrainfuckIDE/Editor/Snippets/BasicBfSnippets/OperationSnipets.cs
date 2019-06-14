@@ -22,12 +22,12 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
 
         /// <summary> 積算を行うスニペットを取得します </summary>
         public static ISnippet Multiplication { get; }
-            = new NonArgumentSnippet("Multi", "Multiplication", "[->[->+>+<<]>[-<+>]<<]");
+            = new NonArgumentSnippet("Multiplication", "Multiplication", "[->[->+>+<<]>[-<+>]<<]");
 
 
         /// <summary> 除算を行うスニペットを取得します </summary>
         public static ISnippet Division { get; }
-           = new NonArgumentSnippet("Division", "Division", "[->->+<[>]>[[-<+>]>>>+<]<<<<]  >[-]>[-<<+>>]<<");
+           = new NonArgumentSnippet("Division", "Division", "[->->+<[>]>[[-<+>]>>>+<]<<<<]  >[-]>[-<+>]>>>[-<<<<<+>>>>>]<<<<<");
 
         /// <summary> 差の絶対値のスニペットを取得します </summary>
         public static ISnippet DiffAbs { get; }
@@ -36,7 +36,7 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
 
         /// <summary> 剰余算を行うスニペットを取得します </summary>
         public static ISnippet Mod { get; }
-           = new NonArgumentSnippet("Mod", "Modulo", "[->->+<[>]>[[-<+>]>>>+<]<<<<]  >[-]>[-<+>]>>>[-<<<<<+>>>>>]<<<<<");
+           = new NonArgumentSnippet("Mod", "Modulo", "[->->+<[>]>[[-<+>]>>]<<<<]  >[-]>[-<<+>>]<<");
 
 
         public static ISnippet Min { get; }
