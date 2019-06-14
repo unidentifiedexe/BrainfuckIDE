@@ -14,9 +14,12 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
             yield return ReadLine;
             yield return ReadNumsOnLine;
             yield return WriteNumber;
+            yield return SkipLine;
         }
 
 
+        public static ISnippet SkipLine { get; }
+          = new NonArgumentSnippet("SkipLine", "Read line", ",[,----------]");
 
         public static ISnippet ReadAll { get; }
           = new NonArgumentSnippet("ReadAll", "Read all", ",+[->,+]");
