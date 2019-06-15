@@ -43,7 +43,10 @@ namespace Interpreter
         /// <returns></returns>
         public Place GetOriginPlaceFromTrimedCode(int index)
         {
-            return _mapToOriginCode[index];
+            if (_mapToOriginCode.Any())
+                return _mapToOriginCode[index];
+            else
+                return Place.Empty;
         }
 
         /// <summary>
