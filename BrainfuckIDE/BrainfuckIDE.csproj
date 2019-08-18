@@ -45,7 +45,7 @@
       <HintPath>..\packages\gong-wpf-dragdrop.2.0.1\lib\net47\GongSolutions.WPF.DragDrop.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
-      <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+      <HintPath>..\packages\AvalonEdit.5.0.3\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
