@@ -82,6 +82,12 @@
     <Compile Include="DialogUtils\Filer\FileOpener.cs" />
     <Compile Include="DialogUtils\Filer\FileSavener.cs" />
     <Compile Include="DialogUtils\ShowMessageBox.cs" />
+    <Compile Include="Editor\CodeAnalysis\BrainfuckIndentationStrategy.cs" />
+    <Compile Include="Editor\CodeAnalysis\MatchingFarenthesisFinder.cs" />
+    <Compile Include="Editor\CodeAnalysis\NestRefactor.cs" />
+    <Compile Include="Editor\CodeAnalysis\SpaceStringMap.cs" />
+    <Compile Include="Editor\ColorizingTransformer\ColorizingTransformerBase.cs" />
+    <Compile Include="Editor\ColorizingTransformer\PointsColorizingTransformer.cs" />
     <Compile Include="Editor\Controls\FileSaverViewModel.cs" />
     <Compile Include="Editor\Controls\NameTabViewLayer.xaml.cs">
       <DependentUpon>NameTabViewLayer.xaml</DependentUpon>
@@ -105,6 +111,8 @@
     <Compile Include="Themes\CustomControlsTest.xaml.cs">
       <DependentUpon>CustomControlsTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\ColorChanger.cs" />
+    <Compile Include="Utils\NullCheckHelper.cs" />
     <Page Include="ControlStyle\StyleDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

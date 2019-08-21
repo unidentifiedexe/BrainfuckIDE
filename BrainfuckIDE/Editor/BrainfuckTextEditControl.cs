@@ -20,12 +20,18 @@ using ICSharpCode.AvalonEdit.CodeCompletion;
 using BrainfuckIDE.Editor.Snippets;
 using System.Windows.Media;
 using WpfUtils;
+using BrainfuckIDE.Editor.CodeAnalysis;
+using System.Diagnostics;
+using BrainfuckIDE.Editor.ColorizingTransformer;
+using BrainfuckIDE.Utils;
 
 namespace BrainfuckIDE.Editor
 {
     partial class BrainfuckTextEditControl : TextEditor
     {
-        private readonly DebuggingColorizeAvalonEdit _debuggingColorizeAvalonEdit = new DebuggingColorizeAvalonEdit();
+        private readonly DebuggingColorizingTransformer _debuggingColorizeAvalonEdit = new DebuggingColorizingTransformer();
+        private readonly PointsColorizingTransformer _pointsColorizer = new PointsColorizingTransformer(Colors.LightSkyBlue.AddAlpha(0x7f));
+
 
         public event EventHandler<DocumentChangeEventArgs> Changed
         {
@@ -35,6 +41,9 @@ namespace BrainfuckIDE.Editor
 
         public BrainfuckTextEditControl() : base()
         {
+            base.TextArea.Options.IndentationSize = 2;
+            base.TextArea.Options.ConvertTabsToSpaces = true;
+            base.TextArea.IndentationStrategy = BrainfuckIndentationStrategy.Instance;
             base.Loaded += BrainfuckTextEditControl_Loaded;
             this.TextArea.Document.Changing += Document_Changing;
             this.TextArea.Document.Changed += Document_Changed; ;
@@ -43,6 +52,29 @@ namespace BrainfuckIDE.Editor
             InitBindings();
             base.TextArea.TextEntering += TextArea_TextEntering;
             base.TextArea.TextEntered += TextArea_TextEntered;
+            base.TextArea.Caret.PositionChanged += Caret_PositionChanged;
+        }
+
+        private void Caret_PositionChanged(object sender, EventArgs e)
+        {
+
+            var offset = TextArea.Caret.Offset -1;
+            if(offset >0)
+            {
+                var letter = base.TextArea.Document.GetCharAt(offset );
+                if (letter == '[' || letter == ']')
+                {
+                    var loc = base.Document.GetLocation(offset);
+                    var cuppledLoc = MatchingFarenthesisFinder.Find(base.Document, loc).Location;
+                    var cuppledLocOffset = cuppledLoc.IsEmpty ? -1 : base.Document.GetOffset(cuppledLoc);
+                    _pointsColorizer.Points = new[] { offset, cuppledLocOffset };
+                }
+                else
+                    _pointsColorizer.Clear();
+
+                this.TextArea.TextView.Redraw();
+            }
+
         }
 
         /// <summary> "[]"の処理を記述 </summary>
@@ -52,6 +84,7 @@ namespace BrainfuckIDE.Editor
             {
                 if (this.TextArea.Selection.Length == 0)
                 {
+                    base.TextArea.Document.BeginUpdate();
                     if (e.Text[0] == '[')
                     {
                         TextArea.Document.Insert(TextArea.Caret.Offset, "]");
@@ -61,10 +94,19 @@ namespace BrainfuckIDE.Editor
                     {
                         if (TextArea.Caret.Offset < TextArea.Document.TextLength &&
                             TextArea.Document.GetCharAt(TextArea.Caret.Offset) == ']')
-
                             TextArea.Document.Remove(TextArea.Caret.Offset, 1);
+
+
+                        #region 自動インデント
+                        var loc = TextArea.Document.GetLocation(TextArea.Caret.Offset - 1);
+                        var matchedLoc = MatchingFarenthesisFinder.Find(TextArea.Document, loc).Location;
+                        TextArea.IndentationStrategy?.IndentLines(TextArea.Document, matchedLoc.Line, loc.Line);
+                        #endregion
+
                     }
+                    base.TextArea.Document.EndUpdate();
                 }
+
             }
         }
 
@@ -117,7 +159,7 @@ namespace BrainfuckIDE.Editor
             }
         }
 
-        private void BrainfuckTextEditControl_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+        private void BrainfuckTextEditControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue is INotifyPropertyChanged newVal)
                 newVal.PropertyChanged += NewVal_PropertyChanged;
@@ -187,6 +229,7 @@ namespace BrainfuckIDE.Editor
             }
 
             this.TextArea.TextView.LineTransformers.Add(_debuggingColorizeAvalonEdit);
+            this.TextArea.TextView.LineTransformers.Add(_pointsColorizer);
         }
 
         public void ToglleDebuggingPoint(TextLocation location)

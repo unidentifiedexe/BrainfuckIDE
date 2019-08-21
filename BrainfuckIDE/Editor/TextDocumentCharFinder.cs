@@ -1,8 +1,10 @@
 ﻿#nullable enable
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using ICSharpCode.AvalonEdit.Document;
 
 namespace BrainfuckIDE.Editor
@@ -90,7 +92,7 @@ namespace BrainfuckIDE.Editor
             Location = new TextLocation(line, column);
         }
 
-        private CharLocationTuple(char Letter, TextLocation location)
+        public CharLocationTuple(char Letter, TextLocation location)
         {
             Char = Letter;
             Location = location;
