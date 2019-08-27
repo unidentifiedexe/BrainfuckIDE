@@ -50,5 +50,49 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
                 };
             }
         }
+
+        public static IEnumerable<StartEndPair> FindAllOfAnotherLine(string text)
+        {
+            return Itr().OrderBy(p => p.Start);
+
+            IEnumerable<StartEndPair> Itr()
+            {
+                var stack = new Stack<(int Index,int line)>();
+                var line = 0;
+                for (int index = 0; index < text.Length; index++)
+                {
+                    var letter = text[index];
+                    if (letter == '[')
+                    {
+                        stack.Push((index, line));
+                    }
+                    else if (letter == ']')
+                    {
+                        if (stack.Count > 0)
+                        {
+                            var (start, prevLine) = stack.Pop();
+                            if(prevLine != line)
+                            yield return new StartEndPair(start, index);
+                        }
+                    }
+                    else if (letter == '\n' || letter == '\r')
+                        line++;
+                }
+            }
+        }
+
+
     }
+
+    readonly struct StartEndPair
+    {
+        public int Start { get; }
+        public int End { get; }
+        public StartEndPair(int start, int end)
+        {
+            Start = start;
+            End = end;
+        }
+    }
+
 }

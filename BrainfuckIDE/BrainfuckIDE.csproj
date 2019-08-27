@@ -82,6 +82,7 @@
     <Compile Include="DialogUtils\Filer\FileOpener.cs" />
     <Compile Include="DialogUtils\Filer\FileSavener.cs" />
     <Compile Include="DialogUtils\ShowMessageBox.cs" />
+    <Compile Include="Editor\CodeAnalysis\BfFoldingManager.cs" />
     <Compile Include="Editor\CodeAnalysis\BrainfuckIndentationStrategy.cs" />
     <Compile Include="Editor\CodeAnalysis\MatchingFarenthesisFinder.cs" />
     <Compile Include="Editor\CodeAnalysis\NestRefactor.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Editor\Controls\NameTabViewLayer.xaml.cs">
       <DependentUpon>NameTabViewLayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editor\EditorColoers.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\ArrayOperetorSnippets.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\MoveSnippet.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\MultiByteVariable.cs" />

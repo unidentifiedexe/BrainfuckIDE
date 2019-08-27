@@ -18,6 +18,7 @@ namespace BrainfuckIDE.Editor.ColorizingTransformer
         private readonly MultiRangeColorizer _breakPoints = new MultiRangeColorizer(Colors.Red);
 
 
+
         public int RunnningPosition
         {
             get => _runnningPosition.Positiion;

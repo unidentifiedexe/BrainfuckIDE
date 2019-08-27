@@ -24,6 +24,8 @@ using BrainfuckIDE.Editor.CodeAnalysis;
 using System.Diagnostics;
 using BrainfuckIDE.Editor.ColorizingTransformer;
 using BrainfuckIDE.Utils;
+using ICSharpCode.AvalonEdit.Folding;
+using System.Collections.Specialized;
 
 namespace BrainfuckIDE.Editor
 {
@@ -32,6 +34,7 @@ namespace BrainfuckIDE.Editor
         private readonly DebuggingColorizingTransformer _debuggingColorizeAvalonEdit = new DebuggingColorizingTransformer();
         private readonly PointsColorizingTransformer _pointsColorizer = new PointsColorizingTransformer(Colors.LightSkyBlue.AddAlpha(0x7f));
 
+        private readonly BfFoldingManager _bfFoldingManager;
 
         public event EventHandler<DocumentChangeEventArgs> Changed
         {
@@ -44,6 +47,7 @@ namespace BrainfuckIDE.Editor
             base.TextArea.Options.IndentationSize = 2;
             base.TextArea.Options.ConvertTabsToSpaces = true;
             base.TextArea.IndentationStrategy = BrainfuckIndentationStrategy.Instance;
+            base.TextArea.LeftMargins.CollectionChanged += LeftMargins_CollectionChanged;
             base.Loaded += BrainfuckTextEditControl_Loaded;
             this.TextArea.Document.Changing += Document_Changing;
             this.TextArea.Document.Changed += Document_Changed; ;
@@ -53,6 +57,18 @@ namespace BrainfuckIDE.Editor
             base.TextArea.TextEntering += TextArea_TextEntering;
             base.TextArea.TextEntered += TextArea_TextEntered;
             base.TextArea.Caret.PositionChanged += Caret_PositionChanged;
+            _bfFoldingManager = new BfFoldingManager(base.Document, base.TextArea);
+        }
+
+        private void LeftMargins_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            foreach (var item in e.NewItems?.OfType<FoldingMargin>() ?? Enumerable.Empty<FoldingMargin>())
+            {
+                item.FoldingMarkerBackgroundBrush = new SolidColorBrush(EditorColoers.Background);
+                item.FoldingMarkerBrush = this.LineNumbersForeground;
+                item.SelectedFoldingMarkerBackgroundBrush = item.FoldingMarkerBackgroundBrush;
+                item.SelectedFoldingMarkerBrush = new SolidColorBrush(EditorColoers.Foreground);
+            }
         }
 
         private void Caret_PositionChanged(object sender, EventArgs e)
@@ -100,11 +116,14 @@ namespace BrainfuckIDE.Editor
                         #region 自動インデント
                         var loc = TextArea.Document.GetLocation(TextArea.Caret.Offset - 1);
                         var matchedLoc = MatchingFarenthesisFinder.Find(TextArea.Document, loc).Location;
-                        TextArea.IndentationStrategy?.IndentLines(TextArea.Document, matchedLoc.Line, loc.Line);
+                        if (!matchedLoc.IsEmpty)
+                            TextArea.IndentationStrategy?.IndentLines(TextArea.Document, matchedLoc.Line, loc.Line);
                         #endregion
 
                     }
                     base.TextArea.Document.EndUpdate();
+
+                    _bfFoldingManager.Update();
                 }
 
             }
@@ -156,6 +175,11 @@ namespace BrainfuckIDE.Editor
                 var newLoc = NearestEfectivPosition(loc);
                 _debuggingColorizeAvalonEdit.RunnningPosition = GetOffset(newLoc);
                 this.TextArea.TextView.Redraw();
+            }
+
+            if(e.RemovalLength >2 || e.InsertionLength > 2)
+            {
+                _bfFoldingManager.Update();
             }
         }
 
