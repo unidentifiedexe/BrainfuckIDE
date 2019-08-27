@@ -49,10 +49,8 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
 
         private static IEnumerable<string> GetWriteNumberStrs()
         {
-             yield return "[->+<]>[>++++++++++<[->->+<[>]>[[-<+>]>>>+<]<<<<]>[-]>+[-<<+>>]>>>[-<<<<+>>>>]<<<<]";
-             yield return "+<[>->++++++++++[-<+++++>]<---[<[+<]>[>]<-]<[.[-]<]]";
-             yield return ">[>++++++++++[->+++++<]+>--.[[-]<]>]";
+            yield return "[[->+<]>[>++++++++++<[->-[>+>>]>[+[-<+>]>+>>]<<<<<]>[-]>+[-<<+>>]>[-<<+>>]<<]<[<]>-<]";
+            yield return ">+[>]>++++++[-<-------->]<+[[<]>[+>]<]<[.[-]<]";
         }
-
     }
 }

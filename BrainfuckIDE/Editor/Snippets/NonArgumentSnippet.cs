@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,10 +20,16 @@ namespace BrainfuckIDE.Editor.Snippets
             Shortcut = shortcut;
             Title = title;
             _snippet = new Snippet ();
+
+            string? prev = null;
             foreach (var item in texts)
             {
-                _snippet.Elements.Add(new SnippetTextElement() { Text = $"{item}\n" });
+                if(prev != null)
+                    _snippet.Elements.Add(new SnippetTextElement() { Text = $"{prev}\n" });
+                prev = item;
             }
+            if (prev != null)
+                _snippet.Elements.Add(new SnippetTextElement() { Text = $"{prev}" });
 
         }
 

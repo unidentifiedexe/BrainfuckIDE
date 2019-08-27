@@ -12,6 +12,8 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
         {
             yield return Multiplication;
             yield return Division;
+            yield return Division2;
+            yield return DivMod;
             yield return Mod;
             yield return Min;
             yield return Max;
@@ -25,9 +27,18 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
             = new NonArgumentSnippet("Multiplication", "Multiplication", "[->[->+>+<<]>[-<+>]<<]");
 
 
+
+        /// <summary> 除算を行うスニペットを取得します </summary>
+        public static ISnippet Division2 { get; }
+           = new NonArgumentSnippet("Division2", "Division it can div by 1", "[->->+<[>]>[[-<+>]>>>+<]<<<<]  >[-]>[-<+>]>>>[-<<<<<+>>>>>]<<<<<");
+
         /// <summary> 除算を行うスニペットを取得します </summary>
         public static ISnippet Division { get; }
-           = new NonArgumentSnippet("Division", "Division", "[->->+<[>]>[[-<+>]>>>+<]<<<<]  >[-]>[-<+>]>>>[-<<<<<+>>>>>]<<<<<");
+           = new NonArgumentSnippet("Division", "Division", "[->-[>+>>]>[+[-<+>]>+>>]<<<<<] >[-]>[-]>[-<<<+>>>]<<<");
+
+        /// <summary> 除余算を行うスニペットを取得します </summary>
+        public static ISnippet DivMod { get; }
+           = new NonArgumentSnippet("DivMod", "Division ans Modulo", "[->-[>+>>]>[+[-<+>]>+>>]<<<<<] >[-]>[-<+>]>[-<<<+>>>]<<<");
 
         /// <summary> 差の絶対値のスニペットを取得します </summary>
         public static ISnippet DiffAbs { get; }
