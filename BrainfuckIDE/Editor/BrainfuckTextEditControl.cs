@@ -59,6 +59,7 @@ namespace BrainfuckIDE.Editor
             base.TextArea.TextEntered += TextArea_TextEntered;
             base.TextArea.Caret.PositionChanged += Caret_PositionChanged;
             _bfFoldingManager = new BfFoldingManager(base.Document, base.TextArea);
+            _pointsColorizer.AddStrongerColorizingTransformer(_debuggingColorizeAvalonEdit);
         }
 
         private void Document_Changed1(object sender, DocumentChangeEventArgs e)
