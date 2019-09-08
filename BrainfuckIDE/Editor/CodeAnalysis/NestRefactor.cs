@@ -93,7 +93,6 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
         {
             return Itr().ToArray();
 
-
             IEnumerable<string> Itr()
             {
                 foreach (var item in GetNestInfos(strs))
@@ -154,8 +153,8 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
             NestDiffInfo? RemoveNest(int nest)
             {
                 if (nest < 1) throw new ArgumentException($"{nameof(nest)}は非負である必要があります");
-
-                for (int i = 0; i < Math.Min(nest - 1, stack.Count); i++)
+                var max = Math.Min(nest - 1, stack.Count);
+                for (int i = 0; i < max; i++)
                     _ = stack.Pop();
                 if (stack.Any())
                     return stack.Pop();

@@ -50,7 +50,8 @@ namespace BrainfuckIDE.Editor
             base.TextArea.LeftMargins.CollectionChanged += LeftMargins_CollectionChanged;
             base.Loaded += BrainfuckTextEditControl_Loaded;
             this.TextArea.Document.Changing += Document_Changing;
-            this.TextArea.Document.Changed += Document_Changed; ;
+            this.TextArea.Document.Changed += Document_Changed;
+            this.TextArea.Document.Changed += Document_Changed1; ;
             this.PreviewMouseDown += BrainfuckTextEditControl_PreviewMouseDown;
             this.DataContextChanged += BrainfuckTextEditControl_DataContextChanged;
             InitBindings();
@@ -58,6 +59,26 @@ namespace BrainfuckIDE.Editor
             base.TextArea.TextEntered += TextArea_TextEntered;
             base.TextArea.Caret.PositionChanged += Caret_PositionChanged;
             _bfFoldingManager = new BfFoldingManager(base.Document, base.TextArea);
+        }
+
+        private void Document_Changed1(object sender, DocumentChangeEventArgs e)
+        {
+            if (e.RemovalLength > 2 || e.InsertionLength > 2)
+            {
+                _bfFoldingManager.Update();
+                return;
+            }
+            else if (e.InsertionLength == 1 && "[]\n".Contains(e.InsertedText.Text))
+            {
+                _bfFoldingManager.Update();
+                return;
+            }
+            else if (e.RemovalLength == 1 && "[]\n".Contains(e.RemovedText.Text))
+            {
+                _bfFoldingManager.Update();
+                return;
+            }
+
         }
 
         private void LeftMargins_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -122,10 +143,13 @@ namespace BrainfuckIDE.Editor
 
                     }
                     base.TextArea.Document.EndUpdate();
-
-                    _bfFoldingManager.Update();
                 }
 
+            }
+
+            if(e.Text.Length != 1 || (e.Text[0] == '[' || e.Text[0] == ']'))
+            {
+                _bfFoldingManager.Update();
             }
         }
 
@@ -168,7 +192,7 @@ namespace BrainfuckIDE.Editor
             if (_debuggingColorizeAvalonEdit.RunnningPosition < 0) return;
 
             var currentChar = this.TextArea.Document.GetCharAt(_debuggingColorizeAvalonEdit.RunnningPosition);
-            if (EffectiveCharacters.Characters.Contains(currentChar)) return;
+            if (!EffectiveCharacters.Characters.Contains(currentChar)) return;
             else
             {
                 var loc = GetEditPlace(_debuggingColorizeAvalonEdit.RunnningPosition);
@@ -177,10 +201,6 @@ namespace BrainfuckIDE.Editor
                 this.TextArea.TextView.Redraw();
             }
 
-            if(e.RemovalLength >2 || e.InsertionLength > 2)
-            {
-                _bfFoldingManager.Update();
-            }
         }
 
         private void BrainfuckTextEditControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
