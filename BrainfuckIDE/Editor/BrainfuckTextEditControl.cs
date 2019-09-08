@@ -58,28 +58,13 @@ namespace BrainfuckIDE.Editor
             base.TextArea.TextEntering += TextArea_TextEntering;
             base.TextArea.TextEntered += TextArea_TextEntered;
             base.TextArea.Caret.PositionChanged += Caret_PositionChanged;
-            _bfFoldingManager = new BfFoldingManager(base.Document, base.TextArea);
+            _bfFoldingManager = new BfFoldingManager(base.TextArea);
             _pointsColorizer.AddStrongerColorizingTransformer(_debuggingColorizeAvalonEdit);
         }
 
         private void Document_Changed1(object sender, DocumentChangeEventArgs e)
         {
-            if (e.RemovalLength > 2 || e.InsertionLength > 2)
-            {
-                _bfFoldingManager.Update();
-                return;
-            }
-            else if (e.InsertionLength == 1 && "[]\n".Contains(e.InsertedText.Text))
-            {
-                _bfFoldingManager.Update();
-                return;
-            }
-            else if (e.RemovalLength == 1 && "[]\n".Contains(e.RemovedText.Text))
-            {
-                _bfFoldingManager.Update();
-                return;
-            }
-
+            _bfFoldingManager.Update();
         }
 
         private void LeftMargins_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

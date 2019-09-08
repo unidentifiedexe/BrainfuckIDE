@@ -86,6 +86,7 @@
     <Compile Include="Editor\CodeAnalysis\BrainfuckIndentationStrategy.cs" />
     <Compile Include="Editor\CodeAnalysis\MatchingFarenthesisFinder.cs" />
     <Compile Include="Editor\CodeAnalysis\NestRefactor.cs" />
+    <Compile Include="Editor\CodeAnalysis\RegionFoldingManager.cs" />
     <Compile Include="Editor\CodeAnalysis\SpaceStringMap.cs" />
     <Compile Include="Editor\ColorizingTransformer\ColorizingTransformerBase.cs" />
     <Compile Include="Editor\ColorizingTransformer\PointsColorizingTransformer.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Editor\Snippets\BasicBfSnippets\SnippetUtils.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\StandardInOutSnippets.cs" />
     <Compile Include="Editor\Snippets\CompletionWindow.cs" />
+    <Compile Include="Editor\Snippets\SyntaxSnippets\RegionSnippet.cs" />
     <Compile Include="Editor\TextDocumentCharFinder.cs" />
     <Compile Include="Filer\FileSaverAndLoader.cs" />
     <Compile Include="Filer\LocalEnvironmental.cs" />
