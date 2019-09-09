@@ -53,7 +53,9 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
 
                     if (string.IsNullOrEmpty(sub))
                         sub = "#region";
-                    stack.Push(new StackNode(_document.GetOffset(line, item.Length - trimed.Length) +1, sub));
+                    var col = item.Length - trimed.Length;
+                    if (col > 0) col++;
+                    stack.Push(new StackNode(_document.GetOffset(line, col), sub));
                 }
                 else if (trimed.StartsWith("#endregion"))
                 {
