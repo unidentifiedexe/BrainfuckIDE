@@ -51,7 +51,7 @@ namespace BrainfuckIDE.Editor
             base.Loaded += BrainfuckTextEditControl_Loaded;
             this.TextArea.Document.Changing += Document_Changing;
             this.TextArea.Document.Changed += Document_Changed;
-            this.TextArea.Document.Changed += Document_Changed1; ;
+            this.TextArea.Document.Changed += Document_Changed1;
             this.PreviewMouseDown += BrainfuckTextEditControl_PreviewMouseDown;
             this.DataContextChanged += BrainfuckTextEditControl_DataContextChanged;
             InitBindings();
@@ -123,19 +123,13 @@ namespace BrainfuckIDE.Editor
                         #region 自動インデント
                         var loc = TextArea.Document.GetLocation(TextArea.Caret.Offset - 1);
                         var matchedLoc = MatchingFarenthesisFinder.Find(TextArea.Document, loc).Location;
-                        if (!matchedLoc.IsEmpty)
-                            TextArea.IndentationStrategy?.IndentLines(TextArea.Document, matchedLoc.Line, loc.Line);
+                        TextArea.IndentationStrategy?.IndentLines(TextArea.Document, matchedLoc.IsEmpty ? 1 : matchedLoc.Line, loc.Line);
                         #endregion
 
                     }
                     base.TextArea.Document.EndUpdate();
                 }
 
-            }
-
-            if(e.Text.Length != 1 || (e.Text[0] == '[' || e.Text[0] == ']'))
-            {
-                _bfFoldingManager.Update();
             }
         }
 
