@@ -11,9 +11,7 @@
 /Interpreter/obj
 /Interpreter/bin
 /TestFile
-/packages/AvalonEdit.5.0.4
-/packages/Microsoft.Xaml.Behaviors.Wpf.1.0.1
-/packages/gong-wpf-dragdrop.2.0.1
+/packages
 /Refacter/bin
 /Refacter/obj
 /BrainfuckInterpreter/obj
