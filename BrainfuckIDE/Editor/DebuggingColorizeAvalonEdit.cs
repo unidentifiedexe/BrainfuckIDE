@@ -27,7 +27,7 @@ namespace BrainfuckIDE.Editor.ColorizingTransformer
 
         public List<int> BreakPoints => _breakPoints.Positions;
 
-        protected override IEnumerable<RangeColorizer> GetRangeColorizers()
+        protected override IEnumerable<PointsColorizer> GetPointsColorizers()
         {
             yield return _breakPoints;
             yield return _runnningPosition;

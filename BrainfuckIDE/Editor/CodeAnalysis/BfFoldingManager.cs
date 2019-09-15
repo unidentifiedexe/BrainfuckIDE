@@ -14,9 +14,9 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
     {
         private readonly FoldingManager _foldingManager;
         private readonly TextDocument _document;
-        public BfFoldingManager(TextDocument document,TextArea textArea )
+        public BfFoldingManager(TextArea textArea )
         {
-            _document = document;
+            _document = textArea.Document;
             _foldingManager = FoldingManager.Install(textArea);
         }
 
@@ -30,7 +30,53 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
                 item.Name = "...";
             }
 
-            _foldingManager.UpdateFoldings(newFolds, -1);
+            var resionFolds = RegionItr(txt.Replace("\r\n", "\n").Split('\n'));
+            var folds = newFolds.Concat(resionFolds).OrderBy(p => p.StartOffset);
+
+
+            _foldingManager.UpdateFoldings(folds, -1);
+        }
+
+
+
+        private IEnumerable<NewFolding> RegionItr(IEnumerable<string> txts)
+        {
+            int line = 0;
+            var stack = new Stack<StackNode>();
+            foreach (var item in txts)
+            {
+                line++;
+                var trimed = item.TrimStart();
+                if (trimed.StartsWith("#region"))
+                {
+                    var sub = trimed.Substring("#region".Length).Trim();
+
+                    if (string.IsNullOrEmpty(sub))
+                        sub = "#region";
+                    var col = item.Length - trimed.Length;
+                    if (col > 0) col++;
+                    stack.Push(new StackNode(_document.GetOffset(line, col), sub));
+                }
+                else if (trimed.StartsWith("#endregion"))
+                {
+                    if (stack.Any())
+                    {
+                        var poped = stack.Pop();
+                        yield return new NewFolding(poped.Pos, _document.GetOffset(line, item.Length)+1) { Name = poped.Text };
+                    }
+                }
+            }
+        }
+        private struct StackNode
+        {
+            public int Pos;
+            public string Text;
+
+            public StackNode(int pos, string text)
+            {
+                Pos = pos;
+                Text = text;
+            }
         }
     }
 }

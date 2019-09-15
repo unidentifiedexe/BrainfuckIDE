@@ -50,14 +50,21 @@ namespace BrainfuckIDE.Editor
             base.TextArea.LeftMargins.CollectionChanged += LeftMargins_CollectionChanged;
             base.Loaded += BrainfuckTextEditControl_Loaded;
             this.TextArea.Document.Changing += Document_Changing;
-            this.TextArea.Document.Changed += Document_Changed; ;
+            this.TextArea.Document.Changed += Document_Changed;
+            this.TextArea.Document.Changed += Document_Changed1;
             this.PreviewMouseDown += BrainfuckTextEditControl_PreviewMouseDown;
             this.DataContextChanged += BrainfuckTextEditControl_DataContextChanged;
             InitBindings();
             base.TextArea.TextEntering += TextArea_TextEntering;
             base.TextArea.TextEntered += TextArea_TextEntered;
             base.TextArea.Caret.PositionChanged += Caret_PositionChanged;
-            _bfFoldingManager = new BfFoldingManager(base.Document, base.TextArea);
+            _bfFoldingManager = new BfFoldingManager(base.TextArea);
+            _pointsColorizer.AddStrongerColorizingTransformer(_debuggingColorizeAvalonEdit);
+        }
+
+        private void Document_Changed1(object sender, DocumentChangeEventArgs e)
+        {
+            _bfFoldingManager.Update();
         }
 
         private void LeftMargins_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -116,14 +123,11 @@ namespace BrainfuckIDE.Editor
                         #region 自動インデント
                         var loc = TextArea.Document.GetLocation(TextArea.Caret.Offset - 1);
                         var matchedLoc = MatchingFarenthesisFinder.Find(TextArea.Document, loc).Location;
-                        if (!matchedLoc.IsEmpty)
-                            TextArea.IndentationStrategy?.IndentLines(TextArea.Document, matchedLoc.Line, loc.Line);
+                        TextArea.IndentationStrategy?.IndentLines(TextArea.Document, matchedLoc.IsEmpty ? 1 : matchedLoc.Line, loc.Line);
                         #endregion
 
                     }
                     base.TextArea.Document.EndUpdate();
-
-                    _bfFoldingManager.Update();
                 }
 
             }
@@ -168,7 +172,7 @@ namespace BrainfuckIDE.Editor
             if (_debuggingColorizeAvalonEdit.RunnningPosition < 0) return;
 
             var currentChar = this.TextArea.Document.GetCharAt(_debuggingColorizeAvalonEdit.RunnningPosition);
-            if (EffectiveCharacters.Characters.Contains(currentChar)) return;
+            if (!EffectiveCharacters.Characters.Contains(currentChar)) return;
             else
             {
                 var loc = GetEditPlace(_debuggingColorizeAvalonEdit.RunnningPosition);
@@ -177,10 +181,6 @@ namespace BrainfuckIDE.Editor
                 this.TextArea.TextView.Redraw();
             }
 
-            if(e.RemovalLength >2 || e.InsertionLength > 2)
-            {
-                _bfFoldingManager.Update();
-            }
         }
 
         private void BrainfuckTextEditControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)

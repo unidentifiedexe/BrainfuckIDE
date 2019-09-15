@@ -29,7 +29,7 @@ namespace BrainfuckIDE.Editor.ColorizingTransformer
 
         public void Clear() => _colorizer.Positions.Clear();
 
-        protected override IEnumerable<RangeColorizer> GetRangeColorizers()
+        protected override IEnumerable<PointsColorizer> GetPointsColorizers()
         {
             yield return _colorizer;
         }

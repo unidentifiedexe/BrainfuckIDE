@@ -1,4 +1,5 @@
 ﻿using BrainfuckIDE.Editor.Snippets.BasicBfSnippets;
+using BrainfuckIDE.Editor.Snippets.SyntaxSnippets;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
@@ -19,6 +20,7 @@ namespace BrainfuckIDE.Editor.Snippets
         public static CompletionWindow Creato(TextArea textArea)
         {
             var snippets = new[]{
+                new [] { RegionSnippet.Instance },
                 new [] { MoveSnippet.Instance, PointerMoveSnippet.Instance },
                 OperationSnipets.GetAllSnippets(),
                 StandardInOutSnippets.GetAllSnippets(),

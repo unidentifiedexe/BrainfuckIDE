@@ -55,13 +55,16 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
                 (beginLine, endLine) = (endLine, beginLine);
 
             var lines = RangeLineItr(beginLine, endLine).ToArray();
+            var txt = GetPrevNestSpaceNum(beginLine);
+            var strs = NestRefactor.Refact(lines.Select(document.GetText).Prepend(txt), NestSpaceNum).Skip(1);
 
-            var strs = NestRefactor.Refact(lines.Select(document.GetText), NestSpaceNum);
+            foreach (var (line, str) in lines.Zip(strs, (l, s) => (l, s)))
+            {
+                if (document.GetText(line) != str)
+                    document.Replace(line, str);
+            }
 
-            foreach (var (line,str) in lines.Zip(strs,(l,s) => (l,s)))
-                document.Replace(line, str);
-
-            IEnumerable <DocumentLine> RangeLineItr(int b, int e)
+            IEnumerable<DocumentLine> RangeLineItr(int b, int e)
             {
                 var line = document.GetLineByNumber(b);
 
@@ -71,6 +74,22 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
                     line = line.NextLine;
                 }
                 yield return line;
+            }
+
+            string GetPrevNestSpaceNum(int line)
+            {
+                var lineD = document.GetLineByNumber(line);
+                var turget = lineD?.PreviousLine;
+                while (turget != null)
+                {
+                    var text = document.GetText(turget);
+                    if (!string.IsNullOrWhiteSpace(text))
+                    {
+                        return text;
+                    }
+                    turget = turget.PreviousLine;
+                }
+                return "";
             }
         }
     }
