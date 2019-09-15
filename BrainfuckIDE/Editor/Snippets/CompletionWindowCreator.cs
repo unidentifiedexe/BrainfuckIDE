@@ -23,7 +23,7 @@ namespace BrainfuckIDE.Editor.Snippets
                 OperationSnipets.GetAllSnippets(),
                 StandardInOutSnippets.GetAllSnippets(),
                 ArrayOperetorSnippets.GetAllSnippets(),
-                MultiByteVariable.GetAllSnippets(),
+                MultiByteVariable2.GetAllSnippets(),
             }.SelectMany(p => p);
 
             return Creato(textArea, snippets);

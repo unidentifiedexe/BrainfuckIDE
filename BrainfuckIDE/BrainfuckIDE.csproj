@@ -97,6 +97,7 @@
     <Compile Include="Editor\Snippets\BasicBfSnippets\ArrayOperetorSnippets.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\MoveSnippet.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\MultiByteVariable.cs" />
+    <Compile Include="Editor\Snippets\BasicBfSnippets\MultiByteVariable2.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\OperationSnipets.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\PointerMoveSnippet.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\SnippetBase.cs" />
