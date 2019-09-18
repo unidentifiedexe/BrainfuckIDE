@@ -11,7 +11,7 @@ namespace Interpreter
 
         static public IEnumerable<char> Characters => _nomalBrainfackCharctors;
 
-        static private readonly string _nomalBrainfackCharctors = "+-><.,[]";
+        static private readonly string _nomalBrainfackCharctors = "+-><.,[]@";
 
         /// <summary>
         /// ソースコードの不要な文字を削除したものを返す
