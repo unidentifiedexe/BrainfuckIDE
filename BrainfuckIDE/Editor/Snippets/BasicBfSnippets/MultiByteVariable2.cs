@@ -259,7 +259,7 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
                 InitSnipet();
             }
 
-            public ReginedSnippets(string shortcut, string title, string text) : base(shortcut, title, $"{text}\n")
+            public ReginedSnippets(string shortcut, string title, string text) : base(shortcut, title, text)
             {
                 InitSnipet();
             }
@@ -279,7 +279,7 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
 
                     new SnippetTextElement() { Text = $"#region {title}\n" },
                      innner,
-                    new SnippetTextElement() { Text = $"#endregion\n" },
+                    new SnippetTextElement() { Text = $"\n#endregion\n" },
                     }
                 };
             }
@@ -300,14 +300,14 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
                 _snippet = new Snippet
                 {
                     Elements =
-                {
-                    new SnippetTextElement() { Text = $"#region {title} " },
-                    header ,
-                    new SnippetTextElement() { Text = $"\n" },
-                    GetCommentsSnippet(notices),
-                    innner ,
-                    new SnippetTextElement() { Text = $"\n#endregion" },
-                }
+                    {
+                        new SnippetTextElement() { Text = $"#region {title} " },
+                        header ,
+                        new SnippetTextElement() { Text = $"\n" },
+                        GetCommentsSnippet(notices),
+                        innner ,
+                        new SnippetTextElement() { Text = $"\n#endregion\n" },
+                    }
                 };
             }
 
