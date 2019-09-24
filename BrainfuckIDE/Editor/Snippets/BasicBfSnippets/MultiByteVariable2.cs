@@ -235,7 +235,7 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
             yield return "  >>+[>]>>>{n}[>]<";
             yield return "  [->+<]<[<]{p}<<<[<]<<";
             yield return "]";
-            yield return ">>>[>]>>>{n}<[-]>>>[[-<+>]>]<<";
+            yield return ">>>[>]>>>{n}<[-]>>[[-<+>]>]<<";
             yield return "[<]{p}<<<";
         }
 
