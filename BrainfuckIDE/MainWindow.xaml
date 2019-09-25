@@ -21,6 +21,7 @@
         WindowStyle="None" 
         Loaded="Window_Loaded"
         AllowsTransparency="True" MinWidth="300" MinHeight="40" Icon="Resource/BrainfuckIdeIcon.ico"
+        Closing="Window_Closing"
         >
 
     <Window.CommandBindings>

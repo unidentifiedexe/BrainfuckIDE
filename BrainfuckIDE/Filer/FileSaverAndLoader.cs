@@ -7,11 +7,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JsonHelper;
 
 namespace BrainfuckIDE.Filer
 {
     class FileSaverAndLoader
     {
+        const string _temporaryFileExtension = ".bftp";
+
         private string _temporaryFilePath = string.Empty;
 
         private string _saveFilePath = string.Empty;
@@ -64,8 +67,6 @@ namespace BrainfuckIDE.Filer
             SaveAs(_saveFilePath, sourceText);
         }
 
-
-
         /// <summary> 一時ファイルにテキストデータを保存します </summary>
         /// <param name="sourceText"> テキストデータ </param>
         /// <exception cref="Exception"> 保存に失敗した場合適当な例外が発生します </exception>
@@ -74,11 +75,16 @@ namespace BrainfuckIDE.Filer
             if (sourceText.Guid == _temporaryFileTextHash) return;
             if (sourceText.Guid == _saveFileTextHash) return;
             if (string.IsNullOrEmpty(_temporaryFilePath))
-                _temporaryFilePath = CreateTemporaryFile(LocalEnvironmental.TemporaryDirectory, ".bf");
-
-            Save(_temporaryFilePath, sourceText.Text);
+                _temporaryFilePath = CreateTemporaryFile(LocalEnvironmental.TemporaryDirectory, _temporaryFileExtension);
+            var tempFile = new TempFileInfo()
+            {
+                OriginalFilePath = _saveFilePath,
+                SourceCode = sourceText.Text,
+            };
+            Json.Save(tempFile, _temporaryFilePath);
             _temporaryFileTextHash = sourceText.Guid;
         }
+
 
         /// <summary> 新たなファイル名を指定してテキストデータの保存を行います </summary>
         /// <param name="sourceText"></param>
@@ -98,13 +104,29 @@ namespace BrainfuckIDE.Filer
         /// <exception cref="Exception"> 読み取りに失敗した場合適当な例外が発生します </exception>
         public SourceText OpenFrom(string loadPath)
         {
+            if (Path.GetExtension(loadPath) == _temporaryFileExtension)
+                return LoadTemporry(loadPath);
+
             var text = File.ReadAllText(loadPath);
             _saveFilePath = loadPath;
             _temporaryFileTextHash = _saveFileTextHash = Guid.NewGuid();
             ForceDeleteTemporaryFile();
             return new SourceText(_saveFileTextHash, text);
         }
-
+        private SourceText LoadTemporry(string filePath)
+        {
+            var tempFile = Json.Load<TempFileInfo>(filePath);
+            if (string.IsNullOrEmpty(_temporaryFilePath) ||
+                Path.GetFullPath(_temporaryFilePath) != Path.GetFullPath(filePath))
+            {
+                ForceDeleteTemporaryFile();
+                _temporaryFilePath = filePath;
+            }
+            _saveFilePath = tempFile.OriginalFilePath;
+            _saveFileTextHash = Guid.NewGuid();
+            _temporaryFileTextHash = Guid.NewGuid();
+            return new SourceText(_temporaryFileTextHash, tempFile.SourceCode);
+        }
 
 
         /// <summary> 一時ファイルがセーブされているかどうかを確認せず一時ファイルを削除する </summary>
@@ -143,6 +165,12 @@ namespace BrainfuckIDE.Filer
 
             throw new Exception("一時ファイルの作成に失敗しました");
 
+        }
+
+        /// <summary> 一時ファイルの一覧を取得します。 </summary>
+        public static string[] GetTemporaryFiles()
+        {
+           return Directory.GetFiles(LocalEnvironmental.TemporaryDirectory, $"*{_temporaryFileExtension}");
         }
     }
 }

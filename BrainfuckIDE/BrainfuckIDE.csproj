@@ -50,6 +50,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -113,6 +114,7 @@
     <Compile Include="Editor\Snippets\CompletionWindowCreator.cs" />
     <Compile Include="Editor\Snippets\ISnippet.cs" />
     <Compile Include="Editor\Snippets\NonArgumentSnippet.cs" />
+    <Compile Include="Filer\TempFileInfo.cs" />
     <Compile Include="Themes\CustomControlsTest.xaml.cs">
       <DependentUpon>CustomControlsTest.xaml</DependentUpon>
     </Compile>
@@ -239,6 +241,10 @@
     <ProjectReference Include="..\Interpreter\Interpreter.csproj">
       <Project>{b9aa7cc8-01e8-4f0b-9047-21e54d210ce5}</Project>
       <Name>Interpreter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JsonHelper\JsonHelper.csproj">
+      <Project>{39e8857f-c840-412d-9277-fbc796786884}</Project>
+      <Name>JsonHelper</Name>
     </ProjectReference>
     <ProjectReference Include="..\Refacter\Refacter.csproj">
       <Project>{1b7fc49d-cfa8-4324-bd61-79e46e636a72}</Project>

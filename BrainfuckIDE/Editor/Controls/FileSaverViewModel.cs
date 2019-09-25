@@ -80,6 +80,11 @@ namespace BrainfuckIDE.Editor.Controls
             RaiseNotifyPropertyChanged(nameof(FilePath));
         }
 
+        public void ForceDeleteTemporaryFile()
+        {
+            _fileSaver.ForceDeleteTemporaryFile();
+        }
+
     }
 
 

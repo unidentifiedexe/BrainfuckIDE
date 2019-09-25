@@ -74,7 +74,7 @@ namespace BrainfuckIDE.Controls.ViewModels
             _interpreter?.NoticeStopReqest();
         }
 
-        private event Action<Interpreter.Interpreter> StopInterpretorRunEvent;
+        private event Action<Interpreter.Interpreter>? StopInterpretorRunEvent;
 
 
         private bool InitializiedInterpretor()
@@ -140,5 +140,11 @@ namespace BrainfuckIDE.Controls.ViewModels
             MemoryVM.SetMemory(_interpreter?.GetEditableMemory());
         }
 
+        public bool IsFileSaved => EditrVM?.FileSaverViewModel?.IsSaved ?? true;
+
+        public void Save()
+        {
+            EditrVM?.SaveCommand.Execute();
+        }
     }
 }
