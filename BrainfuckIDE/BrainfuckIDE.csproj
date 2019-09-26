@@ -119,6 +119,7 @@
     <Compile Include="Editor\Snippets\ISnippet.cs" />
     <Compile Include="Editor\Snippets\NonArgumentSnippet.cs" />
     <Compile Include="Filer\TempFileInfo.cs" />
+    <Compile Include="Filer\TemporaryFileMaker.cs" />
     <Compile Include="Themes\CustomControlsTest.xaml.cs">
       <DependentUpon>CustomControlsTest.xaml</DependentUpon>
     </Compile>
