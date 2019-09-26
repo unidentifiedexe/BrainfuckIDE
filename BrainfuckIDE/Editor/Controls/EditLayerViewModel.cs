@@ -139,15 +139,23 @@ namespace BrainfuckIDE.Editor.Controls
 
         public SourceText GetSourceCode()
         {
+            SaveTemportryFile();
+            return _previousText;
+        }
+
+        /// <summary> 一時ファイルへの保存を行います。 </summary>
+        /// <returns> 実際に保存が行われたかどうか。 </returns>
+        public bool SaveTemportryFile()
+        {
             if (_isChanged)
             {
                 _previousText = new SourceText(Guid.NewGuid(), _baseControl.Text);
                 _isChanged = false;
                 FileSaverViewModel.SaveTextToTemp(_previousText);
+                return true;
             }
-            return _previousText;
+            return false;
         }
-
 
         public IEnumerable<Place> GetBreakPoints()
         {

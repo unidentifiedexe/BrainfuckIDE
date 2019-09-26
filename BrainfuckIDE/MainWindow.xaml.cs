@@ -35,52 +35,43 @@ namespace BrainfuckIDE
             InitializeComponent();
 
         }
-
-        //private void Window_Minimize(object sender, ExecutedRoutedEventArgs e) 
-        //    => SystemCommands.MinimizeWindow(this);
-
-        //private void Window_Close(object sender, ExecutedRoutedEventArgs e)
-        //{
-        //    SystemCommands.CloseWindow(this);
-        //}
-
-        //private void Window_Restore(object sender, ExecutedRoutedEventArgs e) => SystemCommands.RestoreWindow(this);
-
-        //private void Window_Maximize(object sender, ExecutedRoutedEventArgs e) => SystemCommands.MaximizeWindow(this);
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            string[] Commands = System.Environment.GetCommandLineArgs();
-            var files = Commands.Skip(1).Where(p => System.IO.File.Exists(p)).ToArray();
+            string[] Commands = Environment.GetCommandLineArgs();
+            var files = Commands.Skip(1).Where(p => File.Exists(p)).ToArray();
             if (files.Any())
             {
-                LoadFile(files.First());
+                LoadFiles(files);
             }
             else
             {
-                var current = Process.GetCurrentProcess();
-                if(Process.GetProcessesByName(current.ProcessName).Length == 1)
+                var tempFiles = Filer.TemporaryFileMaker.GetUnManagedTemporaryFiles();
+                if (tempFiles.Any())
                 {
-                    var tempFiles = Filer.FileSaverAndLoader.GetTemporaryFiles();
-                    if (tempFiles.Any())
+                    var res = MessageBox.Show("正しく終了されなかったファイルがありますが開きますか？", "", MessageBoxButton.YesNo);
+                    if (res == MessageBoxResult.Yes)
                     {
-                        var res = MessageBox.Show("正しく終了されなかったファイルがありますが開きますか？", "", MessageBoxButton.YesNo);
-                        if(res == MessageBoxResult.Yes)
-                        {
-                            LoadFile(tempFiles.First());
-                            foreach (var item in tempFiles.Skip(1))
-                            {
-                                Process.Start(current.MainModule.FileName, item);
-                            }
-                        }
+                        LoadFiles(tempFiles);
                     }
                 }
             }
 
 
-            void LoadFile(string path)
+            void LoadFiles(IEnumerable<string> pathes)
             {
-                GetDataContext()?.EditrVM.Load(path);
+                bool isFirst = true;
+                foreach (var path in pathes)
+                {
+                    if (isFirst)
+                    {
+                        GetDataContext()?.EditrVM.Load(path);
+                        isFirst = false;
+                    }
+                    else
+                    {
+                        Process.Start(Filer.LocalEnvironmental.CurrentProcess.MainModule.FileName, path);
+                    }
+                }
             }
         }
 
