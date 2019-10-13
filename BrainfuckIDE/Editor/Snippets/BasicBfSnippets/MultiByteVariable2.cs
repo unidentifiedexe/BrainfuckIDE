@@ -102,6 +102,13 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
 
         #endregion
 
+        #region Incriment
+
+        public static ISnippet Incriment { get; }
+          = new ReginedSnippets($"Multi.{nameof(Incriment)}", $"Multi_{nameof(Incriment)}", ">+[+++++++++<[->->+<<]+>[[-]<->]<]>>[+[-<<+>>]]>[[[-]<<+>>]>]<<");
+
+        #endregion
+
         #region Decriment
 
         public static ISnippet Decriment { get; }
@@ -235,7 +242,7 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
             yield return "  >>+[>]>>>{n}[>]<";
             yield return "  [->+<]<[<]{p}<<<[<]<<";
             yield return "]";
-            yield return ">>>[>]>>>{n}<[-]>>[[-<+>]>]<<";
+            yield return ">>>[>]>>>{n}<[-]>[>]>[[-<+>]>]<<";
             yield return "[<]{p}<<<";
         }
 
@@ -244,6 +251,36 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
             yield return "//start  ___{ a*}___{ b }___";
             yield return "//resilt ___{ a*}___{res}___";
             yield return "//notice b の桁が a 以上である必要があります。";
+            yield return "//       アンダーフロー処理済み";
+        }
+
+        #endregion
+
+        #region SubFromPrev
+
+        public static ISnippet SubFromPrev { get; }
+            = new MultiInputMultiByteVariableSnipetts($"Multi.{nameof(SubFromPrev)}", $"Multi_{nameof(SubFromPrev)}", GetSubFromPrevByStrs(), GetSubFromPrevCommens());
+
+        private static IEnumerable<string> GetSubFromPrevByStrs()
+        {
+            yield return "[<]{p}<<<[<]++[[-<+>]>]";
+            yield return ">>>{n}[>]<";
+            yield return "[";
+            yield return "  ->>+<<";
+            yield return "  [ [<]{p}<<<[<]<[-[>[+++++++++>]>[>]>]+<] >-< >>>{n}[>]>+<<- ]";
+            yield return "  <[<]{p}<<<[<]<[->+<]>[>]>>>{n}[>]<";
+            yield return "]";
+            yield return "{p}<<<[<]<[[->+<]<]>>[-]>[>]>>>{n}>>[[-<<+>>]>]<<";
+
+
+
+        }
+
+        private static IEnumerable<string> GetSubFromPrevCommens()
+        {
+            yield return "//start  ___{ a }___{ b*}___";
+            yield return "//resilt ___{res}___{ b*}___";
+            yield return "//notice a の桁が b 以上である必要があります。";
             yield return "//       アンダーフロー処理済み";
         }
 

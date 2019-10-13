@@ -41,6 +41,10 @@
     <ApplicationIcon>Resource\BrainfuckIdeIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dlls\CsUtility.dll</HintPath>
+    </Reference>
     <Reference Include="GongSolutions.WPF.DragDrop, Version=2.0.0.0, Culture=neutral, PublicKeyToken=91f1945125b7a587, processorArchitecture=MSIL">
       <HintPath>..\packages\gong-wpf-dragdrop.2.0.1\lib\net47\GongSolutions.WPF.DragDrop.dll</HintPath>
     </Reference>
@@ -50,6 +54,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -65,10 +70,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </ApplicationDefinition>
+    </Page>
     <Compile Include="Controls\InputBindingsManager.cs" />
     <Compile Include="Controls\Converter.cs" />
     <Compile Include="Controls\Views\MainManuViewLayer.xaml.cs">
@@ -113,6 +118,8 @@
     <Compile Include="Editor\Snippets\CompletionWindowCreator.cs" />
     <Compile Include="Editor\Snippets\ISnippet.cs" />
     <Compile Include="Editor\Snippets\NonArgumentSnippet.cs" />
+    <Compile Include="Filer\TempFileInfo.cs" />
+    <Compile Include="Filer\TemporaryFileMaker.cs" />
     <Compile Include="Themes\CustomControlsTest.xaml.cs">
       <DependentUpon>CustomControlsTest.xaml</DependentUpon>
     </Compile>
@@ -239,6 +246,10 @@
     <ProjectReference Include="..\Interpreter\Interpreter.csproj">
       <Project>{b9aa7cc8-01e8-4f0b-9047-21e54d210ce5}</Project>
       <Name>Interpreter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JsonHelper\JsonHelper.csproj">
+      <Project>{39e8857f-c840-412d-9277-fbc796786884}</Project>
+      <Name>JsonHelper</Name>
     </ProjectReference>
     <ProjectReference Include="..\Refacter\Refacter.csproj">
       <Project>{1b7fc49d-cfa8-4324-bd61-79e46e636a72}</Project>

@@ -1,4 +1,3 @@
-/BrainFackIDE__
 /.vs
 /BrainfuckIDE/bin
 /BrainfuckIDE/obj
@@ -15,3 +14,5 @@
 /Refacter/bin
 /Refacter/obj
 /BrainfuckInterpreter/obj
+/JsonHelper/bin
+/JsonHelper/obj

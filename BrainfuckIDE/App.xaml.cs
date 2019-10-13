@@ -13,5 +13,12 @@ namespace BrainfuckIDE
     /// </summary>
     public partial class App : Application
     {
+        [STAThread]
+        static public void Main(string[] args)
+        {
+            App app = new App();
+            app.InitializeComponent();
+            app.Run();
+        }
     }
 }

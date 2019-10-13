@@ -4,6 +4,7 @@ using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -34,26 +35,65 @@ namespace BrainfuckIDE
             InitializeComponent();
 
         }
-
-        //private void Window_Minimize(object sender, ExecutedRoutedEventArgs e) 
-        //    => SystemCommands.MinimizeWindow(this);
-
-        //private void Window_Close(object sender, ExecutedRoutedEventArgs e)
-        //{
-        //    SystemCommands.CloseWindow(this);
-        //}
-
-        //private void Window_Restore(object sender, ExecutedRoutedEventArgs e) => SystemCommands.RestoreWindow(this);
-
-        //private void Window_Maximize(object sender, ExecutedRoutedEventArgs e) => SystemCommands.MaximizeWindow(this);
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            string[] Commands = Environment.GetCommandLineArgs();
+            var files = Commands.Skip(1).Where(p => File.Exists(p)).ToArray();
+            if (files.Any())
+            {
+                LoadFiles(files);
+            }
+            else
+            {
+                var tempFiles = Filer.TemporaryFileMaker.GetUnManagedTemporaryFiles();
+                if (tempFiles.Any())
+                {
+                    var res = MessageBox.Show("正しく終了されなかったファイルがありますが開きますか？", "", MessageBoxButton.YesNo);
+                    if (res == MessageBoxResult.Yes)
+                    {
+                        LoadFiles(tempFiles);
+                    }
+                }
+            }
 
-            string[] Commands = System.Environment.GetCommandLineArgs();
-            var files = Commands.Skip(1).Where(p => System.IO.File.Exists(p)).ToArray();
-            if(files.Any())
-                (this.DataContext as Controls.ViewModels.InterpreterRunningViewModel)?.EditrVM.Load(files.First());
+
+            void LoadFiles(IEnumerable<string> pathes)
+            {
+                bool isFirst = true;
+                foreach (var path in pathes)
+                {
+                    if (isFirst)
+                    {
+                        GetDataContext()?.EditrVM.Load(path);
+                        isFirst = false;
+                    }
+                    else
+                    {
+                        Process.Start(Filer.LocalEnvironmental.CurrentProcess.MainModule.FileName, path);
+                    }
+                }
+            }
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            var dataContext = GetDataContext();
+            if (!dataContext.IsFileSaved)
+            {
+                var res = MessageBox.Show("ファイルが保存されていません。保存しますか？", "", MessageBoxButton.YesNoCancel);
+
+                if (res == MessageBoxResult.Yes)
+                    dataContext.Save();
+                else if (res == MessageBoxResult.No)
+                    dataContext.EditrVM.FileSaverViewModel.ForceDeleteTemporaryFile();
+                else if (res == MessageBoxResult.Cancel)
+                    e.Cancel = true;
+            }
+        }
+
+        private Controls.ViewModels.InterpreterRunningViewModel GetDataContext()
+        {
+            return (this.DataContext as Controls.ViewModels.InterpreterRunningViewModel);
         }
     }
 

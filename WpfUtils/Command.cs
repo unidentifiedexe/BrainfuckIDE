@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,16 +25,25 @@ namespace WpfUtils
 
         private readonly Func<bool>? _canExecute;
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler? CanExecuteChanged;
 
-        public bool CanExecute(object parameter)
+        bool ICommand.CanExecute(object parameter)
         {
             return _canExecute?.Invoke() ?? true;
         }
 
-        public void Execute(object parameter)
+        void ICommand.Execute(object parameter)
         {
             _action();
+        }
+        public bool CanExecute()
+        {
+            return _canExecute?.Invoke() ?? true;
+        }
+        public void Execute()
+        {
+            if(CanExecute())
+                _action();
         }
 
         /// <summary>特定の処理を実行するコマンドを生成します</summary>
@@ -69,18 +76,24 @@ namespace WpfUtils
 
         private readonly Action<T> _action;
 
-        private readonly Func<bool>? _canExecute;
+        private readonly Func<T,bool>? _canExecute;
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler? CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute?.Invoke() ?? true;
+            return _canExecute?.Invoke((T)parameter) ?? true;
         }
 
-        public void Execute(object parameter)
+        void ICommand.Execute(object parameter)
         {
             _action((T)parameter);
+        }
+
+        public void Execute(T parameter)
+        {
+            if(CanExecute(parameter))
+                _action(parameter);
         }
 
         /// <summary>特定の処理を実行するコマンドを生成します</summary>
@@ -95,7 +108,7 @@ namespace WpfUtils
         /// <summary>特定の処理を実行するコマンドを生成します</summary>
         /// <param name="action">実行する処理</param>
         /// <param name="canExecute"></param>
-        public Command(Action<T> action, Func<bool> canExecute)
+        public Command(Action<T> action, Func<T,bool> canExecute)
         {
             _action = action;
             _canExecute = canExecute;
