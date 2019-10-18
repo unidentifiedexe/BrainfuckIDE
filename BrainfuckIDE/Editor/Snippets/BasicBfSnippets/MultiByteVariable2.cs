@@ -105,7 +105,7 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
         #region Incriment
 
         public static ISnippet Incriment { get; }
-          = new ReginedSnippets($"Multi.{nameof(Incriment)}", $"Multi_{nameof(Incriment)}", ">+[+++++++++<[->->+<<]+>[[-]<->]<]>>[+[-<<+>>]]>[[[-]<<+>>]>]<<");
+          = new ReginedSnippets($"Multi.{nameof(Incriment)}", $"Multi_{nameof(Incriment)}", ">+[+++++++++<[->->+<<]+>[[-]<->]<]>>[+[-<<+>>]]>[[[-]<<+>>]>]<<<");
 
         #endregion
 
@@ -270,7 +270,7 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
             yield return "  [ [<]{p}<<<[<]<[-[>[+++++++++>]>[>]>]+<] >-< >>>{n}[>]>+<<- ]";
             yield return "  <[<]{p}<<<[<]<[->+<]>[>]>>>{n}[>]<";
             yield return "]";
-            yield return "{p}<<<[<]<[[->+<]<]>>[-]>[>]>>>{n}>>[[-<<+>>]>]<<";
+            yield return "{p}<<<[<]<[[->+<]<]>>[-]>[>]>>>{n}>>[[-<<+>>]>]<<<";
 
 
 
