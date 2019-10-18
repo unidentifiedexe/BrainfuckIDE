@@ -265,9 +265,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="SourceLicenses.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resource\BrainfuckIdeIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
