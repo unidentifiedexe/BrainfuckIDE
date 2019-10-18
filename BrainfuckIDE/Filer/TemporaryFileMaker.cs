@@ -16,8 +16,10 @@ namespace BrainfuckIDE.Filer
         /// <summary> 一時ファイルの一覧を取得します。 </summary>
         public static IEnumerable<string> GetTemporaryFiles()
         {
-            return Directory.GetFiles(LocalEnvironmental.TemporaryDirectory, $"*{_temporaryFileExtension}")
-                .Where(IsCollectFormat);
+            if (!Directory.Exists(LocalEnvironmental.TemporaryDirectory))
+                return Enumerable.Empty<string>();
+            else 
+                return Directory.GetFiles(LocalEnvironmental.TemporaryDirectory, $"*{_temporaryFileExtension}").Where(IsCollectFormat);
         }
         public static IEnumerable<string> GetUnManagedTemporaryFiles()
         {
