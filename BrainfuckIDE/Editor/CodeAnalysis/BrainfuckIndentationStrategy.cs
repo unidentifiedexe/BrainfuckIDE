@@ -17,7 +17,7 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
 
         public int NestSpaceNum => _nestSpaceNum;
 
-        public BrainfuckIndentationStrategy(int nestSpaceNum)
+        private BrainfuckIndentationStrategy(int nestSpaceNum)
         {
             _nestSpaceNum = nestSpaceNum;
         }

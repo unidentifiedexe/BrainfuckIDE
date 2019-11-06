@@ -64,7 +64,7 @@ namespace BrainfuckIDE.Editor
 
         private void Document_Changed1(object sender, DocumentChangeEventArgs e)
         {
-            _bfFoldingManager.Update();
+            _bfFoldingManager.Update(e);
         }
 
         private void LeftMargins_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -354,36 +354,27 @@ namespace BrainfuckIDE.Editor
 
         private void MoveLineToNext()
         {
-            var caretLine = this.TextArea.Caret.Line;
-            var caretColum = this.TextArea.Caret.Column;
-            var line = this.TextArea.Document.GetLineByNumber(this.TextArea.Caret.Line);
-            var next = line.NextLine;
-            if (next == null) return;
-            var txt = this.TextArea.Document.GetText(next) + Environment.NewLine +
-                      this.TextArea.Document.GetText(line);
-            if (next.DelimiterLength != 0) txt += Environment.NewLine;
+            _bfFoldingManager.CashNowFoldData();
+            var caretOffset = this.TextArea.Caret.Offset;
+            var x = _bfFoldingManager.GetFoldedLineRange(caretOffset);
 
-            this.TextArea.Document.Replace(line.Offset, line.TotalLength + next.TotalLength, txt);
-            this.TextArea.Caret.Line = caretLine + 1;
-            this.TextArea.Caret.Column = caretColum;
+            var next = this.TextArea.Document.GetLineByOffset(x.End).NextLine;
+            if (next == null) return;
+            var y = _bfFoldingManager.GetFoldedLineRange(next.Offset);
+            this.TextArea.Document.Swap(x.Start, x.Length, y.Start, y.Length);
+            this.TextArea.Caret.Offset = caretOffset - x.End + y.End;
 
         }
 
         private void MoveLineToPrevious()
         {
-            var caretLine = this.TextArea.Caret.Line;
-            var caretColum = this.TextArea.Caret.Column;
-            var line = this.TextArea.Document.GetLineByNumber(this.TextArea.Caret.Line);
-            var prev = line.PreviousLine;
-            if (prev == null) return;
-            var txt = this.TextArea.Document.GetText(line) + Environment.NewLine +
-                       this.TextArea.Document.GetText(prev);
-            if (line.DelimiterLength != 0) txt += Environment.NewLine;
-
-            this.TextArea.Document.Replace(prev.Offset, prev.TotalLength + line.TotalLength, txt);
-            this.TextArea.Caret.Line = caretLine - 1;
-            this.TextArea.Caret.Column = caretColum;
-
+            _bfFoldingManager.CashNowFoldData();
+            var caretOffset = this.TextArea.Caret.Offset;
+            var x = _bfFoldingManager.GetFoldedLineRange(caretOffset);
+            if (x.Start <= 0) return;
+            var y = _bfFoldingManager.GetFoldedLineRange(x.Start - 1);
+            this.TextArea.Document.Swap(x.Start, x.Length, y.Start, y.Length);
+            this.TextArea.Caret.Offset = caretOffset - x.Start + y.Start;
         }
 
         private void RefactSimplySelectedRange()
