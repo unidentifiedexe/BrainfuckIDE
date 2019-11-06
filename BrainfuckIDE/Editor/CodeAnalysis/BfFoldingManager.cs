@@ -37,6 +37,17 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
             _foldingManager.UpdateFoldings(folds, -1);
         }
 
+        //private IEnumerable<NewFolding> GetFoldedFoldings(IEnumerable<FoldingSection> oldFoldings, IEnumerable<NewFolding> newFoldings)
+        //{
+        //    using var oldEnumer = oldFoldings.GetEnumerator();
+        //    using var newEnumer = newFoldings.GetEnumerator();
+
+        //    int GetLine(NewFolding x)
+        //    {
+        //        return _document.Lines
+        //    }
+        //}
+
 
 
         private IEnumerable<NewFolding> RegionItr(IEnumerable<string> txts)

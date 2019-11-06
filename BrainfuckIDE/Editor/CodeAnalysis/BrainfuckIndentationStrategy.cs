@@ -43,6 +43,7 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
             }
         }
 
+    
         public void IndentLines(TextDocument document, int beginLine, int endLine)
         {
 
@@ -58,10 +59,18 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
             var txt = GetPrevNestSpaceNum(beginLine);
             var strs = NestRefactor.Refact(lines.Select(document.GetText).Prepend(txt), NestSpaceNum).Skip(1);
 
-            foreach (var (line, str) in lines.Zip(strs, (l, s) => (l, s)))
+            foreach (var (line, str) in lines.Zip(strs, (l, s) => (l, s)).Reverse())
             {
-                if (document.GetText(line) != str)
-                    document.Replace(line, str);
+                var oldSpaceNum = document.GetText(line).TakeWhile(p => p == ' ').Count();
+                var newSpaceNum = document.GetText(line).TakeWhile(p => p == ' ').Count();
+                if (oldSpaceNum > newSpaceNum)
+                {
+                    document.Remove(line.Offset, oldSpaceNum - newSpaceNum);
+                }
+                else if (newSpaceNum > oldSpaceNum)
+                {
+                    document.Insert(line.Offset, new string(Enumerable.Repeat(' ', newSpaceNum - oldSpaceNum).ToArray()));
+                }
             }
 
             IEnumerable<DocumentLine> RangeLineItr(int b, int e)
