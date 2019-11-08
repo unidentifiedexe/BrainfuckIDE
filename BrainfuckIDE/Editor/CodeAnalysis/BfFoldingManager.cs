@@ -43,8 +43,6 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
         {
 
             var folds = EnumereteNewFoldings(_document.Text);
-
-
             _foldingManager.UpdateFoldings(folds, -1);
         }
 
@@ -53,16 +51,11 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
             if (e is null)
                 throw new ArgumentNullException(nameof(e));
 
-
+            Update();
             var dic = _prevFoldings.Where(p => p.IsFolded)
-                .Where(p => e.X.WasIn(p.Start) && e.X.WasIn(p.End) || (e.Y.WasIn(p.Start) && e.Y.WasIn(p.End)))
+                .Where(p => e.X.ConrainsRange(p.Start,p.End) || (e.Y.ConrainsRange(p.Start,p.End)))
                 .Select(p => e.GetNewOffset(p.Start))
                 .ToHashSet();
-
-
-
-            var folds = EnumereteNewFoldings(_document.Text).ToArray();
-            _foldingManager.UpdateFoldings(folds, -1);
 
             foreach (var item in _foldingManager.AllFoldings)
             {

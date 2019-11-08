@@ -142,7 +142,12 @@ namespace BrainfuckIDE.Editor
             /// <returns></returns>
             public bool WasIn(int offset)
             {
-                return OldOffset <= offset && offset < OldOffset + Length;
+                return OldOffset <= offset && offset < OldEndOffset;
+            }
+
+            public bool ConrainsRange(int start, int end)
+            {
+                return start <= end && OldOffset <= start && end <= OldEndOffset;
             }
 
         }
