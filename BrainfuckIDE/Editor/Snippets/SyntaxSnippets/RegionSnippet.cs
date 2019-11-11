@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Snippets;
+using Snippets;
 
 namespace BrainfuckIDE.Editor.Snippets.SyntaxSnippets
 {

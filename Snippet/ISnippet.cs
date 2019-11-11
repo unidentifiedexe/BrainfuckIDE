@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BrainfuckIDE.Editor.Snippets
+namespace Snippets
 {
     /// <summary>
     /// スニペット挿入に必要な情報の提供をサポートします
     /// </summary>
-    interface ISnippet
+    public interface ISnippet
     {
         string Shortcut { get; }
 

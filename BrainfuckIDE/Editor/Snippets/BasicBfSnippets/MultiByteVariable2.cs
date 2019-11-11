@@ -1,4 +1,5 @@
 ﻿using ICSharpCode.AvalonEdit.Snippets;
+using Snippets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -285,6 +286,11 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
         }
 
         #endregion
+
+        public static ISnippet Test { get; } =
+            TestSnippets.TestSnippet;
+
+
 
 
         #region インナー関数

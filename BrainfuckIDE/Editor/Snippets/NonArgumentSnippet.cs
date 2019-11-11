@@ -8,6 +8,7 @@ using BrainfuckIDE.Editor.Snippets.BasicBfSnippets;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Snippets;
+using Snippets;
 
 namespace BrainfuckIDE.Editor.Snippets
 {
@@ -35,7 +36,7 @@ namespace BrainfuckIDE.Editor.Snippets
 
 
         public NonArgumentSnippet(string shortcut, string title, string text)
-            :this(shortcut,title,text.Split('\n'))
+            :this(shortcut,title,text.Replace("\r\n", "\n").Split('\n','\r'))
         {
         }
 

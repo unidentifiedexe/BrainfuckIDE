@@ -3,6 +3,7 @@ using BrainfuckIDE.Editor.Snippets.SyntaxSnippets;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
+using Snippets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace BrainfuckIDE.Editor.Snippets
     {
         public static CompletionWindow Creato(TextArea textArea)
         {
-            var snippets = new[]{
+            var snippets = new []{
                 new [] { RegionSnippet.Instance },
                 new [] { MoveSnippet.Instance, PointerMoveSnippet.Instance },
                 OperationSnipets.GetAllSnippets(),

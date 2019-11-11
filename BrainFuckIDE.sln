@@ -15,9 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfUtils", "WpfUtils\WpfUti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Refacter", "Refacter\Refacter.csproj", "{1B7FC49D-CFA8-4324-BD61-79E46E636A72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snippet", "Snippet\Snippet.csproj", "{06EEFEE7-281D-47A4-9030-5E430FEBEF64}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snippets", "Snippet\Snippets.csproj", "{06EEFEE7-281D-47A4-9030-5E430FEBEF64}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonHelper", "JsonHelper\JsonHelper.csproj", "{39E8857F-C840-412D-9277-FBC796786884}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tester", "Tester\Tester.csproj", "{93816005-D34E-45CF-9F82-61D3E463F8BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{39E8857F-C840-412D-9277-FBC796786884}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39E8857F-C840-412D-9277-FBC796786884}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39E8857F-C840-412D-9277-FBC796786884}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93816005-D34E-45CF-9F82-61D3E463F8BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93816005-D34E-45CF-9F82-61D3E463F8BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93816005-D34E-45CF-9F82-61D3E463F8BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93816005-D34E-45CF-9F82-61D3E463F8BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

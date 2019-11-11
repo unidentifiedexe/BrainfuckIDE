@@ -106,7 +106,7 @@
     <Compile Include="Editor\Snippets\BasicBfSnippets\MultiByteVariable2.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\OperationSnipets.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\PointerMoveSnippet.cs" />
-    <Compile Include="Editor\Snippets\BasicBfSnippets\SnippetBase.cs" />
+    <Compile Include="Editor\Snippets\BasicBfSnippets\RepeatStringGenerator.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\SnippetUtils.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\StandardInOutSnippets.cs" />
     <Compile Include="Editor\Snippets\CompletionWindow.cs" />
@@ -116,7 +116,6 @@
     <Compile Include="Filer\LocalEnvironmental.cs" />
     <Compile Include="Editor\Snippets\BasicCompletionData.cs" />
     <Compile Include="Editor\Snippets\CompletionWindowCreator.cs" />
-    <Compile Include="Editor\Snippets\ISnippet.cs" />
     <Compile Include="Editor\Snippets\NonArgumentSnippet.cs" />
     <Compile Include="Filer\TempFileInfo.cs" />
     <Compile Include="Filer\TemporaryFileMaker.cs" />
@@ -254,6 +253,10 @@
     <ProjectReference Include="..\Refacter\Refacter.csproj">
       <Project>{1b7fc49d-cfa8-4324-bd61-79e46e636a72}</Project>
       <Name>Refacter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Snippet\Snippets.csproj">
+      <Project>{06eefee7-281d-47a4-9030-5e430febef64}</Project>
+      <Name>Snippets</Name>
     </ProjectReference>
     <ProjectReference Include="..\TextCodeMaker\TextCodeMaker.csproj">
       <Project>{3b520406-b3cc-41d5-8c74-74e136d8424c}</Project>

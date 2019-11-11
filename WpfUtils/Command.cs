@@ -23,9 +23,9 @@ namespace WpfUtils
 
         private readonly Action _action;
 
-        private readonly Func<bool>? _canExecute;
+        private readonly Func<bool> _canExecute;
 
-        public event EventHandler? CanExecuteChanged;
+        public event EventHandler CanExecuteChanged;
 
         bool ICommand.CanExecute(object parameter)
         {
@@ -76,9 +76,9 @@ namespace WpfUtils
 
         private readonly Action<T> _action;
 
-        private readonly Func<T,bool>? _canExecute;
+        private readonly Func<T,bool> _canExecute;
 
-        public event EventHandler? CanExecuteChanged;
+        public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
@@ -126,11 +126,11 @@ namespace WpfUtils
 
         private bool _isExecuting;
         private readonly Func<Task> _execute;
-        private readonly Func<bool>? _canExecute;
+        private readonly Func<bool> _canExecute;
 
         public AsyncCommand(
             Func<Task> execute,
-            Func<bool>? canExecute = null)
+            Func<bool> canExecute = null)
         {
             _execute = execute;
             _canExecute = canExecute;
@@ -183,11 +183,11 @@ namespace WpfUtils
 
         private bool _isExecuting;
         private readonly Func<T,Task> _execute;
-        private readonly Func<bool>? _canExecute;
+        private readonly Func<bool> _canExecute;
 
         public AsyncCommand(
             Func<T,Task> execute,
-            Func<bool>? canExecute = null)
+            Func<bool> canExecute = null)
         {
             _execute = execute;
             _canExecute = canExecute;

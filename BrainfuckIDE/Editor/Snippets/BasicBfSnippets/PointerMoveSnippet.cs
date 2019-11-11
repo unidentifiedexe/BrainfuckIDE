@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Snippets;
+using Snippets;
 using System;
 using System.Collections.Generic;
 using System.Linq;

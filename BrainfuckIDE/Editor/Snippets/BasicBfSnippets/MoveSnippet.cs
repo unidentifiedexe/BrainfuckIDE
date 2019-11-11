@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static BrainfuckIDE.Editor.Snippets.BasicBfSnippets.SnippetUtils;
+using Snippets;
 
 namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
 {
