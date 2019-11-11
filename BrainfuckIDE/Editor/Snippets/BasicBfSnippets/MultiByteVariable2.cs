@@ -15,11 +15,16 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
 
         public static IEnumerable<ISnippet> GetAllSnippets()
         {
-            var type = typeof(MultiByteVariable2);
-            return
-                 type.GetProperties(BindingFlags.Static | BindingFlags.GetProperty | BindingFlags.Public)
-                     .Where(x => x.PropertyType == typeof(ISnippet))
-                     .Select(x => x.GetValue(type, null)).OfType<ISnippet>();
+            var loader = SnippetLoader.Instance;
+            if (loader.IsLoaded == false)
+                loader.Load(new[] { "hoge.json" });
+
+            return loader.LoadedSnippets;
+            //var type = typeof(MultiByteVariable2);
+            //return
+            //     type.GetProperties(BindingFlags.Static | BindingFlags.GetProperty | BindingFlags.Public)
+            //         .Where(x => x.PropertyType == typeof(ISnippet))
+            //         .Select(x => x.GetValue(type, null)).OfType<ISnippet>();
         }
 
         #region ReadNum
@@ -286,10 +291,6 @@ namespace BrainfuckIDE.Editor.Snippets.BasicBfSnippets
         }
 
         #endregion
-
-        public static ISnippet Test { get; } =
-            TestSnippets.TestSnippet;
-
 
 
 

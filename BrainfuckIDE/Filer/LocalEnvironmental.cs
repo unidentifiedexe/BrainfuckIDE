@@ -14,6 +14,8 @@ namespace BrainfuckIDE.Filer
 
         static public string TemporaryDirectory => "./.temp/";
 
+        static public string SnippetDirectory => "./Snippets/";
+
         private static Process? _currentProcess;
 
         static public Process CurrentProcess => _currentProcess ??= Process.GetCurrentProcess();

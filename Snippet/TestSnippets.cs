@@ -13,39 +13,25 @@ namespace Snippets
 {
     public class TestSnippets
     {
-        public static ISnippet TestSnippet =>
-            _testSnippetBase.CreateSnippet();
+        public static ISnippet TestSnippet => Test();
 
-        private static readonly ConverterSnippetSeed _testSnippetBase = Test();
-        private static IEnumerable<string> TestCodeByStrs()
+
+        public static ISnippet[] GetSnippets()
         {
-            yield return "#region {pos}";
-            yield return "[<]{pos:prev}<<<[<]++[[-<+>]>]";
-            yield return ">>>{pos:next}[>]<";
-            yield return "[";
-            yield return "  ->>+<<";
-            yield return "  [ [<]{pos:prev}<<<[<]<[-[>[+++++++++>]>[>]>]+<] >-< >>>{pos:next}[>]>+<<- ]";
-            yield return "  <[<]{pos:prev}<<<[<]<[->+<]>[>]>>>{pos:next}[>]<";
-            yield return "]";
-            yield return "{pos:prev}<<<[<]<[[->+<]<]>>[-]>[>]>>>{pos:next}>>[[-<<+>>]>]<<";
-            yield return "#endregion";
-
-
-
+            SnippetLoader.Instance.Load(new[] { "hoge.json" });
+            return SnippetLoader.Instance.LoadedSnippets.ToArray();
         }
-
-
-        private static ConverterSnippetSeed Test()
+        private static ISnippet Test()
         {
-            var assembly = typeof(TestSnippets).Assembly;
-            var knownTypes = assembly.DefinedTypes
-                .Where(p => p.GetCustomAttributes(typeof(DataContractAttribute), false) != null)
-                .ToArray();
-            //JsonHelper.Json.Save(_testSnippetBase, "hoge.json", knownTypes);
-            var str = new StreamReader("hoge.json").ReadToEnd();
-            var ezer = new JsonHelper.WellKnownTypeDeserializer(knownTypes);
-            var  x = ezer.Parse(str);
-            return x as ConverterSnippetSeed;
+            throw new NotImplementedException();
+
+            //var assembly = typeof(TestSnippets).Assembly;
+            //var knownTypes = assembly.DefinedTypes.ToArray();
+            ////JsonHelper.Json.Save(_testSnippetBase, "hoge.json", knownTypes);
+            //var str = new StreamReader("hoge.json").ReadToEnd();
+            //var ezer = new JsonHelper.WellKnownTypeDeserializer(knownTypes);
+            //var  x = ezer.Parse(str);
+            //return (x as SnippetList).GetSnipetts().First();
         }
     }
 }

@@ -1,16 +1,10 @@
-﻿using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -39,6 +33,9 @@ namespace BrainfuckIDE
         {
             string[] Commands = Environment.GetCommandLineArgs();
             var files = Commands.Skip(1).Where(p => File.Exists(p)).ToArray();
+
+            Snippets.SnippetLoader.Instance.Load(Filer.SnippetFileGetor.GetSnipetFilePathes());
+
             if (files.Any())
             {
                 LoadFiles(files);

@@ -20,16 +20,20 @@ namespace BrainfuckIDE.Editor.Snippets
     {
         public static CompletionWindow Creato(TextArea textArea)
         {
-            var snippets = new []{
-                new [] { RegionSnippet.Instance },
-                new [] { MoveSnippet.Instance, PointerMoveSnippet.Instance },
-                OperationSnipets.GetAllSnippets(),
-                StandardInOutSnippets.GetAllSnippets(),
-                ArrayOperetorSnippets.GetAllSnippets(),
-                MultiByteVariable2.GetAllSnippets(),
-            }.SelectMany(p => p);
+            var loder = SnippetLoader.Instance;
+            if (!loder.IsLoaded || !loder.LoadedSnippets.Any())
+                return null;
 
-            return Creato(textArea, snippets);
+            //new []{
+            //    new [] { RegionSnippet.Instance },
+            //    new [] { MoveSnippet.Instance, PointerMoveSnippet.Instance },
+            //    OperationSnipets.GetAllSnippets(),
+            //    StandardInOutSnippets.GetAllSnippets(),
+            //    ArrayOperetorSnippets.GetAllSnippets(),
+            //    MultiByteVariable2.GetAllSnippets(),
+            //}.SelectMany(p => p);
+
+            return Creato(textArea, loder.LoadedSnippets);
         }
 
 

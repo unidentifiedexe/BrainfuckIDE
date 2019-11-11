@@ -7,8 +7,8 @@
     <ProjectGuid>{06EEFEE7-281D-47A4-9030-5E430FEBEF64}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Snippet</RootNamespace>
-    <AssemblyName>Snippet</AssemblyName>
+    <RootNamespace>Snippets</RootNamespace>
+    <AssemblyName>Snippets</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -60,9 +60,10 @@
     <Compile Include="ReplaceElements\IRepleaceElement.cs" />
     <Compile Include="ElementConverters\RepeatConverter.cs" />
     <Compile Include="ISnippet.cs" />
-    <Compile Include="JsonLoder\SnippetInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnippetBase.cs" />
+    <Compile Include="SnippetList.cs" />
+    <Compile Include="SnippetLoder.cs" />
     <Compile Include="SnippetSeed.cs" />
     <Compile Include="SnippetSeeds\BasicSnippetSeed.cs" />
     <Compile Include="SnippetSeeds\ConverterSnippetSeed.cs" />

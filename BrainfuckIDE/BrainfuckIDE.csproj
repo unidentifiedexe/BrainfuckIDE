@@ -117,6 +117,7 @@
     <Compile Include="Editor\Snippets\BasicCompletionData.cs" />
     <Compile Include="Editor\Snippets\CompletionWindowCreator.cs" />
     <Compile Include="Editor\Snippets\NonArgumentSnippet.cs" />
+    <Compile Include="Filer\SnippetFileGetor.cs" />
     <Compile Include="Filer\TempFileInfo.cs" />
     <Compile Include="Filer\TemporaryFileMaker.cs" />
     <Compile Include="Themes\CustomControlsTest.xaml.cs">

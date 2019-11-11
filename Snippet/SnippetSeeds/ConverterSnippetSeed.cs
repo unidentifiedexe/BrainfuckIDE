@@ -16,14 +16,20 @@ using System.Threading.Tasks;
 namespace Snippets.SnippetSeeds
 {
     [DataContract]
-    class ConverterSnippetSeed : ISnippetSeed
+    class ConverterSnippetSeed : ISnippetSeed , IAddableSnippetSeed
     {
+        #region フィールド
+
         private string? _name;
         private string? _title;
         private string? _shortcut;
         private string[]? _code;
-        private RepleaceElement[]? _elements;
+        private IRepleaceElement[]? _elements;
         private IElementConverter[]? _converters;
+
+        #endregion
+
+        #region プロパティ
 
 
         [DataMember]
@@ -55,10 +61,10 @@ namespace Snippets.SnippetSeeds
 
 
         [DataMember]
-        [DefaultCollectionType(typeof(RepleaceElement[]))]
-        public IEnumerable<RepleaceElement> Elements
+        [DefaultCollectionType(typeof(IRepleaceElement[]))]
+        public IEnumerable<IRepleaceElement> Elements
         {
-            get => _elements ?? Array.Empty<RepleaceElement>();
+            get => _elements ?? Array.Empty<IRepleaceElement>();
             set => _elements = value?.ToArray();
         }
         [DataMember]
@@ -68,17 +74,42 @@ namespace Snippets.SnippetSeeds
             get => _converters ?? Array.Empty<IElementConverter>();
             set => _converters = value.ToArray();
         }
+
+
+        #endregion
+
+
         public ISnippet CreateSnippet()
         {
-            return new CommonSnippet(Shortcut, Title, GetSnippet());
+
+            var snippets = GetSnippet(Code, Elements, Converters);
+            return new CommonSnippet(Shortcut, Title, snippets);
         }
 
-        private Snippet GetSnippet()
+        public ISnippet CreateSnippet(
+            IEnumerable<IRepleaceElement> additivElements,
+            IEnumerable<IElementConverter> additivConverters)
+        {
+            var element = Elements;
+            if (additivElements != null)
+                element = element.Concat(additivElements);
+            var converters = Converters;
+            if (additivConverters != null)
+                converters = converters.Concat(additivConverters);
+            var snippets = GetSnippet(Code, element, converters);
+            return new CommonSnippet(Shortcut, Title, snippets);
+        }
+
+
+        private Snippet GetSnippet(
+            IEnumerable<string> code,
+            IEnumerable<IRepleaceElement> elements, 
+            IEnumerable<IElementConverter> converters)
         {
             var snippet = new Snippet();
 
-            var strs = string.Join("\n", Code);
-            foreach (var item in ConvertToElement(strs, Elements, Converters))
+            var strs = string.Join("\n", code);
+            foreach (var item in ConvertToElement(strs, elements, converters))
             {
                 snippet.Elements.Add(item);
             }
@@ -136,8 +167,9 @@ namespace Snippets.SnippetSeeds
 
             public BoundElementsGetor(IEnumerable<IRepleaceElement> elements, IEnumerable<IElementConverter> converters)
             {
-                _replaceElements = elements.ToDictionary(p => p.Name, p => new SnippetReplaceableTextElement { Text = p.DefaultText });
-                _converters = converters.ToDictionary(p => p.Name);
+                _replaceElements = elements.ToLookup(p => p.Name, p => new SnippetReplaceableTextElement { Text = p.DefaultText })
+                    .ToDictionary(p => p.Key, p => p.First());
+                _converters = converters.ToLookup(p => p.Name).ToDictionary(p => p.Key, p => p.First());
                 _isUsed = _replaceElements.Values.ToDictionary(p => p, _ => false);
             }
 
