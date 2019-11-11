@@ -1,0 +1,272 @@
+{
+  "__type": "SnippetList",
+  "Elements": [
+    {
+      "__type": "RepleaceElement",
+      "DefaultText": "0",
+      "Name": "pos"
+    }
+  ],
+  "Converters": [ 
+    {
+      "__type": "RepeatConverter",
+      "Name": "prev",
+      "IsIgnoreBracketIfZero": true,
+      "StartBracket": "{",
+      "SeedString": "<<<[<]",
+      "EndBracket": "}"
+    },
+    {
+      "__type": "RepeatConverter",
+      "Name": "next",
+      "IsIgnoreBracketIfZero": true,
+      "StartBracket": "{",
+      "SeedString": "[>]>>>",
+      "EndBracket": "}"
+    }
+  ],
+  "Snippets" :[
+    {
+      "__type": "SnippetSeed",
+      "Name": "SubFromPrev",
+      "Shortcut": "Multi.SubFromPrev",
+      "Title": "Multi_SubFromPrev",
+      "Code": [
+        "#region Multi_SubFromPrev {pos}",
+        "//start  ___{ a }___{ b*}___",
+        "//resilt ___{res}___{ b*}___",
+        "//notice a の桁が b 以上である必要があります。",
+        "//       アンダーフロー処理済み",
+        "[<]{pos:prev}<<<[<]++[[-<+>]>]",
+        ">>>{pos:next}[>]<",
+        "[",
+        "  ->>+<<",
+        "  [ [<]{pos:prev}<<<[<]<[-[>[+++++++++>]>[>]>]+<] >-< >>>{pos:next}[>]>+<<- ]",
+        "  <[<]{pos:prev}<<<[<]<[->+<]>[>]>>>{pos:next}[>]<",
+        "]",
+        "{pos:prev}<<<[<]<[[->+<]<]>>[-]>[>]>>>{pos:next}>>[[-<<+>>]>]<<",
+        "#endregion"
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "SubFromNext",
+      "Shortcut": "Multi.SubFromNext",
+      "Title": "Multi_SubFromNext",
+      "Code": [
+        "#region Multi_SubFromNext {pos}",
+        "//start  ___{ a*}___{ b }___",
+        "//resilt ___{ a*}___{res}___",
+        "//notice b の桁が a 以上である必要があります。",
+        "//       アンダーフロー処理済み",
+        "> >>>{pos:next}<++>{pos:prev}<<< <",
+        "[<]>[[-<<+>>]>]",
+        "<<<",
+        "[",
+        "  -[ ->>+[>]>>>{pos:next}[>]< [-[<]] <[>++++++++++< [-[<]]< ]>{pos:prev}<<<[<]< ]",
+        "  >>+[>]>>>{pos:next}[>]<",
+        "  [->+<]<[<]{pos:prev}<<<[<]<<",
+        "]",
+        ">>>[>]>>>{pos:next}<[-]>[>]>[[-<+>]>]<<",
+        "[<]{pos:prev}<<<",
+        "#endregion"      
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "AddToNext",
+      "Shortcut": "Multi.AddToNext",
+      "Title": "Multi_AddToNext",
+      "Code": [
+        "#region Multi_AddToNext {pos}",
+        "//start  ___{ a*}___{ b*}___",
+        "//resilt ___{ a*}___{res}___",
+        "//notice b の桁が a 以上である必要があります",
+        "[",
+        "  -",
+        "  [->>+[>]>{pos:next}[>]<+[<]{pos:prev}<[<]< ]",
+        "  >>+[>]>{pos:next}[>]<",
+        "  [->+<[->+<[->+<[->+<[->+<[->+<[->+<[->+<[->+<[->+<[ ",
+        "    [->+<]>----------< <[+>]>[<]",
+        "  ]]]]]]]]]]]",
+        "  <[<]{pos:prev}<[<]<<",
+        "]",
+        ">>>[[-<<+>>]>]>{pos:next}[>]<",
+        "[",
+        "  [->+<[->+<[->+<[->+<[->+<[->+<[->+<[->+<[->+<[->+<[ ",
+        "    [->+<]>----------< <[+>]>[<]",
+        "  ]]]]]]]]]]]",
+        "  <",
+        "]",
+        ">>[[-<+>]>]<<[<]{pos:prev}<<<",
+        "#endregion"      
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "AddToPrev",
+      "Shortcut": "Multi.AddToPrev",
+      "Title": "Multi_AddToPrev",
+      "Code": [
+        "#region Multi_AddToPrev {pos}",
+        "//start  ___{ a }___{ b*}___",
+        "//resilt ___{res}___{ b*}___",
+        "[",
+        "  [<]{pos:prev}<[<]<<[->>+<<]>>[>]>{pos:next}[>]>+<<-",
+        "  [ [<]{pos:prev}<[<]>+[>]>{pos:next}[>] >+<<- ] <",
+        "]",
+        "{pos:prev}<[<]<<[<]>",
+        "[[-<+>]>]>>[[-<<<+>>>]>]<<<<",
+        "[ ",
+        "  [->+<[->+<[->+<[->+<[->+<[->+<[->+<[->+<[->+<[->+<[ ",
+        "    [->+<]>----------< <[+>]>[<]",
+        "  ]]]]]]]]]]]<",
+        "]",
+        ">>[>]>>>{pos:next}>>[[-<<+>>]>]<<<",
+        "#endregion"      
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "Comparate",
+      "Shortcut": "Multi.Comparate",
+      "Title": "Multi_Comparate",
+      "Code": [
+        "#region Multi_Comparate {pos}",
+        "//start  ___{ a }___{ b*}___",
+        "//resilt ___{ a }_x_{ b*}___",
+        "//notice 桁数が同じである必要があります",
+        "//x : 0 if same / 1 if a lt b / 2 if a gt b",
+        "#region メイン比較部",
+        "[[->>+<<]<]",
+        "<<<[<]>",
+        "[",
+        "  -<<+>>",
+        "  [>[>]>-<<[<]<+>>-]",
+        "  >[>]>>>[>]>>",
+        "  -<<+>>",
+        "  [-<<+[<]<+>>[>]>]",
+        "  <<[<]<",
+        "  [",
+        "    <->>+<",
+        "    -[-[-[-[-[-[-[-[-[-[[+]>+<]]]]]]]]]]",
+        "  ]",
+        "  <+",
+        "  [- <[<]]>",
+        "]",
+        ">[<]",
+        ">[-<+>]<",
+        "#endregion",
+        "#region 後処理部",
+        "<<[<]<<[[->>+<<]<]>>>[>]>>>[>]>>[[-<<+>>]>]<<<",
+        "#endregion",
+        "#endregion"      
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "DecrimentIfPuls",
+      "Shortcut": "Multi.DecrimentIfPuls",
+      "Title": "Multi_DecrimentIfPuls",
+      "Code": [
+        "#region Multi_DecrimentIfPuls",
+        "[-[>[+++++++++>]>]+<]>-<< >>>[<+[>]>>]<<<",
+        "#endregion"      
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "Decriment",
+      "Shortcut": "Multi.Decriment",
+      "Title": "Multi_Decriment",
+      "Code": [
+        "#region Multi_Decriment",
+        "[-[>[+++++++++>]>]+<]>-<< >>>[<+[+++++++++>]>>]<<<",
+        "#endregion"      
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "Incriment",
+      "Shortcut": "Multi.Incriment",
+      "Title": "Multi_Incriment",
+      "Code": [
+        "#region Multi_Incriment ",
+        ">+[+++++++++<[->->+<<]+>[[-]<->]<]>>[+[-<<+>>]]>[[[-]<<+>>]>]<<",
+        "#endregion"      
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "WriteNumber",
+      "Shortcut": "Multi.WriteNumber",
+      "Title": "Multi_WriteNumber",
+      "Code": [
+        "#region Multi_WriteNumber",   
+        "+[<]>[-[+[>]]<+>>] ++++++[-<-------->]<+<--> [[<]>[+>]<]<[<]>[.>]",
+        ">++++++[-<++++++++>]<- [[<]>[->]<]<[<]<[[->+<]<]>>[>]<　//数値復帰部",
+        "#endregion"      
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "IsTrue",
+      "Shortcut": "Multi.IsTrue",
+      "Title": "Multi_IsTrue",
+      "Code": [
+        "#region Multi_IsTrue",
+        "[-[+[>]>]+<] <[[<]<]>>[>]<",
+        "#endregion"      
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "Abs",
+      "Shortcut": "Multi.Abs",
+      "Title": "Multi_Abs",
+      "Code": [
+        "#region Multi_Abs",
+        "[<]>",
+        "-[+",
+        "  [>]<",
+        "  [-[>[+++++++++>]>]+<]>-<<",
+        "  [ >++++++++++< -[->-<] <]",
+        "  >>[[-<+>]>]<<",
+        "  [<]>[-]",
+        "]+",
+        "[>]<",
+        "#endregion"      
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "ReverseSign",
+      "Shortcut": "Multi.ReverseSign",
+      "Title": "Multi_ReverseSign",
+      "Code": [
+        "#region Multi_ReverseSign",
+        "[-[>[+++++++++>]>]+<]>->[<+[+++++++++>]>>]<<<",
+        "[ >++++++++++< -[->-<] <]",
+        ">>[[-<+>]>]<<",
+        "#endregion"      
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "ReadNumber",
+      "Shortcut": "Multi.ReadNumber",
+      "Title": "Multi_ReadNumber",
+      "Code": [
+        "#region Multi_ReadNumber ",
+        "+>+>+>+>+> +>+> //桁数",
+        ">+[-<",
+        "  ,+[-----------[----------------------",
+        "    [--------------<-[+<-]>[[-<+>]>]+<]",
+        "  ]]>",
+        "]",
+        "<<-[+<-]+>[->]<",
+        "#endregion"      
+      ]
+    }
+  ]
+}

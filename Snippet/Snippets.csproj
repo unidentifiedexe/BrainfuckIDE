@@ -64,11 +64,9 @@
     <Compile Include="SnippetBase.cs" />
     <Compile Include="SnippetList.cs" />
     <Compile Include="SnippetLoder.cs" />
-    <Compile Include="SnippetSeed.cs" />
     <Compile Include="SnippetSeeds\BasicSnippetSeed.cs" />
-    <Compile Include="SnippetSeeds\ConverterSnippetSeed.cs" />
+    <Compile Include="SnippetSeeds\SnippetSeed.cs" />
     <Compile Include="SnippetSeeds\ISnippetSeed.cs" />
-    <Compile Include="TestSnippets.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

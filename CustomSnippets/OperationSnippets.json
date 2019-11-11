@@ -1,0 +1,75 @@
+{
+  "__type": "SnippetList",
+  "Snippets" :[
+    {
+      "__type": "SnippetSeed",
+      "Name": "Multiplication",
+      "Shortcut": "Multiplication",
+      "Title": "Multiplication",
+      "Code": [ "[->[->+>+<<]>[-<+>]<<]" ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "Division",
+      "Shortcut": "Division",
+      "Title": "Division",
+      "Code": [ "[->-[>+>>]>[+[-<+>]>+>>]<<<<<] >[-]>[-]>[-<<<+>>>]<<<" ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "Division2",
+      "Shortcut": "Division2",
+      "Title": "Division it can div by 1",
+      "Code": [ "[->->+<[>]>[[-<+>]>>>+<]<<<<]  >[-]>[-<+>]>>>[-<<<<<+>>>>>]<<<<<" ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "DivMod",
+      "Shortcut": "DivMod",
+      "Title": "Division and Modulo",
+      "Code": [ "[->-[>+>>]>[+[-<+>]>+>>]<<<<<] >[-]>[-<+>]>[-<<<+>>>]<<<" ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "DiffAbs",
+      "Shortcut": "DiffAbs",
+      "Title": "DiffAbs",
+      "Code": [ ">>>>+[<+<<<[>>>+<]>>[<]<[>>+<]>[<]>---[[+]<+>]+<[->-<]>>-<[-<<<->->>>+<]>]<<<[-<+>]<" ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "Mod",
+      "Shortcut": "Mod",
+      "Title": "Modulo",
+      "Code": [ "[->->+<[>]>[[-<+>]>>]<<<<]  >[-]>[-<<+>>]<<" ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "Min",
+      "Shortcut": "Min",
+      "Title": "Tow args Min",
+      "Code": [  ">>>>+[<+<<<[>>>+<]>>[<]<[>>+<]>[<]>---[[+]<+>]+<[->-<]>>->+<<[-<<<->->>>+<]>]>-<<<<[-]<[-]" ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "Max",
+      "Shortcut": "Max",
+      "Title": "Tow args Max",
+      "Code": [ ">>>>+[<+<<<[>>>+<]>>[<]<[>>+<]>[<]>---[[+]<+>]+<[->-<]>>->+<<[-<<<->->>>+<]>]>-[-<<<<<+>>>>>]<<<<[-<+>]<" ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "GreaterThan",
+      "Shortcut": "GreaterThan",
+      "Title": "Greater than",
+      "Code": [ "[[->]<[<]>]<<" ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "Not",
+      "Shortcut": "Not",
+      "Title": "Not",
+      "Code": [ "[[-]>-<]>+" ]
+    }
+  ]
+}

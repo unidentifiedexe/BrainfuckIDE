@@ -1,0 +1,61 @@
+{
+  "__type": "SnippetList",
+  "Snippets" :[
+    {
+      "__type": "SnippetSeed",
+      "Name": "SkipLine",
+      "Shortcut": "SkipLine",
+      "Title": "Skip line",
+      "Code": [ ",[,----------]" ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "ReadAll",
+      "Shortcut": "ReadAll",
+      "Title": "Read all",
+      "Code": [ ",+[->,+]" ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "ReadLine",
+      "Shortcut": "ReadLine",
+      "Title": "Read line",
+      "Code": [
+        "#region  ",
+        ",----------",
+        "[",
+        "  ++++++++++",
+        "  ,----------",
+        "]",
+        "#endregion"      
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "ReadNumbers",
+      "Shortcut": "ReadNums",
+      "Title": "Read numbers",
+      "Code": [
+        "#region Read numbers",
+        ">>+",
+        "[-<,----- -----[ >++++[-<----->]<-- ",
+        "  [>++++[-<---->]<<[->>+<<]>>[-<<++++++++++>>]<[-<+>]>+<]",
+        "  +>[-<->]< [- /* */ > ]>+<",
+        "]>]<",
+        "#endregion"      
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "WriteNumber",
+      "Shortcut": "WriteNumber",
+      "Title": "Write number",
+      "Code": [
+        "#region Write number ",  
+        "[[->+<]>[>++++++++++<[->-[>+>>]>[+[-<+>]>+>>]<<<<<]>[-]>+[-<<+>>]>[-<<+>>]<<]<[<]>-<]",
+        ">+[>]>++++++[-<-------->]<+[[<]>[+>]<]<[.[-]<]",
+        "#endregion"      
+      ]
+    }
+  ]
+}

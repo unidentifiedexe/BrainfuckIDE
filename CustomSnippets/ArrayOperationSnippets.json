@@ -1,0 +1,91 @@
+{
+  "__type": "SnippetList",
+  "Snippets" :[
+    {
+      "__type": "SnippetSeed",
+      "Name": "Min",
+      "Shortcut": "Array.Min",
+      "Title": "Array Min",
+      "Code": [ 
+        "#region ",
+        "<",
+        "[",
+        "  [->>>+<<<]",
+        "  >[-<+>>+<]",
+        "  >[[->]<[<]>]<<",
+        "  [-<<->>]",
+        "  <<<",
+        "]",
+        ">",
+        "#endregion "
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "Max",
+      "Shortcut": "Array.Max",
+      "Title": "Array Max",
+      "Code": [ 
+        "#region ",
+        "<",
+        "[",
+        "  [->>+<<]",
+        "  >[-<+>>>+<<]",
+        "  >[[->]<[<]>]<<",
+        "  [-<<+>>]",
+        "  <<<",
+        "]",
+        ">",
+        "#endregion "
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "OrderBy",
+      "Shortcut": "Array.OrderBy",
+      "Title": "OrderBy",
+      "Code": [ 
+        "#region OrderBy",
+        "<[",
+        "  [",
+        "    [->>>+>>+<< <<<]",
+        "    >[-<+>>+<]",
+        "    >[[->]<[<]>]<<",
+        "    [-<<->> >>>+<<<]",
+        "    <<<",
+        "  ]",
+        "  >[-<+>]",
+        "  >>>>> [ [-<<<<+>>>>]>]<< <<<<",
+        "]",
+        "<",
+        "[ [->+<]<]",
+        ">>[>]<",
+        "#endregion "
+      ]
+    },
+    {
+      "__type": "SnippetSeed",
+      "Name": "OrderByDescending",
+      "Shortcut": "Array.OrderByDescending",
+      "Title": "Array OrderByDescending",
+      "Code": [ 
+        "#region OrderByDescending",
+        "<[",
+        "  [",
+        "    [->>+>>>+<< <<<]",
+        "    >[-<+>>>+<<]",
+        "    >[[->]<[<]>]<<",
+        "    [-<<+>> >>>-<<<]",
+        "    <<<",
+        "  ]",
+        "  >[-<+>]",
+        "  >>>>> [ [-<<<<+>>>>]>]<< <<<<",
+        "]",
+        "<",
+        "[ [->+<]<]",
+        ">>[>]<",
+        "#endregion "
+      ]
+    }
+  ]
+}
