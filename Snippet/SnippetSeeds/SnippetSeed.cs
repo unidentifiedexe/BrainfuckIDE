@@ -167,9 +167,11 @@ namespace Snippets.SnippetSeeds
 
             public BoundElementsGetor(IEnumerable<IRepleaceElement> elements, IEnumerable<IElementConverter> converters)
             {
-                _replaceElements = elements.ToLookup(p => p.Name, p => new SnippetReplaceableTextElement { Text = p.DefaultText })
+                _replaceElements = elements.Where(p=>!string.IsNullOrEmpty(p.Name))
+                    .ToLookup(p => p.Name, p => new SnippetReplaceableTextElement { Text = p.DefaultText })
                     .ToDictionary(p => p.Key, p => p.First());
-                _converters = converters.ToLookup(p => p.Name).ToDictionary(p => p.Key, p => p.First());
+                _converters = converters.Where(p => !string.IsNullOrEmpty(p.Name))
+                    .ToLookup(p => p.Name).ToDictionary(p => p.Key, p => p.First());
                 _isUsed = _replaceElements.Values.ToDictionary(p => p, _ => false);
             }
 

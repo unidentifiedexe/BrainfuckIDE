@@ -9,7 +9,7 @@ namespace Snippets.ElementConverters
     [Serializable]
     class DirectionFlipConverter : IElementConverter
     {
-        public string Name { get; }
+        public string Name { get; set; }
 
         public string Convert(string text)
         {
