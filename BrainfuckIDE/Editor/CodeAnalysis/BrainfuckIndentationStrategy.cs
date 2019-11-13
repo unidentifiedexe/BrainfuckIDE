@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BrainfuckIDE.Utils;
+using BrainfuckIDE.Filer;
 
 namespace BrainfuckIDE.Editor.CodeAnalysis
 {
@@ -28,12 +29,11 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
             var addString = document.GetText(line).TrimStart() ?? string.Empty;
             var nestString = new string(prevText.TakeWhile(p => p == ' ').ToArray()) ?? string.Empty;
 
-
             if (prevText.Reverse().TakeWhile(p => p != ']').Contains('['))
             {
                 if (addString.FirstOrDefault() == ']')
                 {
-                    document.Replace(line, $"\n{nestString}{addString}");
+                    document.Replace(line, $"{LocalEnvironmental.Delimiter}{nestString}{addString}");
                 }
                 document.Insert(line.Offset, $"{nestString}{SpaceStringMap.GetNestString(NestSpaceNum)}");
             }

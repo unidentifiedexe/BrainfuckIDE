@@ -103,6 +103,14 @@ namespace BrainfuckIDE.Editor
         /// <summary> "[]"の処理を記述 </summary>
         private void TextArea_TextEntered(object sender, TextCompositionEventArgs e)
         {
+
+            var lastLine = this.TextArea.Document.GetLineByNumber(this.TextArea.Document.LineCount);
+            if (lastLine.Length != 0)
+            {
+                var caretOffset = TextArea.Caret.Offset;
+                this.TextArea.Document.Insert(lastLine.EndOffset, "\n");
+                TextArea.Caret.Offset = caretOffset;
+            }
             if (e.Text.Length == 1)
             {
                 if (this.TextArea.Selection.Length == 0)
@@ -231,8 +239,6 @@ namespace BrainfuckIDE.Editor
                 else if (from < pos + deleteLen) return -1;
                 else return from - deleteLen + addLen;
             }
-
-
         }
 
         private void BrainfuckTextEditControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
