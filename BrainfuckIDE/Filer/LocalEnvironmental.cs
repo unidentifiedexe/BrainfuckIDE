@@ -20,5 +20,7 @@ namespace BrainfuckIDE.Filer
 
         static public Process CurrentProcess => _currentProcess ??= Process.GetCurrentProcess();
 
+
+        public static string Delimiter => "\n";
     }
 }

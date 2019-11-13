@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BrainfuckIDE.Utils;
+using BrainfuckIDE.Filer;
 
 namespace BrainfuckIDE.Editor.CodeAnalysis
 {
@@ -17,7 +18,7 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
 
         public int NestSpaceNum => _nestSpaceNum;
 
-        public BrainfuckIndentationStrategy(int nestSpaceNum)
+        private BrainfuckIndentationStrategy(int nestSpaceNum)
         {
             _nestSpaceNum = nestSpaceNum;
         }
@@ -28,12 +29,11 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
             var addString = document.GetText(line).TrimStart() ?? string.Empty;
             var nestString = new string(prevText.TakeWhile(p => p == ' ').ToArray()) ?? string.Empty;
 
-
             if (prevText.Reverse().TakeWhile(p => p != ']').Contains('['))
             {
                 if (addString.FirstOrDefault() == ']')
                 {
-                    document.Replace(line, $"\n{nestString}{addString}");
+                    document.Replace(line, $"{LocalEnvironmental.Delimiter}{nestString}{addString}");
                 }
                 document.Insert(line.Offset, $"{nestString}{SpaceStringMap.GetNestString(NestSpaceNum)}");
             }
@@ -43,9 +43,9 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
             }
         }
 
+    
         public void IndentLines(TextDocument document, int beginLine, int endLine)
         {
-
             if (beginLine == endLine)
             {
                 return;
@@ -56,12 +56,21 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
 
             var lines = RangeLineItr(beginLine, endLine).ToArray();
             var txt = GetPrevNestSpaceNum(beginLine);
-            var strs = NestRefactor.Refact(lines.Select(document.GetText).Prepend(txt), NestSpaceNum).Skip(1);
+            //var strs = NestRefactor.Refact(lines.Select(document.GetText).Prepend(txt), NestSpaceNum).Skip(1);
+            var strs = NestRefactor.Refact(lines.Select(document.GetText), NestSpaceNum);
 
-            foreach (var (line, str) in lines.Zip(strs, (l, s) => (l, s)))
+            foreach (var (line, str) in lines.Zip(strs, (l, s) => (l, s)).Reverse())
             {
-                if (document.GetText(line) != str)
-                    document.Replace(line, str);
+                var oldSpaceNum = document.GetText(line).TakeWhile(p => p == ' ').Count();
+                var newSpaceNum = str.TakeWhile(p => p == ' ').Count();
+                if (oldSpaceNum > newSpaceNum)
+                {
+                    document.Remove(line.Offset, oldSpaceNum - newSpaceNum);
+                }
+                else if (newSpaceNum > oldSpaceNum)
+                {
+                    document.Insert(line.Offset, new string(Enumerable.Repeat(' ', newSpaceNum - oldSpaceNum).ToArray()));
+                }
             }
 
             IEnumerable<DocumentLine> RangeLineItr(int b, int e)

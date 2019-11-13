@@ -95,9 +95,16 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
 
             IEnumerable<string> Itr()
             {
+                var isFirst = true;
                 foreach (var item in GetNestInfos(strs))
                 {
+                    if (isFirst)
+                    {
+                        firstSpaceNum -= item.Nest * nestSpaceNum;
+                        isFirst = false;
+                    }
                     yield return SpaceStringMap.GetNestedString(item.Text, Math.Max(firstSpaceNum + item.Nest * nestSpaceNum, 0));
+
                 }
             }
         }

@@ -31,8 +31,8 @@ namespace BrainfuckIDE
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            string[] Commands = Environment.GetCommandLineArgs();
-            var files = Commands.Skip(1).Where(p => File.Exists(p)).ToArray();
+            string[] commands = Environment.GetCommandLineArgs();
+            var files = commands.Skip(1).Where(p => File.Exists(p)).ToArray();
 
             Snippets.SnippetLoader.Instance.Load(Filer.SnippetFileGetor.GetSnipetFilePathes());
 

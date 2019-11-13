@@ -64,7 +64,7 @@ namespace BrainfuckIDE.Editor
 
         private void Document_Changed1(object sender, DocumentChangeEventArgs e)
         {
-            _bfFoldingManager.Update();
+            _bfFoldingManager.Update(e);
         }
 
         private void LeftMargins_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -103,6 +103,14 @@ namespace BrainfuckIDE.Editor
         /// <summary> "[]"の処理を記述 </summary>
         private void TextArea_TextEntered(object sender, TextCompositionEventArgs e)
         {
+
+            var lastLine = this.TextArea.Document.GetLineByNumber(this.TextArea.Document.LineCount);
+            if (lastLine.Length != 0)
+            {
+                var caretOffset = TextArea.Caret.Offset;
+                this.TextArea.Document.Insert(lastLine.EndOffset, "\n");
+                TextArea.Caret.Offset = caretOffset;
+            }
             if (e.Text.Length == 1)
             {
                 if (this.TextArea.Selection.Length == 0)
@@ -231,8 +239,6 @@ namespace BrainfuckIDE.Editor
                 else if (from < pos + deleteLen) return -1;
                 else return from - deleteLen + addLen;
             }
-
-
         }
 
         private void BrainfuckTextEditControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -332,6 +338,18 @@ namespace BrainfuckIDE.Editor
             this.InputBindings.Add(GetInputBinding(ConvertToRepeatString, Key.E, ModifierKeys.Control));
             this.InputBindings.Add(GetInputBinding(SelectedTextConvertToPrintCodeCommand, Key.T, ModifierKeys.Control));
             this.InputBindings.Add(GetInputBinding(RefactSimplySelectedRange, Key.W, ModifierKeys.Control));
+            this.PreviewMouseWheel += BrainfuckTextEditControl_MouseWheel;
+        }
+
+        private void BrainfuckTextEditControl_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                if (e.Delta > 0)
+                    this.TextArea.FontSize += 1;
+                if (e.Delta < 0 && this.TextArea.FontSize > 2)
+                    this.TextArea.FontSize -= 1;
+            }
         }
 
         private InputBinding GetInputBinding(Action action, Key key, ModifierKeys modifierKeys)
@@ -354,36 +372,27 @@ namespace BrainfuckIDE.Editor
 
         private void MoveLineToNext()
         {
-            var caretLine = this.TextArea.Caret.Line;
-            var caretColum = this.TextArea.Caret.Column;
-            var line = this.TextArea.Document.GetLineByNumber(this.TextArea.Caret.Line);
-            var next = line.NextLine;
-            if (next == null) return;
-            var txt = this.TextArea.Document.GetText(next) + Environment.NewLine +
-                      this.TextArea.Document.GetText(line);
-            if (next.DelimiterLength != 0) txt += Environment.NewLine;
+            _bfFoldingManager.CashNowFoldData();
+            var caretOffset = this.TextArea.Caret.Offset;
+            var x = _bfFoldingManager.GetFoldedLineRange(caretOffset);
 
-            this.TextArea.Document.Replace(line.Offset, line.TotalLength + next.TotalLength, txt);
-            this.TextArea.Caret.Line = caretLine + 1;
-            this.TextArea.Caret.Column = caretColum;
+            var next = this.TextArea.Document.GetLineByOffset(x.End).NextLine;
+            if (next == null) return;
+            var y = _bfFoldingManager.GetFoldedLineRange(next.Offset);
+            this.TextArea.Document.Swap(x.Start, x.Length, y.Start, y.Length);
+            this.TextArea.Caret.Offset = caretOffset - x.End + y.End;
 
         }
 
         private void MoveLineToPrevious()
         {
-            var caretLine = this.TextArea.Caret.Line;
-            var caretColum = this.TextArea.Caret.Column;
-            var line = this.TextArea.Document.GetLineByNumber(this.TextArea.Caret.Line);
-            var prev = line.PreviousLine;
-            if (prev == null) return;
-            var txt = this.TextArea.Document.GetText(line) + Environment.NewLine +
-                       this.TextArea.Document.GetText(prev);
-            if (line.DelimiterLength != 0) txt += Environment.NewLine;
-
-            this.TextArea.Document.Replace(prev.Offset, prev.TotalLength + line.TotalLength, txt);
-            this.TextArea.Caret.Line = caretLine - 1;
-            this.TextArea.Caret.Column = caretColum;
-
+            _bfFoldingManager.CashNowFoldData();
+            var caretOffset = this.TextArea.Caret.Offset;
+            var x = _bfFoldingManager.GetFoldedLineRange(caretOffset);
+            if (x.Start <= 0) return;
+            var y = _bfFoldingManager.GetFoldedLineRange(x.Start - 1);
+            this.TextArea.Document.Swap(x.Start, x.Length, y.Start, y.Length);
+            this.TextArea.Caret.Offset = caretOffset - x.Start + y.Start;
         }
 
         private void RefactSimplySelectedRange()
@@ -492,4 +501,5 @@ namespace BrainfuckIDE.Editor
             return !IsReadOnly;
         }
     }
+
 }
