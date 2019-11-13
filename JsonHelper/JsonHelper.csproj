@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\DefaultCollectionTypeAttribute.cs" />
+    <Compile Include="Attributes\SimpleNameAttribute.cs" />
     <Compile Include="Attributes\SingleAllowedCollectionAttribute.cs" />
     <Compile Include="SeverAndLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

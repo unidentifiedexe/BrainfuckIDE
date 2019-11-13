@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace JsonHelper.Attributes
 {
-    class SimpleNameAttribute
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
+    class SimpleNameAttribute : Attribute
     {
+        public string SimpleName { get; }
+        public SimpleNameAttribute(string simpleName)
+        {
+            SimpleName = simpleName;
+        }
+
+
     }
 }
