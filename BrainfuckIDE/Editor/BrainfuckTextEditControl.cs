@@ -26,6 +26,7 @@ using BrainfuckIDE.Editor.ColorizingTransformer;
 using BrainfuckIDE.Utils;
 using ICSharpCode.AvalonEdit.Folding;
 using System.Collections.Specialized;
+using BrainfuckIDE.Filer;
 
 namespace BrainfuckIDE.Editor
 {
@@ -108,7 +109,7 @@ namespace BrainfuckIDE.Editor
             if (lastLine.Length != 0)
             {
                 var caretOffset = TextArea.Caret.Offset;
-                this.TextArea.Document.Insert(lastLine.EndOffset, "\n");
+                this.TextArea.Document.Insert(lastLine.EndOffset, LocalEnvironmental.Delimiter);
                 TextArea.Caret.Offset = caretOffset;
             }
             if (e.Text.Length == 1)
