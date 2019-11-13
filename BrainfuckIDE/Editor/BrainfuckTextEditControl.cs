@@ -332,6 +332,18 @@ namespace BrainfuckIDE.Editor
             this.InputBindings.Add(GetInputBinding(ConvertToRepeatString, Key.E, ModifierKeys.Control));
             this.InputBindings.Add(GetInputBinding(SelectedTextConvertToPrintCodeCommand, Key.T, ModifierKeys.Control));
             this.InputBindings.Add(GetInputBinding(RefactSimplySelectedRange, Key.W, ModifierKeys.Control));
+            this.PreviewMouseWheel += BrainfuckTextEditControl_MouseWheel;
+        }
+
+        private void BrainfuckTextEditControl_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                if (e.Delta > 0)
+                    this.TextArea.FontSize += 1;
+                if (e.Delta < 0 && this.TextArea.FontSize > 2)
+                    this.TextArea.FontSize -= 1;
+            }
         }
 
         private InputBinding GetInputBinding(Action action, Key key, ModifierKeys modifierKeys)
@@ -483,4 +495,5 @@ namespace BrainfuckIDE.Editor
             return !IsReadOnly;
         }
     }
+
 }
