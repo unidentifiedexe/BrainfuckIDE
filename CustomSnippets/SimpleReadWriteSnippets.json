@@ -10,6 +10,13 @@
     },
     {
       "__type": "SnippetSeed",
+      "Name": "SkipSection",
+      "Shortcut": "SkipSection",
+      "Title": "Skip Section",
+      "Code": [ ",[,>++++[-<-------->]<]" ]
+    },
+    {
+      "__type": "SnippetSeed",
       "Name": "ReadAll",
       "Shortcut": "ReadAll",
       "Title": "Read all",

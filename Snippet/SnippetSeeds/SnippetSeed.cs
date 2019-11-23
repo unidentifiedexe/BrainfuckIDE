@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 namespace Snippets.SnippetSeeds
 {
     [DataContract]
+    [SimpleName("Snippet")]
     class SnippetSeed : ISnippetSeed , IAddableSnippetSeed
     {
         #region フィールド

@@ -17,11 +17,11 @@ namespace JsonHelper
 {
     public class WellKnownTypeDeserializer
     {
-        private readonly Type[] _knownType;
+        private readonly TypeGetor _typeGetor;
 
         public WellKnownTypeDeserializer(Type[] knownType)
         {
-            _knownType = knownType;
+            _typeGetor = new TypeGetor(knownType ?? Type.EmptyTypes);
         }
 
         private enum JsonType
@@ -58,13 +58,6 @@ namespace JsonHelper
             return ToValue(XElement.Load(reader));
         }
 
-        ///// <summary>create JsonSring from primitive or IEnumerable or Object({public property name:property value})</summary>
-        //public static string Serialize(object obj)
-        //{
-        //    return CreateJsonString(new XStreamingElement("root", CreateTypeAttr(GetJsonType(obj)), CreateJsonNode(obj)));
-        //}
-
-        // private static methods
 
         private object ToValue(XElement element)
         {
@@ -77,21 +70,17 @@ namespace JsonHelper
         private static object ToValueHelper(XElement element)
         {
             var type = (JsonType)Enum.Parse(typeof(JsonType), element.Attribute("type").Value);
-            switch (type)
+
+            return type switch
             {
-                case JsonType.boolean:
-                    return (bool)element;
-                case JsonType.number:
-                    return (double)element;
-                case JsonType.@string:
-                    return (string)element;
-                case JsonType.@object:
-                case JsonType.array:
-                    return new Info(element, type);
-                case JsonType.@null:
-                default:
-                    return null;
-            }
+                JsonType.boolean => (bool)element,
+                JsonType.number => (double)element,
+                JsonType.@string => (string)element,
+                JsonType.@object => new Info(element, type),
+                JsonType.array => new Info(element, type),
+                JsonType.@null => null,
+                _ => null,
+            };
         }
 
         private static JsonType GetJsonType(object obj)
@@ -165,19 +154,6 @@ namespace JsonHelper
                 .Select(pi => (pi.Name, Value: pi.GetValue(obj, null)))
                 .Select(a => new XStreamingElement(a.Name, CreateTypeAttr(GetJsonType(a.Value)), CreateJsonNode(a.Value)));
         }
-
-        //private static string CreateJsonString(XStreamingElement element)
-        //{
-        //    using (var ms = new MemoryStream())
-        //    using (var writer = JsonReaderWriterFactory.CreateJsonWriter(ms, Encoding.Unicode))
-        //    {
-        //        element.WriteTo(writer);
-        //        writer.Flush();
-        //        return Encoding.Unicode.GetString(ms.ToArray());
-        //    }
-        //}
-        // dynamic structure represents JavaScript Object/Array
-
 
         struct Info
         {
@@ -306,19 +282,6 @@ namespace JsonHelper
             }
         }
 
-
-        ///// <summary>Serialize to JsonString</summary>
-        //public override string ToString()
-        //{
-        //    // <foo type="null"></foo> is can't serialize. replace to <foo type="null" />
-        //    foreach (var elem in _xml.Descendants().Where(x => x.Attribute("type").Value == "null"))
-        //    {
-        //        elem.RemoveNodes();
-        //    }
-        //    return CreateJsonString(new XStreamingElement("root", CreateTypeAttr(_jsonType), _xml.Elements()));
-        //}
-
-
         private Type TryGetKnownType(XElement xml, Type targetType)
         {
             var attribute = xml.Attribute("__type");
@@ -330,8 +293,37 @@ namespace JsonHelper
         private Type TryGetKnownType(string typeName, Type targetType)
         {
             var t = typeName.Split(':').First().Split('.').Last();
-            var tt = _knownType.FirstOrDefault(p => p.Name == t && (targetType?.IsAssignableFrom(p) ?? true));
+            var tt = _typeGetor.GetType(t, targetType);
             return tt ?? targetType;
         }
+
+
+
+        private class TypeGetor
+        {
+            private readonly Dictionary<string, Type> _typeMap = new Dictionary<string, Type>();
+
+            public TypeGetor(Type[] knownType)
+            {
+                foreach (var item in knownType)
+                {
+                    var atribute = item.GetCustomAttribute(typeof(SimpleNameAttribute));
+                    if (atribute is SimpleNameAttribute nameAttribute)
+                        _typeMap[nameAttribute.SimpleName] = item;
+                    _typeMap[item.Name] = item;
+                }
+            }
+
+            public Type GetType(string name, Type targetType)
+            {
+                if (_typeMap.TryGetValue(name, out var retType))
+                {
+                    if (targetType?.IsAssignableFrom(retType) ?? true)
+                        return retType;
+                }
+                return targetType;
+            }
+        }
+
     }
 }

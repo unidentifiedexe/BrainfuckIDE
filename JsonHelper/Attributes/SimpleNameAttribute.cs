@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace JsonHelper.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    class SimpleNameAttribute : Attribute
+    public class SimpleNameAttribute : Attribute
     {
         public string SimpleName { get; }
         public SimpleNameAttribute(string simpleName)

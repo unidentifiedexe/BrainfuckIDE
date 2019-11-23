@@ -273,4 +273,7 @@
     <Resource Include="Resource\BrainfuckIdeIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy $(SolutionDir)CustomSnippets $(TargetDir)\Snippets /E/I/Y</PostBuildEvent>
+  </PropertyGroup>
 </Project>
