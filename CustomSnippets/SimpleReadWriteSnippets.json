@@ -2,28 +2,28 @@
   "__type": "SnippetList",
   "Snippets" :[
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "SkipLine",
       "Shortcut": "SkipLine",
       "Title": "Skip line",
       "Code": [ ",[,----------]" ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "SkipSection",
       "Shortcut": "SkipSection",
       "Title": "Skip Section",
       "Code": [ ",[,>++++[-<-------->]<]" ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "ReadAll",
       "Shortcut": "ReadAll",
       "Title": "Read all",
       "Code": [ ",+[->,+]" ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "ReadLine",
       "Shortcut": "ReadLine",
       "Title": "Read line",
@@ -38,7 +38,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "ReadNumbers",
       "Shortcut": "ReadNums",
       "Title": "Read numbers",
@@ -53,7 +53,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "WriteNumber",
       "Shortcut": "WriteNumber",
       "Title": "Write number",

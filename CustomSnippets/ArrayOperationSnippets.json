@@ -2,7 +2,7 @@
   "__type": "SnippetList",
   "Snippets" :[
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "Min",
       "Shortcut": "Array.Min",
       "Title": "Array Min",
@@ -21,7 +21,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "Max",
       "Shortcut": "Array.Max",
       "Title": "Array Max",
@@ -40,7 +40,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "OrderBy",
       "Shortcut": "Array.OrderBy",
       "Title": "OrderBy",
@@ -64,7 +64,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "OrderByDescending",
       "Shortcut": "Array.OrderByDescending",
       "Title": "Array OrderByDescending",

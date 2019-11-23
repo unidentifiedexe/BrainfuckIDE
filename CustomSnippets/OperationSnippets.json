@@ -2,70 +2,70 @@
   "__type": "SnippetList",
   "Snippets" :[
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "Multiplication",
       "Shortcut": "Multiplication",
       "Title": "Multiplication",
       "Code": [ "[->[->+>+<<]>[-<+>]<<]" ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "Division",
       "Shortcut": "Division",
       "Title": "Division",
       "Code": [ "[->-[>+>>]>[+[-<+>]>+>>]<<<<<] >[-]>[-]>[-<<<+>>>]<<<" ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "Division2",
       "Shortcut": "Division2",
       "Title": "Division it can div by 1",
       "Code": [ "[->->+<[>]>[[-<+>]>>>+<]<<<<]  >[-]>[-<+>]>>>[-<<<<<+>>>>>]<<<<<" ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "DivMod",
       "Shortcut": "DivMod",
       "Title": "Division and Modulo",
       "Code": [ "[->-[>+>>]>[+[-<+>]>+>>]<<<<<] >[-]>[-<+>]>[-<<<+>>>]<<<" ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "DiffAbs",
       "Shortcut": "DiffAbs",
       "Title": "DiffAbs",
       "Code": [ ">>>>+[<+<<<[>>>+<]>>[<]<[>>+<]>[<]>---[[+]<+>]+<[->-<]>>-<[-<<<->->>>+<]>]<<<[-<+>]<" ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "Mod",
       "Shortcut": "Mod",
       "Title": "Modulo",
       "Code": [ "[->->+<[>]>[[-<+>]>>]<<<<]  >[-]>[-<<+>>]<<" ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "Min",
       "Shortcut": "Min",
       "Title": "Tow args Min",
       "Code": [  ">>>>+[<+<<<[>>>+<]>>[<]<[>>+<]>[<]>---[[+]<+>]+<[->-<]>>->+<<[-<<<->->>>+<]>]>-<<<<[-]<[-]" ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "Max",
       "Shortcut": "Max",
       "Title": "Tow args Max",
       "Code": [ ">>>>+[<+<<<[>>>+<]>>[<]<[>>+<]>[<]>---[[+]<+>]+<[->-<]>>->+<<[-<<<->->>>+<]>]>-[-<<<<<+>>>>>]<<<<[-<+>]<" ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "GreaterThan",
       "Shortcut": "GreaterThan",
       "Title": "Greater than",
       "Code": [ "[[->]<[<]>]<<" ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "Not",
       "Shortcut": "Not",
       "Title": "Not",

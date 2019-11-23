@@ -27,7 +27,7 @@
   ],
   "Snippets" :[
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "SubFromPrev",
       "Shortcut": "Multi.SubFromPrev",
       "Title": "Multi_SubFromPrev",
@@ -49,7 +49,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "SubFromNext",
       "Shortcut": "Multi.SubFromNext",
       "Title": "Multi_SubFromNext",
@@ -73,7 +73,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "AddToNext",
       "Shortcut": "Multi.AddToNext",
       "Title": "Multi_AddToNext",
@@ -103,7 +103,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "AddToPrev",
       "Shortcut": "Multi.AddToPrev",
       "Title": "Multi_AddToPrev",
@@ -127,7 +127,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "Comparate",
       "Shortcut": "Multi.Comparate",
       "Title": "Multi_Comparate",
@@ -164,7 +164,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "DecrimentIfPuls",
       "Shortcut": "Multi.DecrimentIfPuls",
       "Title": "Multi_DecrimentIfPuls",
@@ -175,7 +175,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "Decriment",
       "Shortcut": "Multi.Decriment",
       "Title": "Multi_Decriment",
@@ -186,7 +186,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "Incriment",
       "Shortcut": "Multi.Incriment",
       "Title": "Multi_Incriment",
@@ -197,7 +197,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "WriteNumber",
       "Shortcut": "Multi.WriteNumber",
       "Title": "Multi_WriteNumber",
@@ -209,7 +209,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "IsTrue",
       "Shortcut": "Multi.IsTrue",
       "Title": "Multi_IsTrue",
@@ -220,7 +220,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "Abs",
       "Shortcut": "Multi.Abs",
       "Title": "Multi_Abs",
@@ -239,7 +239,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "ReverseSign",
       "Shortcut": "Multi.ReverseSign",
       "Title": "Multi_ReverseSign",
@@ -252,7 +252,7 @@
       ]
     },
     {
-      "__type": "SnippetSeed",
+      "__type": "Snippet",
       "Name": "ReadNumber",
       "Shortcut": "Multi.ReadNumber",
       "Title": "Multi_ReadNumber",
