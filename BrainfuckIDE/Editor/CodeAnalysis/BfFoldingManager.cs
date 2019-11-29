@@ -53,8 +53,8 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
 
             Update();
             var dic = _prevFoldings.Where(p => p.IsFolded)
-                .Where(p => e.X.ConrainsRange(p.Start,p.End) || (e.Y.ConrainsRange(p.Start,p.End)))
-                .Select(p => e.GetNewOffset(p.Start))
+                .Where(p => e.X.ConrainsRange(p.Start, p.End) || (e.Y.ConrainsRange(p.Start, p.End)))
+                .Select(p => e.GetNewOffset(p.Start, true))
                 .ToHashSet();
 
             foreach (var item in _foldingManager.AllFoldings)
@@ -127,12 +127,21 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
         /// </summary>
         /// <param name="offset"></param>
         /// <returns></returns>
-        public Range GetFoldedLineRange(int offset)
+        public Range GetFoldedLineRange(int offset) => GetFoldedLineRange(new Range(offset, offset));
+        /// <summary>
+        /// 指定位置が含まれる表示上の一行の範囲を、終端の改行文字を含めない区間で取得します。
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        public Range GetFoldedLineRange(Range range)
         {
-            var line = _document.GetLineByOffset(offset);
+            if (range.Start > range.End)
+                range = new Range(range.End, range.Start);
+            var sLine = _document.GetLineByOffset(range.Start);
+            var eLine = _document.GetLineByOffset(range.End);
 
-            var sLine = GetLastFoldedSection(line.Offset, p => p.StartOffset) ?? line;
-            var eLine = GetLastFoldedSection(line.EndOffset, p => p.EndOffset) ?? line;
+            sLine = GetLastFoldedSection(sLine.Offset, p => p.StartOffset) ?? sLine;
+            eLine = GetLastFoldedSection(eLine.EndOffset, p => p.EndOffset) ?? eLine;
 
             return new Range(sLine.Offset, eLine.EndOffset/* + eLine.DelimiterLength*/);
 

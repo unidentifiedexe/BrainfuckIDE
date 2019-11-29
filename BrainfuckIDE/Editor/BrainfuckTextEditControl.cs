@@ -27,6 +27,7 @@ using BrainfuckIDE.Utils;
 using ICSharpCode.AvalonEdit.Folding;
 using System.Collections.Specialized;
 using BrainfuckIDE.Filer;
+using ICSharpCode.AvalonEdit.Editing;
 
 namespace BrainfuckIDE.Editor
 {
@@ -82,10 +83,10 @@ namespace BrainfuckIDE.Editor
         private void Caret_PositionChanged(object sender, EventArgs e)
         {
 
-            var offset = TextArea.Caret.Offset -1;
-            if(offset >0)
+            var offset = TextArea.Caret.Offset - 1;
+            if (offset > 0)
             {
-                var letter = base.TextArea.Document.GetCharAt(offset );
+                var letter = base.TextArea.Document.GetCharAt(offset);
                 if (letter == '[' || letter == ']')
                 {
                     var loc = base.Document.GetLocation(offset);
@@ -355,7 +356,7 @@ namespace BrainfuckIDE.Editor
 
         private InputBinding GetInputBinding(Action action, Key key, ModifierKeys modifierKeys)
         {
-            return GetInputBinding(new WpfUtils.Command(action, CanEdit), key, modifierKeys);
+            return GetInputBinding(new Command(action, CanEdit), key, modifierKeys);
         }
         private static InputBinding GetInputBinding(ICommand command, Key key, ModifierKeys modifierKeys)
         {
@@ -373,27 +374,68 @@ namespace BrainfuckIDE.Editor
 
         private void MoveLineToNext()
         {
-            _bfFoldingManager.CashNowFoldData();
-            var caretOffset = this.TextArea.Caret.Offset;
-            var x = _bfFoldingManager.GetFoldedLineRange(caretOffset);
 
-            var next = this.TextArea.Document.GetLineByOffset(x.End).NextLine;
-            if (next == null) return;
-            var y = _bfFoldingManager.GetFoldedLineRange(next.Offset);
-            this.TextArea.Document.Swap(x.Start, x.Length, y.Start, y.Length);
-            this.TextArea.Caret.Offset = caretOffset - x.End + y.End;
-
+            MoveLineHelper(GetNextRange);
+            Range? GetNextRange(Range now)
+            {
+                var next = this.TextArea.Document.GetLineByOffset(now.End).NextLine;
+                if (next == null) return null;
+                return _bfFoldingManager.GetFoldedLineRange(next.Offset);
+            }
         }
 
         private void MoveLineToPrevious()
         {
+            MoveLineHelper(GetPrevRange);
+            Range? GetPrevRange(Range now)
+            {
+                if (now.Start <= 0) return null;
+                return _bfFoldingManager.GetFoldedLineRange(now.Start - 1);
+            }
+        }
+
+        private void MoveLineHelper( Func<Range,Range?> getAnotherLine )
+        {
             _bfFoldingManager.CashNowFoldData();
             var caretOffset = this.TextArea.Caret.Offset;
-            var x = _bfFoldingManager.GetFoldedLineRange(caretOffset);
-            if (x.Start <= 0) return;
-            var y = _bfFoldingManager.GetFoldedLineRange(x.Start - 1);
-            this.TextArea.Document.Swap(x.Start, x.Length, y.Start, y.Length);
-            this.TextArea.Caret.Offset = caretOffset - x.Start + y.Start;
+            var selection = TextArea.Selection;
+            var selectionRange = GetCurrentSelectRange();
+            var x = _bfFoldingManager.GetFoldedLineRange(selectionRange);
+            var another = getAnotherLine(x);
+            if (another == null) return;
+            var y = another.Value;
+            var info = this.TextArea.Document.Swap(x.Start, x.Length, y.Start, y.Length);
+            this.TextArea.Caret.Offset = info.GetNewOffset(caretOffset, true);
+            TextArea.Selection = GetSelection(selection, info, selectionRange);
+        }
+        private Selection GetSelection(Selection selection, SwapInfo info, Range oldRange)
+        {
+            var newStart = info.GetNewOffset(oldRange.Start, true);
+            var newEnd = info.GetNewOffset(oldRange.End, true);
+            var newStartLoc = new TextViewPosition(TextArea.Document.GetLocation(newStart));
+            var newEndLoc = new TextViewPosition(TextArea.Document.GetLocation(newEnd));
+            return selection switch
+            {
+                RectangleSelection _ => new RectangleSelection(this.TextArea, newStartLoc, newEndLoc),
+                Selection s when s.IsEmpty => s,
+                Selection _ => Selection.Create(this.TextArea, newStart, newEnd),
+            };
+        }
+
+
+        private Range GetCurrentSelectRange()
+        {
+            var selection = TextArea.Selection;
+            int e, s;
+            if (!selection.EndPosition.Location.IsEmpty)
+                e = Document.GetOffset(selection.EndPosition.Location);
+            else
+                e = this.TextArea.Caret.Offset;
+            if(!selection.StartPosition.Location.IsEmpty)
+                s = Document.GetOffset(selection.StartPosition.Location);
+            else 
+                s = this.TextArea.Caret.Offset;
+            return  new Range(s, e);
         }
 
         private void RefactSimplySelectedRange()

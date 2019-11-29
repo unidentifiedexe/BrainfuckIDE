@@ -11,7 +11,7 @@ namespace BrainfuckIDE.Editor
 {
     static class EditorHelper
     {
-        static public void Swap(this TextDocument document, int xStart, int xLength, int yStart, int yLength)
+        public static SwapInfo Swap(this TextDocument document, int xStart, int xLength, int yStart, int yLength)
         {
             if (xStart > yStart)
             {
@@ -36,8 +36,9 @@ namespace BrainfuckIDE.Editor
             };
 
             document.Replace(xStart, newTest.Length, newTest, offsetChangeMap);
-
+            return SwapInfo.CreateFrom(new SwapInfo.SwapNode(xStart, xText), new SwapInfo.SwapNode(yStart, yText));
         }
+
 
         static public bool IsSwapDocumentChangedEvent(this DocumentChangeEventArgs e)
         {
@@ -96,6 +97,12 @@ namespace BrainfuckIDE.Editor
 
             return new SwapInfo(xNode, yNode);
         }
+
+
+        static public SwapInfo CreateFrom(SwapNode lower, SwapNode upper)
+        {
+            return new SwapInfo(lower, upper);
+        }
         private SwapInfo(SwapNode lower, SwapNode upper)
         {
             _lower = lower;
@@ -108,16 +115,27 @@ namespace BrainfuckIDE.Editor
         public SwapNode Y => _upper;
 
 
-        public int GetNewOffset(int offset)
+        public int GetNewOffset(int offset, bool moveEdge)
         {
-            if (offset < _lower.OldOffset) return offset;
-            else if (offset < _lower.OldEndOffset) return offset + (_upper.OldEndOffset - _lower.OldEndOffset);
-            else if (offset < _upper.OldOffset) return offset + (_upper.Length - _lower.Length);
-            else if (offset < _upper.OldEndOffset) return offset - (_upper.OldOffset - _lower.OldOffset);
-            else return offset;
+            if (moveEdge == true)
+            {
+                if (offset < _lower.OldOffset) return offset;
+                else if (offset <= _lower.OldEndOffset) return offset + (_upper.OldEndOffset - _lower.OldEndOffset);
+                else if (offset < _upper.OldOffset) return offset + (_upper.Length - _lower.Length);
+                else if (offset <= _upper.OldEndOffset) return offset - (_upper.OldOffset - _lower.OldOffset);
+                else return offset;
+            }
+            else
+            {
+                if (offset <= _lower.OldOffset) return offset;
+                else if (offset < _lower.OldEndOffset) return offset + (_upper.OldEndOffset - _lower.OldEndOffset);
+                else if (offset <= _upper.OldOffset) return offset + (_upper.Length - _lower.Length);
+                else if (offset < _upper.OldEndOffset) return offset - (_upper.OldOffset - _lower.OldOffset);
+                else return offset;
+            }
         }
 
-
+        
 
         public struct SwapNode
         {
