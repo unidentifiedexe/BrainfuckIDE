@@ -1,0 +1,12 @@
+{
+  "__type": "SnippetList",
+  "Snippets" :[
+    {
+      "__type": "Snippet",
+      "Name": "region",
+      "Shortcut": "region",
+      "Title": "region",
+      "Code": [ "#region","#endregion" ]
+    }
+  ]
+}
