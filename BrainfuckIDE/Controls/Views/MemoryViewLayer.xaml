@@ -14,20 +14,22 @@
              Focusable="True"
              >
     <Grid>
-        <ItemsControl ItemsSource="{Binding MemoryTokens}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <local:MemoryTokenView Margin="2" 
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding MemoryTokens}" Width="{Binding Path=ViewportWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:MemoryTokenView Margin="2" 
                                            IsReadOnly="{Binding Path=DataContext.IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
-                    <!--<custom:TokenViewTextBox Text="{Binding Value}" Width="30" TextAlignment="Center" Margin="2" Foreground="#FFE4E4E4" Background="#FF1E1E1E"
+                        <!--<custom:TokenViewTextBox Text="{Binding Value}" Width="30" TextAlignment="Center" Margin="2" Foreground="#FFE4E4E4" Background="#FF1E1E1E"
                                              IsReadOnly="{Binding Path=DataContext.IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>-->
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Focusable="True"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Focusable="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>
