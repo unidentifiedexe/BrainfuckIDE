@@ -109,8 +109,10 @@ namespace BrainfuckIDE.Editor.Controls
         #region DebugCommand
 
         private Command? _toggleBreakPointCommand;
-        public Command ToggleBreakPointCommand 
-            => _toggleBreakPointCommand ??= new Command(ToggleBreakPointOnCurrentPos);
+        private RunningState _runningState;
+
+        public Command ToggleBreakPointCommand
+=> _toggleBreakPointCommand ??= new Command(ToggleBreakPointOnCurrentPos);
 
         private void ToggleBreakPointOnCurrentPos()
         {
@@ -165,13 +167,13 @@ namespace BrainfuckIDE.Editor.Controls
 
         public Place RunnningPosition
         {
-            get => ConvertPlace(_baseControl.RunnningPosition);
+            get => ConvertPlace(_baseControl.RunningPosition);
             set
             {
                 var newPos = ConvertPlace(value);
-                if (newPos != _baseControl.RunnningPosition)
+                if (newPos != _baseControl.RunningPosition)
                 {
-                    _baseControl.RunnningPosition = newPos;
+                    _baseControl.RunningPosition = newPos;
                     RaiseNotifyPropertyChanged();
                 }
             }
@@ -189,10 +191,15 @@ namespace BrainfuckIDE.Editor.Controls
             return new TextLocation(place.Line + 1, place.Colomun + 1);
         }
 
-        public bool IsReadOnly
+        public RunningState RunningState
         {
-            get => _baseControl.IsReadOnly;
-            set => _baseControl.IsReadOnly = value;
+            get => _runningState;
+            set
+            {
+                if (_runningState == value) return;
+                _runningState = value;
+                _baseControl.RunningState = value;
+            }
         }
 
 

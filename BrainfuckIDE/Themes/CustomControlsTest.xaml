@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="100">
     <Grid>
-        <local:TokenViewTextBox Text="Hoge" Foreground="Black" TextChanged="TokenViewTextBox_TextChanged"></local:TokenViewTextBox>
+        <StackPanel>
+            
+        <local:TokenViewTextBox Text="huga" Foreground="Black" TextChanged="TokenViewTextBox_TextChanged"></local:TokenViewTextBox>
+        </StackPanel>
     </Grid>
 </UserControl>

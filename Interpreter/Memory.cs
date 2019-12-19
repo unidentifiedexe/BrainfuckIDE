@@ -68,17 +68,17 @@ namespace Interpreter
             }
         }
 
-        private EditableMemoryWrapper? _editableMemoryWrappe = null;
+        private EditableMemoryWrapper? _editableMemoryWrapper = null;
 
         /// <summary> デバッグ用の書き換え可能のメモリラッパーを取得します </summary>
         /// <returns></returns>
         public IEditableMemory GetEditableMemory()
         {
-            if(_editableMemoryWrappe == null)
-                _editableMemoryWrappe = new EditableMemoryWrapper(this);
+            if(_editableMemoryWrapper == null)
+                _editableMemoryWrapper = new EditableMemoryWrapper(this);
             else
-                _editableMemoryWrappe.ReadFeomParent();
-            return _editableMemoryWrappe;
+                _editableMemoryWrapper.ReadFeomParent();
+            return _editableMemoryWrapper;
 
         }
 

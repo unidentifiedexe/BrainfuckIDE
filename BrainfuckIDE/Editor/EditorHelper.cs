@@ -55,11 +55,36 @@ namespace BrainfuckIDE.Editor
             return info != null;
         }
 
+        static public IOffsetConverter GetOffsetConverter(this DocumentChangeEventArgs e)
+        {
+            if (e.TryCreateSwapInfo(out var swapInfo)) return swapInfo!;
+            else
+                return new OffsetChangeMapConverter(e.OffsetChangeMap);
+        }
 
     }
 
 
-    public class SwapInfo
+    public class OffsetChangeMapConverter : IOffsetConverter
+    {
+        private readonly OffsetChangeMap _offsetChangeMaps;
+
+        public OffsetChangeMapConverter(OffsetChangeMap offsetChangeMaps)
+        {
+            _offsetChangeMaps = offsetChangeMaps ?? throw new ArgumentNullException(nameof(offsetChangeMaps));
+        }
+
+        public int GetNewOffset(int offset) => _offsetChangeMaps.GetNewOffset(offset);
+    }
+
+    public interface IOffsetConverter
+    {
+        int GetNewOffset(int offset);
+    }
+
+         
+
+    public class SwapInfo : IOffsetConverter
     {
         private readonly SwapNode _lower;
         private readonly SwapNode _upper;
@@ -115,6 +140,7 @@ namespace BrainfuckIDE.Editor
         public SwapNode Y => _upper;
 
 
+        public int GetNewOffset(int offset) => GetNewOffset(offset, true);
         public int GetNewOffset(int offset, bool moveEdge)
         {
             if (moveEdge == true)

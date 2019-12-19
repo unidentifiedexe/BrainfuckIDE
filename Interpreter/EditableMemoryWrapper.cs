@@ -19,10 +19,23 @@ namespace Interpreter
 
             readonly Memory _parent;
             private EditableMemoryToken[] _data = null!;
+            private int _currentIndex;
 
             int IReadOnlyCollection<EditableMemoryToken>.Count => _data.Length;
 
             EditableMemoryToken IReadOnlyList<EditableMemoryToken>.this[int index] => _data[index];
+
+
+            public int CurrentIndex
+            {
+                get => _currentIndex;
+                set
+                {
+                    if ((uint)value >= _data.Length)
+                        throw new IndexOutOfRangeException(nameof(CurrentIndex));
+                    _currentIndex = value;
+                }
+            }
 
             public EditableMemoryWrapper(Memory parent)
             {
@@ -32,15 +45,17 @@ namespace Interpreter
 
             internal void ReadFeomParent()
             {
-                _data = _parent._memory.Select((p, i) => new EditableMemoryToken(i,p, i == _parent.Position)).ToArray();
+                _data = _parent._memory.Select((p, i) => new EditableMemoryToken(i, p, i == _parent.Position)).ToArray();
+                CurrentIndex = _parent.Position;
             }
 
             public void ReflectToParent()
             {
-                foreach (var (i,val) in _data.Where(p => p.IsEdited))
+                foreach (var (i, val) in _data.Where(p => p.IsEdited))
                 {
                     _parent._memory[i] = val;
-                } 
+                }
+                _parent._position = CurrentIndex;
             }
 
             IEnumerator<EditableMemoryToken> IEnumerable<EditableMemoryToken>.GetEnumerator()
@@ -61,7 +76,12 @@ namespace Interpreter
     {
         /// <summary> 変更を元データに反映します </summary>
         void ReflectToParent();
+
+
+        public int CurrentIndex { get; }
     }
+
+
     /// <summary> メモリの各インデックスの状態のラッパークラス </summary>
     public class EditableMemoryToken
     {

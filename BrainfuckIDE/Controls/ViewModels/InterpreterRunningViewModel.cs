@@ -123,11 +123,20 @@ namespace BrainfuckIDE.Controls.ViewModels
             }
             var interpreter = _interpreter;
 
-            EditrVM.IsReadOnly = true;
             MemoryVM.IsReadOnly = true;
+            EditrVM.RunningState = Editor.RunningState.Running;
             await Task.Run(() => interpreter.ExecuteNextCode(runType));
 
-            EditrVM.IsReadOnly = false;
+            var  state = interpreter.State switch
+            {
+                RunnningState.Runnning => Editor.RunningState.Running,
+                RunnningState.Pause => Editor.RunningState.Pause,
+                _ => Editor.RunningState.Stop
+            };
+
+
+            EditrVM.RunningState = state;
+
             MemoryVM.IsReadOnly = false;
             StopInterpretorRunEvent?.Invoke(interpreter);
             UpdateDebuggerState();

@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="Editor\EditorColoers.cs" />
     <Compile Include="Editor\EditorHelper.cs" />
+    <Compile Include="Editor\RunningState.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\ArrayOperetorSnippets.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\MoveSnippet.cs" />
     <Compile Include="Editor\Snippets\BasicBfSnippets\MultiByteVariable.cs" />

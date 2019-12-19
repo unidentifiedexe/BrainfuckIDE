@@ -7,6 +7,30 @@
       "Shortcut": "region",
       "Title": "region",
       "Code": [ "#region","#endregion" ]
+    },
+    {
+      "__type": "Snippet",
+      "Name": "move",
+      "Shortcut": "move",
+      "Title": "move",
+      "Elements": [
+        {
+          "__type": "RepleaceElement",
+          "DefaultText": ">",
+          "Name": "dir"
+        }
+      ],
+      "Converters": [ 
+        {
+          "__type": "OnlyDirectionConverter",
+          "Name": "only"
+        },
+        {
+          "__type": "DirectionFlipConverter",
+          "Name": "flip"
+        }
+      ],
+      "Code": [ "[{dir}+{dir:only,flip}]" ]
     }
   ]
 }

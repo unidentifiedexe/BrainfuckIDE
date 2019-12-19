@@ -223,27 +223,29 @@ namespace BrainfuckIDE.Editor
         private void Document_Changing(object sender, DocumentChangeEventArgs e)
         {
 
-            var pos = e.Offset;
-            var deleteLen = e.RemovalLength;
-            var addLen = e.InsertionLength;
+            var converter = e.GetOffsetConverter();
+
+            //var pos = e.Offset;
+            //var deleteLen = e.RemovalLength;
+            //var addLen = e.InsertionLength;
             var newArr = _debuggingColorizeAvalonEdit.BreakPoints
-                .Select(p => PositionConverter(p)).Where(p => p != -1).ToArray();
+                .Select(p => converter.GetNewOffset(p)).Where(IsEfectiveAt).Distinct().Where(p => p >= 0).ToArray();
             _debuggingColorizeAvalonEdit.BreakPoints.Clear();
             _debuggingColorizeAvalonEdit.BreakPoints.AddRange(newArr);
 
             _debuggingColorizeAvalonEdit.RunnningPosition
-                = e.OffsetChangeMap.GetNewOffset(_debuggingColorizeAvalonEdit.RunnningPosition);
+               = NearestEfectivOffset(converter.GetNewOffset(_debuggingColorizeAvalonEdit.RunnningPosition));
 
 
-            int PositionConverter(int from)
-            {
-                if (from < pos) return from;
-                else if (from < pos + deleteLen) return -1;
-                else return from - deleteLen + addLen;
-            }
+            //int PositionConverter(int from)
+            //{
+            //    if (from < pos) return from;
+            //    else if (from < pos + deleteLen) return -1;
+            //    else return from - deleteLen + addLen;
+            //}
         }
 
-        private void BrainfuckTextEditControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void BrainfuckTextEditControl_Loaded(object sender, RoutedEventArgs e)
         {
             InitializeSyntaxHighlight();
         }
@@ -283,7 +285,7 @@ namespace BrainfuckIDE.Editor
                 _debuggingColorizeAvalonEdit.BreakPoints.Select(GetEditPlace);
         }
 
-        public TextLocation RunnningPosition
+        public TextLocation RunningPosition
         {
             get => GetEditPlace(_debuggingColorizeAvalonEdit.RunnningPosition);
             set
@@ -291,6 +293,7 @@ namespace BrainfuckIDE.Editor
                 var inPos = value;
                 if (!inPos.IsEmpty) inPos = NearestEfectivPosition(inPos);
                 _debuggingColorizeAvalonEdit.RunnningPosition = GetOffset(inPos);
+                this.TextArea.TextView.Redraw();
 
             }
         }
@@ -308,8 +311,30 @@ namespace BrainfuckIDE.Editor
             return this.TextArea.Document.GetOffset(location);
         }
 
+        public RunningState RunningState
+        {
+            get => _runningState;
+            set
+            {
+                _runningState = value;
+                IsReadOnly = (_runningState == RunningState.Running);
+            }
+        }
+        private RunningState _runningState;
 
 
+        public bool IsEfectiveAt(int offset)
+        {
+            var letter = TextArea.Document.GetCharAt(offset);
+            return EffectiveCharacters.IsEffectiveChar(letter);
+        }
+
+        public int NearestEfectivOffset(int offset)
+        {
+            if (offset < 0) return offset;
+            else
+                return GetOffset(NearestEfectivPosition(GetEditPlace(offset)));
+        }
         public TextLocation NearestEfectivPosition(TextLocation textLocation)
         {
             return
@@ -338,8 +363,9 @@ namespace BrainfuckIDE.Editor
             this.InputBindings.Add(GetInputBinding(MoveLineToPrevious, Key.Up, ModifierKeys.Alt));
             this.InputBindings.Add(GetInputBinding(PointerDirectionInverse, Key.R, ModifierKeys.Control));
             this.InputBindings.Add(GetInputBinding(ConvertToRepeatString, Key.E, ModifierKeys.Control));
-            this.InputBindings.Add(GetInputBinding(SelectedTextConvertToPrintCodeCommand, Key.T, ModifierKeys.Control));
+            this.InputBindings.Add(GetInputBinding(SelectedTextConvertToPrintCode, Key.T, ModifierKeys.Control));
             this.InputBindings.Add(GetInputBinding(RefactSimplySelectedRange, Key.W, ModifierKeys.Control));
+            this.InputBindings.Add(GetInputBinding(SetRunningPositionToCurrentPosition, Key.N, ModifierKeys.Control));
             this.PreviewMouseWheel += BrainfuckTextEditControl_MouseWheel;
         }
 
@@ -394,7 +420,7 @@ namespace BrainfuckIDE.Editor
             }
         }
 
-        private void MoveLineHelper( Func<Range,Range?> getAnotherLine )
+        private void MoveLineHelper(Func<Range, Range?> getAnotherLine)
         {
             _bfFoldingManager.CashNowFoldData();
             var caretOffset = this.TextArea.Caret.Offset;
@@ -431,11 +457,11 @@ namespace BrainfuckIDE.Editor
                 e = Document.GetOffset(selection.EndPosition.Location);
             else
                 e = this.TextArea.Caret.Offset;
-            if(!selection.StartPosition.Location.IsEmpty)
+            if (!selection.StartPosition.Location.IsEmpty)
                 s = Document.GetOffset(selection.StartPosition.Location);
-            else 
+            else
                 s = this.TextArea.Caret.Offset;
-            return  new Range(s, e);
+            return new Range(s, e);
         }
 
         private void RefactSimplySelectedRange()
@@ -525,10 +551,10 @@ namespace BrainfuckIDE.Editor
 
         }
 
-        private ICommand? _selectedTextConvertToPrintCodeCommand;
+        //private ICommand? _selectedTextConvertToPrintCodeCommand;
 
-        public ICommand SelectedTextConvertToPrintCodeCommand
-                => _selectedTextConvertToPrintCodeCommand ??= new Command(SelectedTextConvertToPrintCode, CanEdit);
+        //public ICommand SelectedTextConvertToPrintCodeCommand
+        //        => _selectedTextConvertToPrintCodeCommand ??= new Command(SelectedTextConvertToPrintCode, CanEdit);
 
         private void SelectedTextConvertToPrintCode()
         {
@@ -537,6 +563,13 @@ namespace BrainfuckIDE.Editor
             var selectionLength = SelectionLength;
             var newText = TextCodeMaker.AutoMaker.GetSimplyTextOutputer(selectedText);
             Document.Replace(selectionStart, selectionLength, newText);
+        }
+
+
+        private void SetRunningPositionToCurrentPosition()
+        {
+            if (RunningState == RunningState.Pause)
+                RunningPosition = this.TextArea.Caret.Location;
         }
 
         private bool CanEdit()

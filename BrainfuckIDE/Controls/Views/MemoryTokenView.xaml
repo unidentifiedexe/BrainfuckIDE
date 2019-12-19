@@ -23,8 +23,6 @@
                     ctrls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" CaretBrush="#FFE6E6E6"
                 IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MemoryTokenView}}}"
                 >
-                
-                
                 <TextBox.Text>
                     <Binding Path ="Value" Converter="{ctrls:ByteStringInteractiveConverter}"/>
                 </TextBox.Text>
