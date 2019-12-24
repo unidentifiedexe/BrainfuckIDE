@@ -50,5 +50,28 @@ namespace BrainfuckIDE.CustomControls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TokenViewTextBox), new FrameworkPropertyMetadata(typeof(TokenViewTextBox)));
         }
+
+
+
+        public bool IsEdditing
+        {
+            get { return (bool)GetValue(IsEdditingProperty); }
+            private set { SetValue(IsEdditingPropertyKey, value); }
+        }
+
+        private static readonly DependencyPropertyKey IsEdditingPropertyKey = DependencyProperty.RegisterReadOnly
+            (nameof(IsEdditing), typeof(bool), typeof(TokenViewTextBox), new PropertyMetadata(false, OnIsEdditingChanged));
+
+        // Using a DependencyProperty as the backing store for IsEdditing.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsEdditingProperty = IsEdditingPropertyKey.DependencyProperty;
+        //DependencyProperty.Register(nameof(IsEdditing), typeof(bool), typeof(MemoryTokenView), new PropertyMetadata(false, OnIsEdditingChnaged));
+
+        private static void OnIsEdditingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //if (!(d is TokenViewTextBox owner)) return;
+            //if (!(e.NewValue is bool val)) return;
+            //owner.SetMainTextVisible(val);
+        }
+
     }
 }

@@ -9,7 +9,7 @@
     <Grid>
         <StackPanel>
             
-        <local:TokenViewTextBox Text="huga" Foreground="Black" TextChanged="TokenViewTextBox_TextChanged"></local:TokenViewTextBox>
+        <local:TokenViewTextBox Text="huga" Foreground="White" TextChanged="TokenViewTextBox_TextChanged"></local:TokenViewTextBox>
         </StackPanel>
     </Grid>
 </UserControl>

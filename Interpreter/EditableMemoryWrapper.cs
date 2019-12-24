@@ -45,7 +45,7 @@ namespace Interpreter
 
             internal void ReadFeomParent()
             {
-                _data = _parent._memory.Select((p, i) => new EditableMemoryToken(i, p, i == _parent.Position)).ToArray();
+                _data = _parent._memory.Select((p, i) => new EditableMemoryToken(i, p)).ToArray();
                 CurrentIndex = _parent.Position;
             }
 
@@ -78,7 +78,7 @@ namespace Interpreter
         void ReflectToParent();
 
 
-        public int CurrentIndex { get; }
+        public int CurrentIndex { get; set; }
     }
 
 
@@ -100,16 +100,14 @@ namespace Interpreter
         }
 
         public int Index { get; }
-        public bool IsCurrent { get; }
         public bool IsEdited { get; private set; } = false;
 
 
 
-        public EditableMemoryToken(int index, byte value, bool isCurrent)
+        public EditableMemoryToken(int index, byte value)
         {
             Value = value;
             Index = index;
-            IsCurrent = isCurrent;
         }
 
         public void Deconstruct(out int index, out byte value)

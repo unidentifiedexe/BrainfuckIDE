@@ -177,19 +177,30 @@ namespace BrainfuckIDE.Editor
 
         private void Document_Changed(object sender, DocumentChangeEventArgs e)
         {
-            if (_debuggingColorizeAvalonEdit.RunnningPosition >= TextArea.Document.TextLength)
-                _debuggingColorizeAvalonEdit.RunnningPosition = TextArea.Document.TextLength - 1;
-            if (_debuggingColorizeAvalonEdit.RunnningPosition < 0) return;
 
-            var currentChar = this.TextArea.Document.GetCharAt(_debuggingColorizeAvalonEdit.RunnningPosition);
-            if (!EffectiveCharacters.Characters.Contains(currentChar)) return;
-            else
-            {
-                var loc = GetEditPlace(_debuggingColorizeAvalonEdit.RunnningPosition);
-                var newLoc = NearestEfectivPosition(loc);
-                _debuggingColorizeAvalonEdit.RunnningPosition = GetOffset(newLoc);
+            var converter = e.GetOffsetConverter();
+            var newArr = _debuggingColorizeAvalonEdit.BreakPoints
+                .Select(p => converter.GetNewOffset(p)).Where(IsEfectiveAt).Distinct().Where(p => p >= 0).ToArray();
+            _debuggingColorizeAvalonEdit.BreakPoints.Clear();
+            _debuggingColorizeAvalonEdit.BreakPoints.AddRange(newArr);
+
+            _debuggingColorizeAvalonEdit.RunnningPosition
+               = NearestEfectivOffset(converter.GetNewOffset(_debuggingColorizeAvalonEdit.RunnningPosition));
+
+
+            //if (_debuggingColorizeAvalonEdit.RunnningPosition >= TextArea.Document.TextLength)
+            //    _debuggingColorizeAvalonEdit.RunnningPosition = TextArea.Document.TextLength - 1;
+            //if (_debuggingColorizeAvalonEdit.RunnningPosition < 0) return;
+
+            //var currentChar = this.TextArea.Document.GetCharAt(_debuggingColorizeAvalonEdit.RunnningPosition);
+            //if (!EffectiveCharacters.Characters.Contains(currentChar)) return;
+            //else
+            //{
+            //    var loc = GetEditPlace(_debuggingColorizeAvalonEdit.RunnningPosition);
+            //    var newLoc = NearestEfectivPosition(loc);
+            //    _debuggingColorizeAvalonEdit.RunnningPosition = GetOffset(newLoc);
+            //}
                 this.TextArea.TextView.Redraw();
-            }
 
         }
 
@@ -223,18 +234,18 @@ namespace BrainfuckIDE.Editor
         private void Document_Changing(object sender, DocumentChangeEventArgs e)
         {
 
-            var converter = e.GetOffsetConverter();
+            //var converter = e.GetOffsetConverter();
 
-            //var pos = e.Offset;
-            //var deleteLen = e.RemovalLength;
-            //var addLen = e.InsertionLength;
-            var newArr = _debuggingColorizeAvalonEdit.BreakPoints
-                .Select(p => converter.GetNewOffset(p)).Where(IsEfectiveAt).Distinct().Where(p => p >= 0).ToArray();
-            _debuggingColorizeAvalonEdit.BreakPoints.Clear();
-            _debuggingColorizeAvalonEdit.BreakPoints.AddRange(newArr);
+            ////var pos = e.Offset;
+            ////var deleteLen = e.RemovalLength;
+            ////var addLen = e.InsertionLength;
+            //var newArr = _debuggingColorizeAvalonEdit.BreakPoints
+            //    .Select(p => converter.GetNewOffset(p)).Where(IsEfectiveAt).Distinct().Where(p => p >= 0).ToArray();
+            //_debuggingColorizeAvalonEdit.BreakPoints.Clear();
+            //_debuggingColorizeAvalonEdit.BreakPoints.AddRange(newArr);
 
-            _debuggingColorizeAvalonEdit.RunnningPosition
-               = NearestEfectivOffset(converter.GetNewOffset(_debuggingColorizeAvalonEdit.RunnningPosition));
+            //_debuggingColorizeAvalonEdit.RunnningPosition
+            //   = NearestEfectivOffset(converter.GetNewOffset(_debuggingColorizeAvalonEdit.RunnningPosition));
 
 
             //int PositionConverter(int from)

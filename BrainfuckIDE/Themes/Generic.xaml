@@ -10,10 +10,46 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:TokenViewTextBox}">
-                    <DockPanel >
-                        <TextBlock DockPanel.Dock="Left" Text="["/>
-                        <TextBlock DockPanel.Dock="Right" Text="]"/>
-                    </DockPanel>
+                    <Grid>
+                        <Border BorderThickness="2">
+                            <DockPanel>
+                                <DockPanel DockPanel.Dock="Left" Width="5">
+                                    <Border DockPanel.Dock="Top" Height="1" Background="{TemplateBinding Foreground}" />
+                                    <Border DockPanel.Dock="Bottom" Height="1" Background="{TemplateBinding Foreground}" />
+                                    <Border DockPanel.Dock="Left" Width="1" Background="{TemplateBinding Foreground}" />
+                                    <Border/>
+                                </DockPanel>
+                                <DockPanel DockPanel.Dock="Right" Width="5">
+                                    <Border DockPanel.Dock="Top" Height="1" Background="{TemplateBinding Foreground}" />
+                                    <Border DockPanel.Dock="Bottom" Height="1" Background="{TemplateBinding Foreground}" />
+                                    <Border DockPanel.Dock="Right" Width="1" Background="{TemplateBinding Foreground}" />
+                                    <Border/>
+                                </DockPanel>
+                                <TextBlock Text="{TemplateBinding Text}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFE6E6E6"/>
+                                
+                            </DockPanel>
+                            <!--<Border.Triggers>
+                                <DataTrigger Binding="{TemplateBinding IsEdditing}" Value="True">
+                                    <Setter Property="BorderBrush" Value="Green"/>
+                                </DataTrigger>
+                            </Border.Triggers>-->
+                            <!--<Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding XPath=}">
+                                            <Setter Property="BorderBrush" Value="Green"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>-->
+                        </Border>
+                        <TextBox Visibility="Collapsed" Height="15" BorderThickness="0"
+                                x:Name="_mainTextBox" Foreground="{TemplateBinding Foreground}"
+                                VerticalContentAlignment="Center"  HorizontalContentAlignment="Center" Background="{x:Null}"
+                                CaretBrush="#FFE6E6E6"
+                                Text="{TemplateBinding Text}"
+                                />
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

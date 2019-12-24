@@ -8,29 +8,56 @@
              xmlns:local="clr-namespace:BrainfuckIDE.Controls.Views"
              mc:Ignorable="d" 
              Width="32"
-             d:DesignHeight="20" d:DesignWidth="32"
+             d:DesignHeight="15" d:DesignWidth="32"
              d:DataContext="{d:DesignInstance {x:Type vm:MemoryTokenViewModel}}"
              Background="{Binding IsCurrent, Converter={local:BackGroundBrushConverter}, Mode=OneWay}"
-
+             MouseDoubleClick="UserControl_MouseDoubleClick"   
+             Foreground="#FFE6E6E6"
+             FontFamily="Consolas"
              >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
-        <DockPanel>
-            <TextBlock Text="[" DockPanel.Dock="Left" VerticalAlignment="Center" Foreground="#FFE6E6E6"/>
-            <TextBlock Text="]" DockPanel.Dock="Right"  VerticalAlignment="Center" Foreground="#FFE6E6E6"/>
-            <TextBox 
-                x:Name="_mainTextBox" x:FieldModifier="private"
-                Foreground="#FFE6E6E6" VerticalContentAlignment="Center"  HorizontalContentAlignment="Center" Background="{x:Null}" BorderThickness="0"
-                    ctrls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" CaretBrush="#FFE6E6E6"
-                IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MemoryTokenView}}}"
-                >
-                <TextBox.Text>
-                    <Binding Path ="Value" Converter="{ctrls:ByteStringInteractiveConverter}"/>
-                </TextBox.Text>
-                
-            </TextBox>
-                <ToolTipService.ToolTip>
-                <ToolTip Content="{Binding Value,Converter={ctrls:ByteToCharStringConverter}}"/>
-            </ToolTipService.ToolTip>
-        </DockPanel>
+        <Border BorderThickness="2" Focusable="True">
+            <DockPanel>
+                <DockPanel DockPanel.Dock="Left" Width="5">
+                    <Border DockPanel.Dock="Top" Height="1" Background="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}}" />
+                    <Border DockPanel.Dock="Bottom" Height="1" Background="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}}" />
+                    <Border DockPanel.Dock="Left" Width="1" Background="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}}" />
+                    <Border/>
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Right" Width="5">
+                    <Border DockPanel.Dock="Top" Height="1" Background="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}}" />
+                    <Border DockPanel.Dock="Bottom" Height="1" Background="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}}" />
+                    <Border DockPanel.Dock="Right" Width="1" Background="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}}" />
+                    <Border/>
+                </DockPanel>
+                    <TextBlock x:Name="_mainTextBlock" x:FieldModifier="private" Text="{Binding Value, Converter={ctrls:ByteStringInteractiveConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFE6E6E6"/>
+                <!--<ContentControl HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                </ContentControl>-->
+            </DockPanel>
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsEdditing,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:MemoryTokenView}}" Value="true">
+                            <Setter Property="BorderBrush" Value="Green"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+        <TextBox Visibility="Collapsed" Height="15" BorderThickness="0"
+                x:Name="_mainTextBox" x:FieldModifier="private" Foreground="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Control}}"
+                VerticalContentAlignment="Center"  HorizontalContentAlignment="Center" Background="{x:Null}"
+                PreviewKeyDown="MainTextBox_PreviewKeyDown" CaretBrush="#FFE6E6E6"
+                Text="{Binding Value, Converter={ctrls:ByteStringInteractiveConverter},NotifyOnTargetUpdated =True}"
+                LostFocus="_mainTextBox_LostFocus"
+                />
     </Grid>
+    <ToolTipService.ToolTip>
+        <ToolTip Content="{Binding Value,Converter={ctrls:ByteToCharStringConverter}}"/>
+    </ToolTipService.ToolTip>
 </UserControl>

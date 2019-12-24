@@ -13,34 +13,19 @@ namespace BrainfuckIDE.Controls.ViewModels
 {
     class MemoryViewModel : ViewModelBase
     {
-        IEditableMemory? _editableMemory;
-        private ObservableCollection<MemoryTokenViewModel> _memoryTokens
-            = new ObservableCollection<MemoryTokenViewModel>();
-
-        public ObservableCollection<MemoryTokenViewModel> MemoryTokens
+        MemoriTokenCollection _memoryTokens = new MemoriTokenCollection(null);
+        public MemoriTokenCollection MemoryTokens
         {
             get => _memoryTokens;
-            set
+            private set
             {
-                if (_memoryTokens != value)
-                {
-                    _memoryTokens = value;
-                    RaiseNotifyPropertyChanged();
-                }
+                _memoryTokens = value;
+                RaiseNotifyPropertyChanged();
             }
         }
         public void SetMemory(IEditableMemory? editableMemory)
         {
-            _editableMemory = editableMemory;
-            if (_editableMemory != null)
-            {
-                var addTokens = editableMemory.Select(p => new MemoryTokenViewModel(p));
-                MemoryTokens = new ObservableCollection<MemoryTokenViewModel>(addTokens);
-            }
-            else
-            {
-                MemoryTokens.Clear();
-            }
+            MemoryTokens = new MemoriTokenCollection(editableMemory);
         }
 
 
@@ -58,9 +43,7 @@ namespace BrainfuckIDE.Controls.ViewModels
             }
         }
 
-        internal void ReflectToInterpretor()
-        {
-            _editableMemory?.ReflectToParent();
-        }
+        internal void ReflectToInterpretor() => _memoryTokens.ReflectToParent();
     }
+
 }
