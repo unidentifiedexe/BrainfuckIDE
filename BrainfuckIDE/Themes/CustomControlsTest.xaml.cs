@@ -24,5 +24,10 @@ namespace BrainfuckIDE.Themes
         {
             InitializeComponent();
         }
+
+        private void TokenViewTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
