@@ -88,9 +88,9 @@ namespace Interpreter
             _hasStopReqest = false;
             State = RunnningState.Runnning;
             Exception = null;
-            var startLine = _sourceCode.Position.Line;
             try
             {
+                var startLine = _sourceCode.Position.Line;
                 while (!_hasStopReqest)
                 {
                     var letter = _sourceCode.Current;

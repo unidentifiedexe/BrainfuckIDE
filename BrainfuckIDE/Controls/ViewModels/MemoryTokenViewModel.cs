@@ -57,7 +57,8 @@ namespace BrainfuckIDE.Controls.ViewModels
             {
                 var vms = _editableMemory.Select(p => new EditableMemoryTokenViewModel(this, p));
                 _list = new List<EditableMemoryTokenViewModel>(vms);
-                _list[_editableMemory.CurrentIndex].IsCurrent = true;
+                if (SelectedIndex >= 0)
+                    _list[SelectedIndex].IsCurrent = true;
             }
             else
                 _list = new List<EditableMemoryTokenViewModel>();

@@ -31,7 +31,7 @@ namespace Interpreter
                 get => _currentIndex;
                 set
                 {
-                    if ((uint)value >= _data.Length)
+                    if (value < -1 || _data.Length < value)
                         throw new IndexOutOfRangeException(nameof(CurrentIndex));
                     _currentIndex = value;
                 }

@@ -127,13 +127,12 @@ namespace BrainfuckIDE.Controls.ViewModels
             EditrVM.RunningState = Editor.RunningState.Running;
             await Task.Run(() => interpreter.ExecuteNextCode(runType));
 
-            var  state = interpreter.State switch
+            var state = interpreter.State switch
             {
                 RunnningState.Runnning => Editor.RunningState.Running,
                 RunnningState.Pause => Editor.RunningState.Pause,
                 _ => Editor.RunningState.Stop
             };
-
 
             EditrVM.RunningState = state;
 
