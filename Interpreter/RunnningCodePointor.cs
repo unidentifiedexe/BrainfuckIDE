@@ -19,15 +19,15 @@ namespace Interpreter
         {
             get
             {
-                if (IsFinished || _runnningPointer == -1)
+                if (IsFinished || _runningPointer == -1)
                     return Place.Empty;
                 else
-                    return _sourceCode.GetOriginPlaceFromTrimedCode(_runnningPointer);
+                    return _sourceCode.GetOriginPlaceFromTrimedCode(_runningPointer);
             }
         }
 
         /// <summary> 現在実行中のポインタのトリムコードでの位置 </summary>
-        private int _runnningPointer = 0;
+        private int _runningPointer = 0;
 
         /// <summary> ソースコード </summary>
         private readonly RunnningCode _sourceCode;
@@ -40,12 +40,12 @@ namespace Interpreter
         {
             get
             {
-                if (_runnningPointer == -1)
+                if (_runningPointer == -1)
                     return char.MaxValue;
                 else if (IsFinished)
                     return char.MaxValue;
                 else
-                    return _sourceCode[_runnningPointer];
+                    return _sourceCode[_runningPointer];
             }
         }
 
@@ -65,7 +65,7 @@ namespace Interpreter
             _sourceCode = new RunnningCode(sourceCode);
             _janper = new Janper(_sourceCode);
             if(!currentPos.IsEmpty())
-                _runnningPointer = _sourceCode.GetTrimedCodePlaceFromOrigin(currentPos);
+                _runningPointer = _sourceCode.GetTrimedCodePlaceFromOrigin(currentPos);
         }
 
         /// <summary> ポインタを一つ移動させる </summary>
@@ -75,9 +75,9 @@ namespace Interpreter
         public bool MoveNext()
         {
             if (IsFinished) return false;
-            _runnningPointer++;
+            _runningPointer++;
             //System.Diagnostics.Debug.WriteLine($"Next => [{_runnningPointer}] = {_sourceCode[_runnningPointer]}");
-            if (_sourceCode[_runnningPointer] == Char.MinValue)
+            if (_sourceCode[_runningPointer] == Char.MinValue)
             {
                 IsFinished = true;
                 return false;
@@ -90,13 +90,13 @@ namespace Interpreter
         public void Jamp()
         {
             if (Current == '[' || Current == ']')
-                _runnningPointer = _janper[_runnningPointer];
+                _runningPointer = _janper[_runningPointer];
         }
 
         public void FourceUodatePosition(Place place)
         {
             if (!place.IsEmpty())
-                _runnningPointer = _sourceCode.GetTrimedCodePlaceFromOrigin(place);
+                _runningPointer = _sourceCode.GetTrimedCodePlaceFromOrigin(place);
         }
 
         /// <summary> []によるコードの移動をサポートする </summary>
