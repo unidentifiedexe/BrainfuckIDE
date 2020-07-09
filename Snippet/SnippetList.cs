@@ -5,12 +5,13 @@ using Snippets.SnippetSeeds;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Snippets
 {
-    class SnippetList
+    class SnippetList : IPriority
     {
 
         [DefaultCollectionType(typeof(IRepleaceElement[]))]
@@ -22,6 +23,8 @@ namespace Snippets
         [DefaultCollectionType(typeof(ISnippetSeed[]))]
         public IEnumerable<ISnippetSeed> Snippets { get; set; }
 
+        [DataMember]
+        public int Priority { get; set; }
 
         public ISnippet[] GetSnipetts()
         {

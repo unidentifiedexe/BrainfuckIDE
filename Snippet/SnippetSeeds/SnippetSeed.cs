@@ -17,7 +17,7 @@ namespace Snippets.SnippetSeeds
 {
     [DataContract]
     [SimpleName("Snippet")]
-    class SnippetSeed : ISnippetSeed , IAddableSnippetSeed
+    class SnippetSeed : ISnippetSeed , IAddableSnippetSeed , IPriority
     {
         #region フィールド
 
@@ -60,6 +60,8 @@ namespace Snippets.SnippetSeeds
             set => _code = value.ToArray();
         }
 
+        [DataMember]
+        public int Priority { get; set; }
 
         [DataMember]
         [DefaultCollectionType(typeof(IRepleaceElement[]))]

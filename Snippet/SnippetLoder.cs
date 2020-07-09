@@ -19,11 +19,16 @@ namespace Snippets
 
         private static ISnippet[] LoadSnipetts(IEnumerable<string> path)
         {
-            return path?.SelectMany(p => LoadSnipetts(p)).ToArray() ?? Array.Empty<ISnippet>();
+            return 
+                path?
+                .Select(LoadJson)
+                .OrderByDescending(p => (p as IPriority)?.Priority ?? 0)
+                .SelectMany(LoadSnipettsFrom).ToArray()
+                ?? Array.Empty<ISnippet>();
         }
-        private static ISnippet[] LoadSnipetts(string path)
+        private static ISnippet[] LoadSnipettsFrom(object obj)
         {
-            return LoadJson(path) switch
+            return obj switch
             {
                 ISnippetSeed snipetts => new[] { snipetts.CreateSnippet() },
                 SnippetList list => list.GetSnipetts(),
