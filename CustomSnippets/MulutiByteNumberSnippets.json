@@ -34,7 +34,7 @@
       "Code": [
         "#region Multi_SubFromPrev {pos}",
         "//start  ___{ a }___{ b*}___",
-        "//resilt ___{res}___{ b*}___",
+        "//result ___{res}___{ b*}___",
         "//notice a の桁が b 以上である必要があります。",
         "//       アンダーフロー処理済み",
         "[<]{pos:prev}<<<[<]++[[-<+>]>]",
@@ -44,7 +44,7 @@
         "  [ [<]{pos:prev}<<<[<]<[-[>[+++++++++>]>[>]>]+<] >-< >>>{pos:next}[>]>+<<- ]",
         "  <[<]{pos:prev}<<<[<]<[->+<]>[>]>>>{pos:next}[>]<",
         "]",
-        "{pos:prev}<<<[<]<[[->+<]<]>>[-]>[>]>>>{pos:next}>>[[-<<+>>]>]<<",
+        "{pos:prev}<<<[<]<[[->+<]<]>>[-]>[>]>>>{pos:next}>>[[-<<+>>]>]<<<",
         "#endregion"
       ]
     },
@@ -56,7 +56,7 @@
       "Code": [
         "#region Multi_SubFromNext {pos}",
         "//start  ___{ a*}___{ b }___",
-        "//resilt ___{ a*}___{res}___",
+        "//result ___{ a*}___{res}___",
         "//notice b の桁が a 以上である必要があります。",
         "//       アンダーフロー処理済み",
         "> >>>{pos:next}<++{pos:prev}<<<",
@@ -79,8 +79,8 @@
       "Title": "Multi_AddToNext",
       "Code": [
         "#region Multi_AddToNext {pos}",
-        "//start  ___{ a*}___{ b*}___",
-        "//resilt ___{ a*}___{res}___",
+        "//start  ___{ a*}___{ b }___",
+        "//result ___{ a*}___{res}___",
         "//notice b の桁が a 以上である必要があります",
         "[",
         "  -",
@@ -110,7 +110,7 @@
       "Code": [
         "#region Multi_AddToPrev {pos}",
         "//start  ___{ a }___{ b*}___",
-        "//resilt ___{res}___{ b*}___",
+        "//result ___{res}___{ b*}___",
         "[",
         "  [<]{pos:prev}<[<]<<[->>+<<]>>[>]>{pos:next}[>]>+<<-",
         "  [ [<]{pos:prev}<[<]>+[>]>{pos:next}[>] >+<<- ] <",
@@ -134,7 +134,7 @@
       "Code": [
         "#region Multi_Comparate {pos}",
         "//start  ___{ a }___{ b*}___",
-        "//resilt ___{ a }_x_{ b*}___",
+        "//result ___{ a }_x_{ b*}___",
         "//notice 桁数が同じである必要があります",
         "//x : 0 if same / 1 if a lt b / 2 if a gt b",
         "#region メイン比較部",
@@ -194,7 +194,7 @@
       "Code": [
         "#region Swap {pos}",
         "//start  ___{ a }___{ b*}___",
-        "//resilt ___{ b }___{ a*}___",
+        "//result ___{ b }___{ a*}___",
         "//notice 桁数が同じである必要があります",
         "[[->>+<<]<]",
         ">>>",
