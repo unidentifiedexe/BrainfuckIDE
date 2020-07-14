@@ -62,6 +62,7 @@
     <Compile Include="ElementConverters\DirectionFlipConverter.cs" />
     <Compile Include="ElementConverters\IElementConverter.cs" />
     <Compile Include="ElementConverters\OnlyDirectionConverter.cs" />
+    <Compile Include="IPriority.cs" />
     <Compile Include="ReplaceElements\IRepleaceElement.cs" />
     <Compile Include="ElementConverters\RepeatConverter.cs" />
     <Compile Include="ISnippet.cs" />
