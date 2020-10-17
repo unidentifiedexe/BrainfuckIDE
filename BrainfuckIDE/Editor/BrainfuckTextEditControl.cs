@@ -200,7 +200,7 @@ namespace BrainfuckIDE.Editor
             //    var newLoc = NearestEfectivPosition(loc);
             //    _debuggingColorizeAvalonEdit.RunnningPosition = GetOffset(newLoc);
             //}
-                this.TextArea.TextView.Redraw();
+            this.TextArea.TextView.Redraw();
 
         }
 
@@ -336,6 +336,7 @@ namespace BrainfuckIDE.Editor
 
         public bool IsEfectiveAt(int offset)
         {
+            if (offset == 0) return false;
             var letter = TextArea.Document.GetCharAt(offset);
             return EffectiveCharacters.IsEffectiveChar(letter);
         }
@@ -587,6 +588,22 @@ namespace BrainfuckIDE.Editor
         {
             return !IsReadOnly;
         }
+
+
+        public void OpenAllFoldiongAt(TextLocation loc)
+        {
+            var offset = GetOffset(loc);
+
+            _bfFoldingManager.OpenAllFoldiongAt(offset);
+        }
+
+        public void FocusAt(TextLocation loc)
+        {
+            OpenAllFoldiongAt(loc);
+            ScrollTo(loc.Line, loc.Column);
+        }
+
+
     }
 
 }
