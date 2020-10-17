@@ -24,6 +24,19 @@ namespace BrainfuckIDE.Editor.CodeAnalysis
         }
 
 
+        /// <summary> 指定の offset を含む Folding を全て開きます。 </summary>
+        /// <param name="offset"></param>
+        public void OpenAllFoldiongAt(int offset)
+        {
+            var foldings = _foldingManager.GetFoldingsContaining(offset);
+            foreach (var item in foldings)
+            {
+                item.IsFolded = false;
+            }
+        }
+
+
+
         FoldInfo[] _prevFoldings = new FoldInfo[0];
 
         public void CashNowFoldData()

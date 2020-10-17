@@ -144,8 +144,11 @@ namespace BrainfuckIDE.Controls.ViewModels
 
         private void UpdateDebuggerState()
         {
-            EditrVM.RunnningPosition = _interpreter?.Position ?? Place.Empty;
+            var position = _interpreter?.Position ?? Place.Empty;
+            EditrVM.RunnningPosition = position;
             MemoryVM.SetMemory(_interpreter?.GetEditableMemory());
+            if (position.IsEmpty() == false)
+                EditrVM.ForcusAt(position);
         }
 
         public bool IsFileSaved => EditrVM?.FileSaverViewModel?.IsSaved ?? true;

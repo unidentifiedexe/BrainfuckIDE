@@ -202,6 +202,15 @@ namespace BrainfuckIDE.Editor.Controls
             }
         }
 
+        /// <summary> 指定位置のフォールディングを全て開き、そこにスクロールをします。 </summary>
+        /// <param name="place"></param>
+        public void ForcusAt(Place place)
+        {
+            var loc = ConvertPlace(place);
+            _baseControl.FocusAt(loc);
+        }
+
+
 
     }
     readonly struct SourceText
