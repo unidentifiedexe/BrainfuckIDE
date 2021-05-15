@@ -14,11 +14,11 @@ namespace Refacter
 
             var codes = removeNonEfectivChar(sourceCode).SplitIf((p, n) => (p != n)).Select(p => p.ToArray());
 
-            return new string(GetMarged(codes).SelectMany().ToArray());
+            return new string(GetMarged(codes).SelectMany(p => p.ToCode()).ToArray());
         }
 
 
-        abstract class CodeSeed
+        internal abstract class CodeSeed
         {
             public static CodeSeed GetSeed(char[] data)
             {
@@ -59,7 +59,7 @@ namespace Refacter
 
             private class DefaultCodeSeed : CodeSeed
             {
-                public override CodeType Type => CodeType.None;
+                public override CodeType Type { get; }
 
                 public override bool HasCode => _code.Length != 0;
 
@@ -68,6 +68,15 @@ namespace Refacter
                 public DefaultCodeSeed(char[] code)
                 {
                     _code = new string(code);
+
+                    Type = _code.FirstOrDefault() switch
+                    {
+                        ',' => CodeType.InputSeed,
+                        '.' => CodeType.OutputSeed,
+                        '[' => CodeType.LoopSeed,
+                        ']' => CodeType.LoopSeed,
+                        _ => CodeType.None,
+                    };
                 }
                 public override IEnumerable<char> ToCode()
                 {
@@ -121,7 +130,37 @@ namespace Refacter
                 }
             }
         }
-        static IEnumerable<IEnumerable<char>> GetMarged(IEnumerable<char[]> source)
+        //static IEnumerable<IEnumerable<char>> GetMarged(IEnumerable<char[]> source)
+        //{
+        //    CodeSeed prev = null;
+
+        //    foreach (var item in source)
+        //    {
+        //        var current = CodeSeed.GetSeed(item);
+        //        if (current == null) continue;
+        //        if (prev == null)
+        //        {
+        //            prev = current;
+        //        }
+        //        else if (prev != null)
+        //        {
+        //            if (prev.TryMarge(current, out var marged))
+        //                prev = marged;
+        //            else
+        //            {
+        //                yield return prev.ToCode();
+        //                prev = current;
+        //            }
+
+        //        }
+
+        //    }
+        //    if(prev != null)
+        //        yield return prev.ToCode();
+        //}
+
+
+        internal static IEnumerable<CodeSeed> GetMarged(IEnumerable<char[]> source)
         {
             CodeSeed prev = null;
 
@@ -139,17 +178,16 @@ namespace Refacter
                         prev = marged;
                     else
                     {
-                        yield return prev.ToCode();
+                        yield return prev;
                         prev = current;
                     }
 
                 }
 
             }
-            if(prev != null)
-                yield return prev.ToCode();
+            if (prev != null)
+                yield return prev;
         }
-
 
         public enum CodeType
         {

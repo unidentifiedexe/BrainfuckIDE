@@ -18,5 +18,11 @@ namespace WpfUtils
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        protected void ExchangeProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) return;
+            field = value;
+            RaiseNotifyPropertyChanged(propertyName);
+        }
     }
 }

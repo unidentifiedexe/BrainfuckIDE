@@ -100,6 +100,7 @@
             </MenuItem>-->
                     <MenuItem Header="Refact(_R)" Foreground="White" Template="{StaticResource MenuItemControlTemplate}">
                         <MenuItem Header="CopySimplyCodeToClipbord"  Background="#FF3F3F46" Command="{Binding CopySimplyCodeToClipbordCommand}"/>
+                        <MenuItem Header="CopyCLangCodeToClipbord"  Background="#FF3F3F46" Command="{Binding CopyCLangCodeToClipbordCommand}"/>
                     </MenuItem>
                     <MenuItem Header="Window(_W)" Foreground="White" Template="{StaticResource MenuItemControlTemplate}">
                         <MenuItem Header="Print text code geter window"  Background="#FF3F3F46" Command="{Binding OpenPrintTextCodeGeterWindowCommand}"/>
