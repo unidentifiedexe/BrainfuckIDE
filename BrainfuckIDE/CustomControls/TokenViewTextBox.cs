@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,19 +53,66 @@ namespace BrainfuckIDE.CustomControls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TokenViewTextBox), new FrameworkPropertyMetadata(typeof(TokenViewTextBox)));
         }
 
+        public TokenViewTextBox()
+        {
+            this.LostFocus += TokenViewTextBox_LostFocus;
+        }
 
+        private void TokenViewTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is TextBox textBox)) return;
+            var be = textBox.GetBindingExpression(TextBox.TextProperty);
+            be?.UpdateSource();
+            OnTextUpdated();
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            Control control = GetTemplateChild("PART_mainControl") as Control;
+
+            control.PreviewMouseDoubleClick += Control_PreviewMouseDoubleClick;
+            TextBox textBox = GetTemplateChild("PART_TextBox") as TextBox;
+            textBox.PreviewKeyDown += TextBox_PreviewKeyDown;
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (!(sender is TextBox textBox)) return;
+            var be = textBox.GetBindingExpression(TextBox.TextProperty);
+            if (e.Key == Key.Enter)
+            {
+                be?.UpdateSource();
+                OnTextUpdated();
+            }
+            else if (e.Key == Key.Escape)
+            {
+                be?.UpdateTarget();
+                OnTextUpdated();
+            }
+        }
+
+        private void OnTextUpdated()
+        {
+            IsEdditing = false;
+        }
+
+        private void Control_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            IsEdditing = true;
+        }
 
         public bool IsEdditing
         {
             get { return (bool)GetValue(IsEdditingProperty); }
-            private set { SetValue(IsEdditingPropertyKey, value); }
+            private set { SetValue(_isEdditingPropertyKey, value); }
         }
 
-        private static readonly DependencyPropertyKey IsEdditingPropertyKey = DependencyProperty.RegisterReadOnly
+        private static readonly DependencyPropertyKey _isEdditingPropertyKey = DependencyProperty.RegisterReadOnly
             (nameof(IsEdditing), typeof(bool), typeof(TokenViewTextBox), new PropertyMetadata(false, OnIsEdditingChanged));
 
         // Using a DependencyProperty as the backing store for IsEdditing.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IsEdditingProperty = IsEdditingPropertyKey.DependencyProperty;
+        public static readonly DependencyProperty IsEdditingProperty = _isEdditingPropertyKey.DependencyProperty;
         //DependencyProperty.Register(nameof(IsEdditing), typeof(bool), typeof(MemoryTokenView), new PropertyMetadata(false, OnIsEdditingChnaged));
 
         private static void OnIsEdditingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -74,4 +123,28 @@ namespace BrainfuckIDE.CustomControls
         }
 
     }
+
+
+
+    public class BooleranSwitchConverter : IValueConverter
+    {
+        
+        public Collection<object> Values { get; } = new Collection<object>();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool boolValue)
+                return Values[boolValue ? 1 : 0];
+            else
+                throw new NotImplementedException();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    
+
 }
