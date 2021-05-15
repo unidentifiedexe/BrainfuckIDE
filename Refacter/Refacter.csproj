@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeConverter.cs" />
+    <Compile Include="ToCLang.cs" />
     <Compile Include="ToSimpleCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

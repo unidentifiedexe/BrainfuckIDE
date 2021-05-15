@@ -30,6 +30,7 @@ namespace BrainfuckIDE.Controls.ViewModels
         private Command? _stopCommand;
         private Command? _pauseCommand;
         private  Command? _copySimplyCodeToClipbordCommand;
+        private  Command? _copyCLangCodeToClipbordCommand;
 
         public AsyncCommand<RunType> RunCommand => _runCommand ??= new AsyncCommand<RunType>(Run);
 
@@ -38,6 +39,9 @@ namespace BrainfuckIDE.Controls.ViewModels
 
         public Command CopySimplyCodeToClipbordCommand
             => _copySimplyCodeToClipbordCommand ??= new Command(CopySimplyCodeToClipbord);
+
+        public Command CopyCLangCodeToClipbordCommand
+            => _copyCLangCodeToClipbordCommand ??= new Command(CopyCLangCodeToClipbord);
 
         public Command OpenPrintTextCodeGeterWindowCommand =>
             _openPrintTextCodeGeterWindowCommand ??= new Command(OpenPrintTextCodeGeterWindow);
@@ -59,6 +63,13 @@ namespace BrainfuckIDE.Controls.ViewModels
         {
             var (hash, code) = EditrVM.GetSourceCode();
             var str = Refacter.ToSimpleCode.Get(code,EffectiveCharacters.RemoveNonEffectiveChars);
+            Clipboard.SetDataObject(str, true);
+        }
+
+        private void CopyCLangCodeToClipbord()
+        {
+            (_, var code) = EditrVM.GetSourceCode();
+            var str = Refacter.ToCLang.ToCLangCode(code);
             Clipboard.SetDataObject(str, true);
         }
 
